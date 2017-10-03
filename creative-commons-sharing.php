@@ -11,6 +11,9 @@
  * @package         Creative_Commons_Sharing
  */
 
+require 'includes/class-settings.php';
+require 'includes/class-widget.php';
+
 /**
 * Main initiation class.
 *
@@ -114,6 +117,20 @@ final class Creative_Commons_Sharing {
 		// Load translated strings for plugin.
 		load_plugin_textdomain( 'creative-commons-sharing', false, dirname( $this->basename ) . '/languages/' );
 
+		$this->settings = new Creative_Commons_Sharing_Settings( $this );
+
+		add_action( 'widgets_init', array( $this, 'register_widgets' ) );
+
+	}
+
+
+	/**
+	 * Register our widgets.
+	 *
+	 * @since 1.0
+	 */
+	public function register_widgets() {
+		register_widget( 'Creative_Commons_Sharing_Widget' );
 	}
 
 
