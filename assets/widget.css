@@ -31,3 +31,7 @@
     border-color: #006799;
     color: #fff;
 }
+
+.widget.creative_commons_sharing p {
+	font-size: .8em;
+}

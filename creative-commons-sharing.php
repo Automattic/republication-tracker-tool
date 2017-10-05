@@ -12,6 +12,7 @@
  */
 
 require 'includes/class-settings.php';
+require 'includes/class-article-settings.php';
 require 'includes/class-widget.php';
 
 /**
@@ -118,6 +119,7 @@ final class Creative_Commons_Sharing {
 		load_plugin_textdomain( 'creative-commons-sharing', false, dirname( $this->basename ) . '/languages/' );
 
 		$this->settings = new Creative_Commons_Sharing_Settings( $this );
+		$this->article_settings = new Creative_Commons_Sharing_Article_Settings( $this );
 
 		add_action( 'widgets_init', array( $this, 'register_widgets' ) );
 

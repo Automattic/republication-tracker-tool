@@ -34,8 +34,12 @@
 			return;
 		}
 
+		global $post;
+
 		wp_enqueue_style( 'creative-commons-sharing-css', plugins_url( 'assets/widget.css', dirname( __FILE__ ) ), array(), '1.0' );
 		add_thickbox();
+		add_action( 'wp_ajax_my_action', 'my_action' );
+		add_action( 'wp_ajax_nopriv_my_action', 'my_action' );
 
 		echo $args['before_widget'];
 
@@ -43,14 +47,23 @@
             echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
         }
 
-		echo '<div id="creative-commons-share-modal" style="display:none;"><p>This is my hidden content! It will appear in ThickBox when the link is clicked.</p></div>';
+		$attribution_statement = 'This <a href=“http://www.passblue.com/post-link/“>article</a> first appeared on <a href=“http://www.passblue.com”>Passblue</a> and is republished here under a Creative Commons license.';
+		$pixel = sprintf( '<img src="%s" />', home_url( '/wp-content/plugins/creative-commons-sharing/includes/pixel.php?post=' . $post->ID ) );
 
-		echo '<p><a href="#TB_inline?width=600&height=550&inlineId=creative-commons-share-modal" class="creative-commons-button thickbox">Republish this article</a></p>';
-		echo '<a rel="license" href="http://creativecommons.org/licenses/by-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nd/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nd/4.0/">Creative Commons Attribution-NoDerivatives 4.0 International License</a>.';
-		echo '<div class="message">';
-        	echo esc_html__( $instance['text'], 'creative-commons-sharing' );
-        echo '</div>';
+		echo '<div id="creative-commons-share-modal" style="display:none;">';
+			echo '<h1>Republish</h1>';
+			echo '<div class="license">';
+				echo '<p><a rel="license" href="http://creativecommons.org/licenses/by-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nd/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nd/4.0/">Creative Commons Attribution-NoDerivatives 4.0 International License</a>.</p>';
+			echo '</div>';
+			echo sprintf( '<textarea>%s</textarea>', wpautop( $post->post_content . "\n\n" . $attribution_statement . $pixel ) );
+		echo '</div>';
 
+		echo '<div class="license">';
+			echo '<p><a href="#TB_inline?width=600&height=550&inlineId=creative-commons-share-modal" class="creative-commons-button thickbox">Republish this article</a></p>';
+			echo '<p><a rel="license" href="http://creativecommons.org/licenses/by-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nd/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nd/4.0/">Creative Commons Attribution-NoDerivatives 4.0 International License</a>.</p>';
+		echo '</div>';
+
+		echo sprintf( '<div class="message">%s</div>', wpautop( esc_html__( $instance['text'], 'creative-commons-sharing' ) ) );
 		?>
 
 

@@ -83,47 +83,9 @@ class Creative_Commons_Sharing_Settings {
 	 *
 	 * @since 1.0
 	 */
-	public function create_settings() {
-/*
-		add_settings_section(
-			$section_key,
-			$section['label'],
-			array( $this, 'section_callback' ),
-			$this->settings_page
-		);
-
-		add_settings_field(
-			$field_key,
-			$field['label'],
-			array( $this, 'field_callback' ),
-			$this->settings_page,
-			$section_key,
-			array_merge( array( 'key' => $field_key ), $field )
-		);
-		register_setting( 'creative-commons-sharing', $field_key );
-*/
-	}
+	public function create_settings() {}
 
 	public function section_callback( $arg ) {}
 
-	public function field_callback( $arg ) {
-		if ( 'checkbox' === $arg['type'] ) {
-			echo sprintf(
-				'<input type="%s" name="%s" id="%s" type="checkbox" value="1" class="code" %s />',
-				$arg['type'],
-				$arg['key'],
-				$arg['key'],
-				checked( 1, get_option( $arg['key'] ), false )
-			);
-		} else {
-			// @TODO needs validation/sanitization.
-			echo sprintf(
-				'<input type="%s" name="%s" id="%s" value="%s" placeholder="Enter a URL" class="regular-text" />',
-				$arg['type'],
-				$arg['key'],
-				$arg['key'],
-				get_option( $arg['key'] )
-			);
-		}
-	}
+	public function field_callback( $arg ) {}
 }
