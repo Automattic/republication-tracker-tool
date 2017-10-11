@@ -1,37 +1,36 @@
-.creative-commons-button {
-	height: 30px;
-    line-height: 28px;
-    padding: 0 12px 2px;
-	text-align: center;
-	background: #0085ba;
-    border-color: #0073aa #006799 #006799;
-    -webkit-box-shadow: 0 1px 0 #006799;
-    box-shadow: 0 1px 0 #006799;
-    color: #fff;
-    text-decoration: none;
-    text-shadow: 0 -1px 1px #006799, 1px 0 1px #006799, 0 1px 1px #006799, -1px 0 1px #006799;
-	display: inline-block;
-	font-size: 13px;
-	margin: 0;
-	cursor: pointer;
-	border-width: 1px;
-	border-style: solid;
-	-webkit-appearance: none;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
-	white-space: nowrap;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-	vertical-align: top;
-}
-
-.creative-commons-button:hover {
-    background: #008ec2;
-    border-color: #006799;
-    color: #fff;
+.widget.creative_commons_sharing {
+    text-align: center;
+    max-width: 300px;
+    margin: 0 auto;
 }
 
 .widget.creative_commons_sharing p {
-	font-size: .8em;
+    margin-bottom: 1em;
+}
+
+.widget.creative_commons_sharing a.license {
+    border-top: 3px double #ddd;
+    border-bottom: 3px double #ddd;
+    padding: 1em 0;
+    min-width: 100%;
+    display: block;
+}
+
+.widget.creative_commons_sharing a.creative-commons-button {
+    background-color: #5499db;
+    border: 1px solid #2863a7;
+    color: #fff;
+    padding: 1em;
+    font-size: 1.25em;
+    margin: 0 0 1em 0;
+    display: block;
+    border-radius: .25em;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px #2863a7;
+}
+
+.widget.creative_commons_sharing a.creative-commons-button:hover {
+    background-color: #2863a7;
+    text-decoration: none;
+    cursor: pointer;
 }
