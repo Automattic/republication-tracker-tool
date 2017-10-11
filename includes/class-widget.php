@@ -52,12 +52,20 @@
 		$license_statement = get_option('creative_commons_sharing_policy');
 
 		echo '<div id="creative-commons-share-modal" style="display:none;">';
-			echo '<h1>Republish</h1>';
+			echo sprintf( '<h1>%s</h1>', esc_html__( 'Republish This Story', 'creative-commons-sharing' ) );
 			echo '<div class="license">';
 				echo '<p><a rel="license" href="http://creativecommons.org/licenses/by-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nd/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nd/4.0/">Creative Commons Attribution-NoDerivatives 4.0 International License</a>.</p>';
 				if ( $license_statement ) {
 					echo sprintf( '<p>%s</p>', esc_html( $license_statement ) );
 				}
+			echo '</div>';
+			echo '<div class="article-info">';
+				echo sprintf(
+					'<h2>%s</h2><div class="byline">%s <br />%s</div>',
+					$post->post_title,
+					esc_html__( 'by', 'creative-commons-sharing' ) . ' ' . get_the_author_meta( 'display_name', $post->post_author ),
+					get_bloginfo( 'name' ) . ', ' . $post->post_date
+				);
 			echo '</div>';
 			echo sprintf( '<textarea rows="5">%s</textarea>', wpautop( $post->post_content . "\n\n" . $attribution_statement . $pixel ) );
 		echo '</div>';
