@@ -59,7 +59,7 @@
 					echo sprintf( '<p>%s</p>', esc_html( $license_statement ) );
 				}
 			echo '</div>';
-			echo sprintf( '<textarea>%s</textarea>', wpautop( $post->post_content . "\n\n" . $attribution_statement . $pixel ) );
+			echo sprintf( '<textarea rows="5">%s</textarea>', wpautop( $post->post_content . "\n\n" . $attribution_statement . $pixel ) );
 		echo '</div>';
 
 		echo '<div class="license">';
