@@ -34,3 +34,7 @@
     text-decoration: none;
     cursor: pointer;
 }
+
+#creative-commons-share-modal-content {
+	padding-top: 15px;
+}
