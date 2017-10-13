@@ -57,9 +57,8 @@
 
 		echo '<div id="creative-commons-share-modal" style="display:none;">';
 			echo '<div id="creative-commons-share-modal-content">';
-				echo sprintf( '<h1>%s</h1>', esc_html__( 'Republish This Story', 'creative-commons-sharing' ) );
 				echo '<div class="license">';
-					echo '<p><a rel="license" href="http://creativecommons.org/licenses/by-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nd/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nd/4.0/">Creative Commons Attribution-NoDerivatives 4.0 International License</a>.</p>';
+					echo '<p>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nd/4.0/">Creative Commons Attribution-NoDerivatives 4.0 International License</a>. <br /><a rel="license" href="http://creativecommons.org/licenses/by-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nd/4.0/88x31.png" /></a></p>';
 					if ( $license_statement ) {
 						echo sprintf( '<p>%s</p>', esc_html( $license_statement ) );
 					}
@@ -77,7 +76,7 @@
 		echo '</div>';
 
 		echo '<div class="license">';
-			echo '<p><a href="#TB_inline?width=600&height=550&inlineId=creative-commons-share-modal" class="creative-commons-button thickbox">Republish this article</a></p>';
+			echo '<p><a name="Republish This Story" href="#TB_inline?width=600&height=550&inlineId=creative-commons-share-modal" class="creative-commons-button thickbox">Republish this article</a></p>';
 			echo '<p><a class="license" rel="license" href="http://creativecommons.org/licenses/by-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nd/4.0/88x31.png" /></a></p>';
 		echo '</div>';
 
