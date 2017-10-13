@@ -51,6 +51,10 @@
 		$pixel = sprintf( '<img src="%s" />', home_url( '/wp-content/plugins/creative-commons-sharing/includes/pixel.php?post=' . $post->ID ) );
 		$license_statement = get_option('creative_commons_sharing_policy');
 
+		$content = $post->post_content;
+		$content = apply_filters( 'the_content', $content );
+		$content = preg_replace( "/<img[^>]+\>/i", " ", $content );
+
 		echo '<div id="creative-commons-share-modal" style="display:none;">';
 			echo '<div id="creative-commons-share-modal-content">';
 				echo sprintf( '<h1>%s</h1>', esc_html__( 'Republish This Story', 'creative-commons-sharing' ) );
@@ -68,7 +72,7 @@
 						get_bloginfo( 'name' ) . ', ' . $post->post_date
 					);
 				echo '</div>';
-				echo sprintf( '<textarea rows="5">%s</textarea>', wpautop( $post->post_content . "\n\n" . $attribution_statement . $pixel ) );
+				echo sprintf( '<textarea rows="5">%s</textarea>', wpautop( $content . "\n\n" . $attribution_statement . $pixel ) );
 			echo '</div>';
 		echo '</div>';
 
