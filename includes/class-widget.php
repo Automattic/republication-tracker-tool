@@ -61,7 +61,7 @@
 			echo '</div>';
 			echo '<div class="article-info">';
 				echo sprintf(
-					'<h2>%s</h2><div class="byline">%s <br />%s</div>',
+					'<h1>%s</h1><p class="byline">%s <br />%s</p>',
 					$post->post_title,
 					esc_html__( 'by', 'creative-commons-sharing' ) . ' ' . get_the_author_meta( 'display_name', $post->post_author ),
 					get_bloginfo( 'name' ) . ', ' . $post->post_date
