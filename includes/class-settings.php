@@ -60,21 +60,21 @@ class Creative_Commons_Sharing_Settings {
 		register_setting(
 			'reading',
 			'creative_commons_sharing_policy',
-			'esc_html'
+			'wp_kses_post'
 		);
 	}
 
 	public function creative_commons_sharing_callback( $arg ) {
-		$content = get_option('creative_commons_sharing_policy');
+		$content = get_option( 'creative_commons_sharing_policy' );
 		wp_editor(
 			$content,
 			'creative_commons_sharing_policy',
 			array(
-	            'wpautop'               =>      true,
-	            'media_buttons' =>      false,
-	            'textarea_name' =>      'creative_commons_sharing_policy',
-	            'textarea_rows' =>      10,
-	            'teeny'                 =>      true
+	            'wpautop'       => true,
+	            'media_buttons' => false,
+	            'textarea_name' => 'creative_commons_sharing_policy',
+	            'textarea_rows' => 10,
+	            'teeny'         => true,
 	        )
 		);
 		echo sprintf( '<p><em>%s</em></p>', esc_html__( 'This policy will display in the modal window when someone copies the content of your article for republishing.' ) );
