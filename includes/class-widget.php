@@ -47,9 +47,9 @@
             echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
         }
 
-		$attribution_statement = 'This <a href=“http://www.passblue.com/post-link/“>article</a> first appeared on <a href=“http://www.passblue.com”>Passblue</a> and is republished here under a Creative Commons license.';
+		$attribution_statement = 'This <a target="_blank" href=“http://www.passblue.com/post-link/“>article</a> first appeared on <a target="_blank" href=“http://www.passblue.com”>Passblue</a> and is republished here under a Creative Commons license.';
 		$pixel = sprintf( '<img src="%s" />', home_url( '/wp-content/plugins/creative-commons-sharing/includes/pixel.php?post=' . $post->ID ) );
-		$license_statement = get_option('creative_commons_sharing_policy');
+		$license_statement = get_option( 'creative_commons_sharing_policy' );
 
 		$content = $post->post_content;
 		$content = apply_filters( 'the_content', $content );
@@ -58,7 +58,7 @@
 		echo '<div id="creative-commons-share-modal" style="display:none;">';
 			echo '<div id="creative-commons-share-modal-content">';
 				echo '<div class="license">';
-					echo '<p>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nd/4.0/">Creative Commons Attribution-NoDerivatives 4.0 International License</a>. <br /><a rel="license" href="http://creativecommons.org/licenses/by-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nd/4.0/88x31.png" /></a></p>';
+					echo '<p>This work is licensed under a <a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nd/4.0/">Creative Commons Attribution-NoDerivatives 4.0 International License</a>. <br /><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nd/4.0/88x31.png" /></a></p>';
 					if ( $license_statement ) {
 						echo apply_filters( 'the_content', $license_statement );
 					}
@@ -83,7 +83,7 @@
 
 		echo '<div class="license">';
 			echo '<p><a name="Republish This Story" href="#TB_inline?width=600&height=550&inlineId=creative-commons-share-modal" class="creative-commons-button thickbox">Republish this article</a></p>';
-			echo '<p><a class="license" rel="license" href="http://creativecommons.org/licenses/by-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nd/4.0/88x31.png" /></a></p>';
+			echo '<p><a class="license" rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nd/4.0/88x31.png" /></a></p>';
 		echo '</div>';
 
 		echo sprintf( '<div class="message">%s</div>', wpautop( esc_html__( $instance['text'], 'creative-commons-sharing' ) ) );
