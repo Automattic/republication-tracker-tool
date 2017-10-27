@@ -53,7 +53,12 @@
 
 		$content = $post->post_content;
 		$content = apply_filters( 'the_content', $content );
+
+		// remove images
 		$content = preg_replace( "/<img[^>]+\>/i", " ", $content );
+
+		// remove captions
+		$content = preg_replace( "/<(div|figure)[^>]+[wp\-caption][^>]+\>.*<\/(div|figure)>/i", " ", $content );
 
 		echo '<div id="creative-commons-share-modal" style="display:none;">';
 			echo '<div id="creative-commons-share-modal-content">';
