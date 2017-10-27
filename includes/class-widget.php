@@ -60,6 +60,8 @@
 		// remove captions
 		$content = preg_replace( "/<(div|figure)[^>]+[wp\-caption][^>]+\>.*<\/(div|figure)>/i", " ", $content );
 
+		$content = htmlspecialchars( $content, ENT_HTML5, 'UTF-8', true );
+
 		echo '<div id="creative-commons-share-modal" style="display:none;">';
 			echo '<div id="creative-commons-share-modal-content">';
 				echo '<div class="license">';
