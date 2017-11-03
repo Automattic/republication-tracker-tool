@@ -36,6 +36,7 @@
 
 		global $post;
 
+		wp_enqueue_script( 'creative-commons-sharing-js', plugins_url( 'assets/widget.js', dirname( __FILE__ ) ), array( 'jquery' ), '1.0', false );
 		wp_enqueue_style( 'creative-commons-sharing-css', plugins_url( 'assets/widget.css', dirname( __FILE__ ) ), array(), '1.0' );
 		add_thickbox();
 		add_action( 'wp_ajax_my_action', 'my_action' );
@@ -79,12 +80,13 @@
 					);
 				echo '</div>';
 				echo sprintf( '
-					<textarea rows="5"><h1>%s</h1><p class="byline">%s <br />%s</p>%s</textarea>',
+					<textarea id="creative-commons-shareable-content" rows="5"><h1>%s</h1><p class="byline">%s <br />%s</p>%s</textarea>',
 					$post->post_title,
 					esc_html__( 'by', 'creative-commons-sharing' ) . ' ' . get_the_author_meta( 'display_name', $post->post_author ),
 					get_bloginfo( 'name' ) . ', ' . $post->post_date,
 					wpautop( $content . "\n\n" . $attribution_statement . $pixel )
 				);
+				echo '<button onclick="copyToClipboard(\'#creative-commons-shareable-content\')">Copy to Clipboard</button>';
 			echo '</div>';
 		echo '</div>';
 
