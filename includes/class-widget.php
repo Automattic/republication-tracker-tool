@@ -86,7 +86,7 @@
 					get_bloginfo( 'name' ) . ', ' . $post->post_date,
 					wpautop( $content . "\n\n" . $attribution_statement . $pixel )
 				);
-				echo '<button onclick="copyToClipboard(\'#creative-commons-shareable-content\')">Copy to Clipboard</button>';
+				echo wpautop( '<button onclick="copyToClipboard(\'#creative-commons-shareable-content\')">Copy to Clipboard</button>' );
 			echo '</div>';
 		echo '</div>';
 
