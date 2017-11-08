@@ -84,7 +84,7 @@
 					<textarea id="creative-commons-shareable-content" rows="5"><h1>%s</h1><p class="byline">%s <br />%s</p>%s</textarea>',
 					$post->post_title,
 					esc_html__( 'by', 'creative-commons-sharing' ) . ' ' . get_the_author_meta( 'display_name', $post->post_author ),
-					get_bloginfo( 'name' ) . ', ' . $post->post_date,
+					get_bloginfo( 'name' ) . ', ' . date( 'F j, Y', strtotime( $post->post_date ) ),
 					wpautop( $content . "\n\n" . $attribution_statement . $pixel )
 				);
 				echo wpautop( '<button onclick="copyToClipboard(\'#creative-commons-shareable-content\')">Copy to Clipboard</button>' );
