@@ -38,7 +38,6 @@
 
 		wp_enqueue_script( 'creative-commons-sharing-js', plugins_url( 'assets/widget.js', dirname( __FILE__ ) ), array( 'jquery' ), '1.0', false );
 		wp_enqueue_style( 'creative-commons-sharing-css', plugins_url( 'assets/widget.css', dirname( __FILE__ ) ), array(), '1.0' );
-		add_thickbox();
 		add_action( 'wp_ajax_my_action', 'my_action' );
 		add_action( 'wp_ajax_nopriv_my_action', 'my_action' );
 
@@ -66,8 +65,10 @@
 
 		echo '<div id="creative-commons-share-modal" style="display:none;">';
 			echo '<div id="creative-commons-share-modal-content">';
-				echo '<div class="license">';
-					echo '<p>This work is licensed under a <a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nd/4.0/">Creative Commons Attribution-NoDerivatives 4.0 International License</a>. <br /><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nd/4.0/88x31.png" /></a></p>';
+				echo '<div class="creative-commons-close">X</div>';
+				echo '<h2>Republish this article</h2>';
+				echo '<div class="cc-policy">';
+					echo '<div class="cc-license"><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nd/4.0/88x31.png" /></a><p>This work is licensed under a <a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nd/4.0/">Creative Commons Attribution-NoDerivatives 4.0 International License</a>.</p></div>';
 					if ( $license_statement ) {
 						echo apply_filters( 'the_content', $license_statement );
 					}
@@ -92,7 +93,7 @@
 		echo '</div>';
 
 		echo '<div class="license">';
-			echo '<p><a name="Republish This Story" href="#TB_inline?width=600&height=550&inlineId=creative-commons-share-modal" class="creative-commons-button thickbox">Republish this article</a></p>';
+			echo '<p><button name="Republish This Story" id="cc-btn" class="creative-commons-button">Republish this article</button></p>';
 			echo '<p><a class="license" rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nd/4.0/88x31.png" /></a></p>';
 		echo '</div>';
 

@@ -5,3 +5,39 @@ function copyToClipboard( element ) {
 	document.execCommand( 'copy' );
 	$temp.remove();
 }
+
+jQuery(document).ready(function(){
+	var $ = jQuery;
+
+	// Remove captions from shareable text
+	var $shareable = $('#creative-commons-shareable-content');
+	var html = $shareable.text();
+	var temp = '<div class="cc-temp" style="display:none;">' + html + '</div>';
+	$('body').append(temp);
+	var $temp = $('.cc-temp');
+	$temp.find('.wp-caption').remove();
+	var captionless = $temp.html();
+	$shareable.text(captionless);
+	$temp.remove();
+
+	// Responsive modal
+	var $modal = $('#creative-commons-share-modal');
+	var $btn = $('#cc-btn');
+	var $close = $('.creative-commons-close');
+
+	$btn.click(function(){
+		$modal.show();
+	});
+	$('#creative-commons-share-modal-content').click(function(e) {
+    	e.stopPropagation();
+	});
+
+	$modal.click(function(){
+		$modal.hide();
+	});
+
+	$close.click(function(){
+		$modal.hide();
+	});
+	
+});
