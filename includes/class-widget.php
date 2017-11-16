@@ -53,7 +53,12 @@
 		$license_statement = get_option( 'creative_commons_sharing_policy' );
 
 		$content = $post->post_content;
-		$content = apply_filters( 'the_content', $content );
+		global $shortcode_tags;
+		if ( is_array( $shortcode_tags ) ) {
+			foreach ( $shortcode_tags as $tag ) {
+				$content = str_replace( $tag, '', $content );
+			}
+		}
 
 		// remove images
 		$content = preg_replace( "/<img[^>]+\>/i", " ", $content );
@@ -69,9 +74,7 @@
 				echo '<h2>Republish this article</h2>';
 				echo '<div class="cc-policy">';
 					echo '<div class="cc-license"><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nd/4.0/88x31.png" /></a><p>This work is licensed under a <a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nd/4.0/">Creative Commons Attribution-NoDerivatives 4.0 International License</a>.</p></div>';
-					if ( $license_statement ) {
-						echo apply_filters( 'the_content', $license_statement );
-					}
+					echo $license_statement;
 				echo '</div>';
 				echo '<div class="article-info">';
 					echo sprintf(
