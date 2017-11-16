@@ -39,7 +39,10 @@ class Creative_Commons_Sharing_Article_Settings {
 	 */
 	public function hooks() {
 		add_action( 'add_meta_boxes', array( $this, 'register_meta_boxes' ) );
+		add_action( 'manage_edit-post_columns', array( $this, 'add_custom_columns' ) );
+		add_action( 'manage_posts_custom_column' , array( $this, 'custom_column_content' ), 10, 2 );
 	}
+
 
 	/**
 	 * Add custom metaboxes.
@@ -67,6 +70,11 @@ class Creative_Commons_Sharing_Article_Settings {
 	 */
 	public function render_metabox( $post, $args ) {
 		$shares = get_post_meta( $post->ID, 'creative_commons_sharing', true );
+		$total_count = 0;
+		foreach ( $shares as $url => $count ) {
+			$total_count = $total_count + $count;
+		}
+		echo wpautop( 'This post has been shared ' . $total_count . ' times.' );
 		echo '<table class="wp-list-table widefat fixed striped posts">';
 			echo '<thead>';
 				echo '<th scope="col" id="url" class="manage-column column-primary"><span>URL</span><span class="sorting-indicator"></span></th>';
@@ -87,4 +95,23 @@ class Creative_Commons_Sharing_Article_Settings {
 			echo '</tfoot>';
 		echo '</table>';
 	}
+
+	public function add_custom_columns( $columns ) {
+		$columns['creative_commons_sharing'] = 'Creative Commons Sharing';
+		return $columns;
+	}
+
+	public function custom_column_content( $column, $post_id ) {
+		switch ( $column ) {
+			case 'creative_commons_sharing':
+				$shares = get_post_meta( $post_id, 'creative_commons_sharing', true );
+				$total_count = 0;
+				foreach ( $shares as $url => $count ) {
+					$total_count = $total_count + $count;
+				}
+				echo sprintf( '%s shares', number_format( $total_count ) );
+				break;
+		}
+	}
+
 }
