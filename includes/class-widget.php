@@ -47,7 +47,7 @@
             echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
         }
 
-		$attribution_statement = sprintf( 'This <a target="_blank" href=“%s“>article</a> first appeared on <a target="_blank" href=“%s”>%s</a> and is republished here under a Creative Commons license.', get_permalink( $post ), home_url(), get_bloginfo() );
+		$attribution_statement = sprintf( 'This <a target="_blank" href="%s">article</a> first appeared on <a target="_blank" href="%s">%s</a> and is republished here under a Creative Commons license.', get_permalink( $post ), home_url(), get_bloginfo() );
 //		$pixel = sprintf( '<img src="%s" />', home_url( '/wp-content/plugins/creative-commons-sharing/includes/pixel.php?post=' . $post->ID ) );
 		$pixel = sprintf( '<script type="text/javascript" id="creative-commons-sharing-source" src="%s" data-postid="%s" data-homeurl="%s" async="true"></script>', home_url( '/wp-content/plugins/creative-commons-sharing/assets/pixel.js' ), $post->ID, home_url() );
 		$license_statement = get_option( 'creative_commons_sharing_policy' );
