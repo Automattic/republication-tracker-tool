@@ -77,7 +77,7 @@ class Creative_Commons_Sharing_Article_Settings {
 		echo wpautop( 'Total number of views: ' . $total_count );
 		echo '<table class="wp-list-table widefat fixed striped posts">';
 			echo '<thead>';
-				echo '<th scope="col" id="url" class="manage-column column-primary"><span>URL</span><span class="sorting-indicator"></span></th>';
+				echo '<th scope="col" id="url" class="manage-column column-primary"><span>Republished URL</span><span class="sorting-indicator"></span></th>';
 				echo '<th scope="col" id="views" class="manage-column ">Views</th>';
 			echo '</thead>';
 			echo '<tbody id="the-list">';
@@ -90,7 +90,7 @@ class Creative_Commons_Sharing_Article_Settings {
 				}
 			echo '</tbody>';
 			echo '<tfoot>';
-				echo '<th scope="col" id="url" class="manage-column column-primary"><span>URL</span><span class="sorting-indicator"></span></th>';
+				echo '<th scope="col" id="url" class="manage-column column-primary"><span>Republished URL</span><span class="sorting-indicator"></span></th>';
 				echo '<th scope="col" id="views" class="manage-column">Views</th>';
 			echo '</tfoot>';
 		echo '</table>';
