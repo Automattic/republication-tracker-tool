@@ -74,11 +74,11 @@ class Creative_Commons_Sharing_Article_Settings {
 		foreach ( $shares as $url => $count ) {
 			$total_count = $total_count + $count;
 		}
-		echo wpautop( 'This post has been shared ' . $total_count . ' times.' );
+		echo wpautop( 'Total number of views: ' . $total_count );
 		echo '<table class="wp-list-table widefat fixed striped posts">';
 			echo '<thead>';
 				echo '<th scope="col" id="url" class="manage-column column-primary"><span>URL</span><span class="sorting-indicator"></span></th>';
-				echo '<th scope="col" id="views" class="manage-column "># of Views</th>';
+				echo '<th scope="col" id="views" class="manage-column ">Views</th>';
 			echo '</thead>';
 			echo '<tbody id="the-list">';
 				foreach ( $shares as $url => $count ) {
@@ -91,13 +91,13 @@ class Creative_Commons_Sharing_Article_Settings {
 			echo '</tbody>';
 			echo '<tfoot>';
 				echo '<th scope="col" id="url" class="manage-column column-primary"><span>URL</span><span class="sorting-indicator"></span></th>';
-				echo '<th scope="col" id="views" class="manage-column"># of Views</th>';
+				echo '<th scope="col" id="views" class="manage-column">Views</th>';
 			echo '</tfoot>';
 		echo '</table>';
 	}
 
 	public function add_custom_columns( $columns ) {
-		$columns['creative_commons_sharing'] = 'Creative Commons Sharing';
+		$columns['creative_commons_sharing'] = 'Total Views';
 		return $columns;
 	}
 
@@ -109,7 +109,7 @@ class Creative_Commons_Sharing_Article_Settings {
 				foreach ( $shares as $url => $count ) {
 					$total_count = $total_count + $count;
 				}
-				echo sprintf( '%s shares', number_format( $total_count ) );
+				echo sprintf( '%s', number_format( $total_count ) );
 				break;
 		}
 	}

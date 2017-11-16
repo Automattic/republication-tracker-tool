@@ -12,13 +12,12 @@ jQuery(document).ready(function(){
 	// Remove captions from shareable text
 	var $shareable = $('#creative-commons-shareable-content');
 	var html = $shareable.text();
-	var temp = '<div class="cc-temp" style="display:none;">' + html + '</div>';
-	$('body').append(temp);
-	var $temp = $('.cc-temp');
-	$temp.find('.wp-caption').remove();
-	var captionless = $temp.html();
+
+	var parser = new DOMParser();
+	var doc = parser.parseFromString(html, "text/html");
+	$(doc).find('.wp-caption').remove();
+	var captionless = $(doc).find('body').html()
 	$shareable.text(captionless);
-	$temp.remove();
 
 	// Responsive modal
 	var $modal = $('#creative-commons-share-modal');
