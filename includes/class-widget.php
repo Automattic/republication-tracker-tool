@@ -48,7 +48,7 @@
         }
 
 		$attribution_statement = sprintf( 'This <a target="_blank" href="%s">article</a> first appeared on <a target="_blank" href="%s">%s</a> and is republished here under a Creative Commons license.', get_permalink( $post ), home_url(), get_bloginfo() );
-		$pixel = sprintf( '<script type="text/javascript" id="creative-commons-sharing-source" src="%s" data-postid="%s" data-homeurl="%s" async="true"></script>', home_url( '/wp-content/plugins/creative-commons-sharing/assets/pixel.js' ), $post->ID, home_url() );
+		$pixel = sprintf( '<script type="text/javascript" id="creative-commons-sharing-source" src="%s" data-postid="%s" data-pluginsdir="%s" async="true"></script>', plugins_url( 'assets/pixel.js', dirname( __FILE__ ) ), $post->ID, plugins_url() );
 		$license_statement = get_option( 'creative_commons_sharing_policy' );
 
 		$content = $post->post_content;
