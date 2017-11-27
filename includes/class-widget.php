@@ -18,7 +18,7 @@
 	public function __construct() {
 		$widget_ops = array(
 			'classname' => 'creative_commons_sharing',
-			'description' => 'Creative Commons Sharing',
+			'description' => esc_html__( 'Creative Commons Sharing', 'creative-commons-sharing' ),
 		);
 		parent::__construct( 'creative_commons_sharing', 'Creative Commons Sharing', $widget_ops );
 	}
@@ -47,7 +47,7 @@
             echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
         }
 
-		$attribution_statement = sprintf( 'This <a target="_blank" href="%s">article</a> first appeared on <a target="_blank" href="%s">%s</a> and is republished here under a Creative Commons license.', get_permalink( $post ), home_url(), get_bloginfo() );
+		$attribution_statement = sprintf( esc_html__( 'This <a target="_blank" href="%s">article</a> first appeared on <a target="_blank" href="%s">%s</a> and is republished here under a Creative Commons license.', 'creative-commons-sharing' ), get_permalink( $post ), home_url(), get_bloginfo() );
 		$pixel = sprintf( '<script type="text/javascript" id="creative-commons-sharing-source" src="%s" data-postid="%s" data-pluginsdir="%s" async="true"></script>', plugins_url( 'assets/pixel.js', dirname( __FILE__ ) ), $post->ID, plugins_url() );
 		$license_statement = get_option( 'creative_commons_sharing_policy' );
 
@@ -70,9 +70,17 @@
 		echo '<div id="creative-commons-share-modal" style="display:none;">';
 			echo '<div id="creative-commons-share-modal-content">';
 				echo '<div class="creative-commons-close">X</div>';
-				echo '<h2>Republish this article</h2>';
+				echo sprintf( '<h2>%s</h2>', esc_html__( 'Republish this article', 'creative-commons-sharing' ) );
 				echo '<div class="cc-policy">';
-					echo '<div class="cc-license"><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nd/4.0/88x31.png" /></a><p>This work is licensed under a <a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nd/4.0/">Creative Commons Attribution-NoDerivatives 4.0 International License</a>.</p></div>';
+					echo '<div class="cc-license">';
+						echo sprintf( '<a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nd/4.0/"><img alt="%s" style="border-width:0" src="https://i.creativecommons.org/l/by-nd/4.0/88x31.png" /></a>', esc_html__( 'Creative Commons License' ) );
+						echo wpautop(
+							sprintf(
+								__( 'This work is licensed under a <a rel="license" target="_blank" href="%s">Creative Commons Attribution-NoDerivatives 4.0 International License</a>.' ),
+								'http://creativecommons.org/licenses/by-nd/4.0/'
+							)
+						);
+					echo '</div>';
 					echo $license_statement;
 				echo '</div>';
 				echo '<div class="article-info">';
@@ -90,20 +98,26 @@
 					get_bloginfo( 'name' ) . ', ' . date( 'F j, Y', strtotime( $post->post_date ) ),
 					wpautop( $content . "\n\n" . $attribution_statement . $pixel )
 				);
-				echo wpautop( '<button onclick="copyToClipboard(\'#creative-commons-shareable-content\')">Copy to Clipboard</button>' );
+				echo wpautop( sprintf( '<button onclick="copyToClipboard(\'#creative-commons-shareable-content\')">%s</button>', esc_html__( 'Copy to Clipboard', 'creative-commons-sharing' ) ) );
 			echo '</div>';
 		echo '</div>';
 
 		echo '<div class="license">';
-			echo '<p><button name="Republish This Story" id="cc-btn" class="creative-commons-button">Republish this article</button></p>';
-			echo '<p><a class="license" rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nd/4.0/88x31.png" /></a></p>';
+			echo sprintf(
+				'<p><button name="%1$s" id="cc-btn" class="creative-commons-button">%1$s</button></p>',
+				esc_html__( 'Republish This Story', 'creative-commons-sharing' )
+			);
+			echo sprintf(
+				'<p><a class="license" rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nd/4.0/"><img alt="%s" style="border-width:0" src="https://i.creativecommons.org/l/by-nd/4.0/88x31.png" /></a></p>',
+				esc_html__( 'Creative Commons License', 'creative-commons-sharing' )
+			);
 		echo '</div>';
 
-		echo sprintf( '<div class="message">%s</div>', wpautop( esc_html__( $instance['text'], 'creative-commons-sharing' ) ) );
-		?>
+		echo sprintf(
+			'<div class="message">%s</div>',
+			wpautop( esc_html__( $instance['text'], 'creative-commons-sharing' ) )
+		);
 
-
-		<?php
         echo $args['after_widget'];
 	}
 

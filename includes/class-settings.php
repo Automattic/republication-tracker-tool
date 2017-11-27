@@ -77,6 +77,6 @@ class Creative_Commons_Sharing_Settings {
 	            'teeny'         => true,
 	        )
 		);
-		echo sprintf( '<p><em>%s</em></p>', esc_html__( 'This policy will display in the modal window when someone copies the content of your article for republishing.' ) );
+		echo sprintf( '<p><em>%s</em></p>', esc_html__( 'This policy will display in the modal window when someone copies the content of your article for republishing.', 'creative-commons-sharing' ) );
 	}
 }

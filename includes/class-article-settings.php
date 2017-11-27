@@ -78,8 +78,8 @@ class Creative_Commons_Sharing_Article_Settings {
 		echo wpautop( 'Total number of views: ' . $total_count );
 		echo '<table class="wp-list-table widefat fixed striped posts">';
 			echo '<thead>';
-				echo '<th scope="col" id="url" class="manage-column column-primary"><span>Republished URL</span><span class="sorting-indicator"></span></th>';
-				echo '<th scope="col" id="views" class="manage-column ">Views</th>';
+				echo sprintf( '<th scope="col" id="url" class="manage-column column-primary"><span>%s</span><span class="sorting-indicator"></span></th>', esc_html__( 'Republished URL', 'creative-commons-sharing' ) );
+				echo sprintf( '<th scope="col" id="views" class="manage-column ">%s</th>', esc_html__( 'Views', 'creative-commons-sharing' ) );
 			echo '</thead>';
 			echo '<tbody id="the-list">';
 				foreach ( $shares as $url => $count ) {
@@ -91,19 +91,19 @@ class Creative_Commons_Sharing_Article_Settings {
 				}
 			echo '</tbody>';
 			echo '<tfoot>';
-				echo '<th scope="col" id="url" class="manage-column column-primary"><span>Republished URL</span><span class="sorting-indicator"></span></th>';
-				echo '<th scope="col" id="views" class="manage-column">Views</th>';
+				echo sprintf( '<th scope="col" id="url" class="manage-column column-primary"><span>%s</span><span class="sorting-indicator"></span></th>', esc_html__( 'Republished URL', 'creative-commons-sharing' ) );
+				echo sprintf( '<th scope="col" id="views" class="manage-column">%s</th>', esc_html__( 'Views', 'creative-commons-sharing' ) );
 			echo '</tfoot>';
 		echo '</table>';
 	}
 
 	public function add_custom_columns( $columns ) {
-		$columns['creative_commons_sharing'] = 'Total Views';
+		$columns['creative_commons_sharing'] = esc_html__( 'Total Views', 'creative-commons-sharing' );
 		return $columns;
 	}
 
 	public function add_sortable_columns( $columns ) {
-		$columns['creative_commons_sharing'] = 'Total Views';
+		$columns['creative_commons_sharing'] = esc_html__( 'Total Views', 'creative-commons-sharing' );
 		return $columns;
 	}
 
