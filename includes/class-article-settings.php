@@ -106,8 +106,10 @@ class Creative_Commons_Sharing_Article_Settings {
 			case 'creative_commons_sharing':
 				$shares = get_post_meta( $post_id, 'creative_commons_sharing', true );
 				$total_count = 0;
-				foreach ( $shares as $url => $count ) {
-					$total_count = $total_count + $count;
+				if ( $shares ) {
+					foreach ( $shares as $url => $count ) {
+						$total_count = $total_count + $count;
+					}
 				}
 				echo sprintf( '%s', number_format( $total_count ) );
 				break;
