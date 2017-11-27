@@ -40,6 +40,7 @@ class Creative_Commons_Sharing_Article_Settings {
 	public function hooks() {
 		add_action( 'add_meta_boxes', array( $this, 'register_meta_boxes' ) );
 		add_action( 'manage_edit-post_columns', array( $this, 'add_custom_columns' ) );
+		add_action( 'manage_edit-post_sortable_columns', array( $this, 'add_sortable_columns' ) );
 		add_action( 'manage_posts_custom_column' , array( $this, 'custom_column_content' ), 10, 2 );
 	}
 
@@ -97,6 +98,11 @@ class Creative_Commons_Sharing_Article_Settings {
 	}
 
 	public function add_custom_columns( $columns ) {
+		$columns['creative_commons_sharing'] = 'Total Views';
+		return $columns;
+	}
+
+	public function add_sortable_columns( $columns ) {
 		$columns['creative_commons_sharing'] = 'Total Views';
 		return $columns;
 	}
