@@ -38,5 +38,5 @@ jQuery(document).ready(function(){
 	$close.click(function(){
 		$modal.hide();
 	});
-	
+
 });

@@ -62,9 +62,7 @@
 		// remove images
 		$content = preg_replace( "/<img[^>]+\>/i", " ", $content );
 
-		// remove captions
-		$content = preg_replace( "/<(div|figure)[^>]+[wp\-caption][^>]+\>.*<\/(div|figure)>/i", " ", $content );
-
+		// force UTF-8
 		$content = htmlspecialchars( $content, ENT_HTML5, 'UTF-8', true );
 
 		echo '<div id="creative-commons-share-modal" style="display:none;">';
