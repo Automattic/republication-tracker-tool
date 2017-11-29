@@ -5,12 +5,12 @@ if ( ! isset( $_GET['post'] ) ) {
 	return;
 }
 
+$post = get_post( intval( $_GET['post'] ) );
+$content = $post->post_content;
+
 $attribution_statement = sprintf( esc_html__( 'This <a target="_blank" href="%s">article</a> first appeared on <a target="_blank" href="%s">%s</a> and is republished here under a Creative Commons license.', 'creative-commons-sharing' ), get_permalink( $post ), home_url(), get_bloginfo() );
 $pixel = sprintf( '<script type="text/javascript" id="creative-commons-sharing-source" src="%s" data-postid="%s" data-pluginsdir="%s" async="true"></script>', plugins_url( 'assets/pixel.js', dirname( __FILE__ ) ), $post->ID, plugins_url() );
 $license_statement = get_option( 'creative_commons_sharing_policy' );
-
-$post = get_post( intval( $_GET['post'] ) );
-$content = $post->post_content;
 
 global $shortcode_tags;
 if ( is_array( $shortcode_tags ) ) {
