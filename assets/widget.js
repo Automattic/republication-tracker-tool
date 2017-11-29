@@ -17,6 +17,7 @@ jQuery(document).ready(function(){
 		cache: false,
 		success: function( data ){
 			html = data;
+			$('#creative-commons-share-modal').append(html);
 		}
 	});
 
@@ -37,10 +38,9 @@ jQuery(document).ready(function(){
 	$btn.click(function(){
 		$modal.html( html );
 		$modal.show();
-	});
-
-	$('#creative-commons-share-modal-content').click(function(e) {
-    	e.stopPropagation();
+		$('#creative-commons-share-modal-content').unbind().click(function(e) {
+	    	e.stopPropagation();
+		});
 	});
 
 	$modal.click(function(){
