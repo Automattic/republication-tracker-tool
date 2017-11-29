@@ -6,23 +6,11 @@ function copyToClipboard( element ) {
 	$temp.remove();
 }
 
-jQuery(document).ready(function(){
-	var $ = jQuery,
-		html = '',
-		postId = $( '#creative-commons-share-modal' ).attr( 'data-postid' ),
-		pluginsdir = $( '#creative-commons-share-modal' ).attr( 'data-pluginsdir' );
-
-	$.ajax({
-		url: pluginsdir + '/creative-commons-sharing/includes/shareable-content.php?post=' + postId,
-		cache: false,
-		success: function( data ){
-			html = data;
-			$('#creative-commons-share-modal').append(html);
-		}
-	});
-
+function ajaxCallback(data){
 	// Remove captions from shareable text
+	var $ = jQuery;
 	var $shareable = $('#creative-commons-shareable-content');
+  	var html = $shareable.text();
 
 	var parser = new DOMParser();
 	var doc = parser.parseFromString(html, "text/html");
@@ -36,7 +24,7 @@ jQuery(document).ready(function(){
 	var $close = $('.creative-commons-close');
 
 	$btn.click(function(){
-		$modal.html( html );
+		//$modal.html( html );
 		$modal.show();
 		$('#creative-commons-share-modal-content').unbind().click(function(e) {
 	    	e.stopPropagation();
@@ -49,6 +37,21 @@ jQuery(document).ready(function(){
 
 	$close.click(function(){
 		$modal.hide();
+	});
+}
+
+jQuery(document).ready(function(){
+	var $ = jQuery,
+		postId = $( '#creative-commons-share-modal' ).attr( 'data-postid' ),
+		pluginsdir = $( '#creative-commons-share-modal' ).attr( 'data-pluginsdir' );
+
+	$.ajax({
+		url: pluginsdir + '/creative-commons-sharing/includes/shareable-content.php?post=' + postId,
+		cache: false,
+		success: function( data ){
+			$('#creative-commons-share-modal').append(data);
+			ajaxCallback(data);
+		}
 	});
 
 });
