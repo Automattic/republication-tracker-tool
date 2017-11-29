@@ -51,7 +51,11 @@
 		$pixel = sprintf( '<script type="text/javascript" id="creative-commons-sharing-source" src="%s" data-postid="%s" data-pluginsdir="%s" async="true"></script>', plugins_url( 'assets/pixel.js', dirname( __FILE__ ) ), $post->ID, plugins_url() );
 		$license_statement = get_option( 'creative_commons_sharing_policy' );
 
-		echo '<div id="creative-commons-share-modal" style="display:none;"></div>';
+		echo sprintf(
+			'<div id="creative-commons-share-modal" style="display:none;" data-postid="%s" data-pluginsdir="%s"></div>',
+			$post->ID,
+			plugins_url()
+		);
 
 		echo '<div class="license">';
 			echo sprintf(
