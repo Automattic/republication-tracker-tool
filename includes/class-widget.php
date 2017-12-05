@@ -5,12 +5,13 @@
  * @since   1.0
  * @package Trust_Indicators
  */
+
 /**
  * Creative Commons Sharing Settings class.
  *
  * @since 1.0
  */
- class Creative_Commons_Sharing_Widget extends WP_Widget {
+class Creative_Commons_Sharing_Widget extends WP_Widget {
 
 	/**
 	 * Sets up the widgets name etc
@@ -26,8 +27,8 @@
 	/**
 	 * Outputs the content of the widget
 	 *
-	 * @param array $args
-	 * @param array $instance
+	 * @param array $args Sidebar arguments.
+	 * @param array $instance This instance of the widget.
 	 */
 	public function widget( $args, $instance ) {
 		if ( ! is_single() ) {
@@ -43,14 +44,14 @@
 
 		echo $args['before_widget'];
 
-        if ( ! empty( $instance['title'] ) ) {
-            echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
-        }
+		if ( ! empty( $instance['title'] ) ) {
+			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
+		}
 
 		echo sprintf(
 			'<div id="creative-commons-share-modal" style="display:none;" data-postid="%s" data-pluginsdir="%s"></div>',
-			$post->ID,
-			plugins_url()
+			esc_attr( $post->ID ),
+			esc_attr( plugins_url() )
 		);
 
 		echo '<div class="license">';
@@ -66,46 +67,46 @@
 
 		echo sprintf(
 			'<div class="message">%s</div>',
-			wpautop( esc_html__( $instance['text'], 'creative-commons-sharing' ) )
+			wpautop( esc_html_( $instance['text'] ) )
 		);
 
-        echo $args['after_widget'];
+		echo $args['after_widget'];
 	}
 
 	/**
 	 * Outputs the options form on admin
 	 *
-	 * @param array $instance The widget options
+	 * @param array $instance The widget options.
 	 */
 	public function form( $instance ) {
 		echo sprintf( '<p><em>%s</em></p>', esc_html__( 'This widget will only display on single articles.', 'creative-commons-sharing' ) );
-		$title = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( '', 'text_domain' );
-        $text = ! empty( $instance['text'] ) ? $instance['text'] : esc_html__( 'Republish our articles for free, online or in print, under Creative Commons license.', 'text_domain' );
-        ?>
-        <p>
-            <label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'text_domain' ); ?></label>
-            <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
-        </p>
-        <p>
-            <textarea class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'text' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'text' ) ); ?>" type="text" cols="30" rows="10"><?php echo esc_attr( $text ); ?></textarea>
-        </p>
-        <?php
+		$title = ! empty( $instance['title'] ) ? $instance['title'] : '';
+		$text = ! empty( $instance['text'] ) ? $instance['text'] : esc_html__( 'Republish our articles for free, online or in print, under Creative Commons license.', 'text_domain' );
+		?>
+		<p>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'text_domain' ); ?></label>
+			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+		</p>
+		<p>
+			<textarea class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'text' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'text' ) ); ?>" type="text" cols="30" rows="10"><?php echo esc_attr( $text ); ?></textarea>
+		</p>
+		<?php
 	}
 
 	/**
 	 * Processing widget options on save
 	 *
-	 * @param array $new_instance The new options
-	 * @param array $old_instance The previous options
+	 * @param array $new_instance The new options.
+	 * @param array $old_instance The previous options.
 	 *
 	 * @return array
 	 */
 	public function update( $new_instance, $old_instance ) {
 		$instance = array();
 
-        $instance['title'] = ( !empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
-        $instance['text'] = ( !empty( $new_instance['text'] ) ) ? $new_instance['text'] : '';
+		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+		$instance['text'] = ( ! empty( $new_instance['text'] ) ) ? $new_instance['text'] : '';
 
-        return $instance;
+		return $instance;
 	}
 }
