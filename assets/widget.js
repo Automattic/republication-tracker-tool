@@ -10,7 +10,7 @@ function ajaxCallback(data){
 	// Remove captions from shareable text
 	var $ = jQuery;
 	var $shareable = $('#creative-commons-shareable-content');
-  	var html = $shareable.text();
+	var html = $shareable.text();
 
 	var parser = new DOMParser();
 	var doc = parser.parseFromString(html, "text/html");
@@ -27,7 +27,7 @@ function ajaxCallback(data){
 		//$modal.html( html );
 		$modal.show();
 		$('#creative-commons-share-modal-content').unbind().click(function(e) {
-	    	e.stopPropagation();
+			e.stopPropagation();
 		});
 	});
 
