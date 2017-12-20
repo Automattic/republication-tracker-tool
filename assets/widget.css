@@ -1,13 +1,21 @@
+/**
+ * Styles for the Creative Commons Sharing widget.
+ *
+ * .side-widget on passblue.com replaces standard wordpress .widget class
+ */
+.side-widget.creative_commons_sharing,
 .widget.creative_commons_sharing {
     text-align: center;
     max-width: 300px;
     margin: 0 auto;
 }
 
+.side-widget.creative_commons_sharing p,
 .widget.creative_commons_sharing p {
     margin-bottom: 1em;
 }
 
+.side-widget.creative_commons_sharing a.license,
 .widget.creative_commons_sharing a.license {
     border-top: 3px double #ddd;
     border-bottom: 3px double #ddd;
@@ -16,6 +24,7 @@
     display: block;
 }
 
+.side-widget.creative_commons_sharing button.creative-commons-button,
 .widget.creative_commons_sharing button.creative-commons-button {
     width:100%;
     background-color: #5499db;
@@ -30,6 +39,7 @@
     text-shadow: 1px 1px 1px #2863a7;
 }
 
+.side-widget.creative_commons_sharing button.creative-commons-button:hover,
 .widget.creative_commons_sharing button.creative-commons-button:hover {
     background-color: #2863a7;
     text-decoration: none;
