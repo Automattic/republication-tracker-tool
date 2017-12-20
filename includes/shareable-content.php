@@ -12,8 +12,63 @@ if ( ! isset( $_GET['post'] ) ) {
 	return;
 }
 
+/**
+ * What tags do we want to keep in the embed?
+ * Not things from our server.
+ *
+ * Generall: wp_kses_post, but not allowing the terms listed below because
+ * - they're referencing assets on our server: audio, figure, img, track, video
+ * - they're referencing the referenced asset: figure, figcaption
+ * - they're not likely to work: form, button
+ *
+ * @var array $allowed_tags_excerpt
+ * @link https://codex.wordpress.org/Function_Reference/wp_kses
+ */
+global $allowedposttags;
+$allowed_tags_excerpt = $allowedposttags;
+unset( $allowed_tags_excerpt['audio'] );
+unset( $allowed_tags_excerpt['figure'] );
+unset( $allowed_tags_excerpt['figcaption'] );
+unset( $allowed_tags_excerpt['img'] );
+unset( $allowed_tags_excerpt['form'] );
+unset( $allowed_tags_excerpt['button'] );
+unset( $allowed_tags_excerpt['track'] );
+unset( $allowed_tags_excerpt['video'] );
+
+
+/**
+ * The article WP_Post object
+ *
+ * @var WP_Post $post the post ID
+ */
 $post = get_post( intval( $_GET['post'] ) );
+
+/**
+ * The content of the aforementioned post
+ *
+ * @var HTML $content
+ */
 $content = $post->post_content;
+
+// Remove shortcodes from the content.
+$content = strip_shortcodes( $content );
+
+// Remove comments from the content. (Lookin' at you, Gutenberg.)
+$content = preg_replace( '/<!--(.|\s)*?-->/i', ' ', $content );
+
+// Remove captions and figures from the content
+$content = preg_replace( '/<figure[^>]?\>(.|\s)*?<\/figure>/i', ' ', $content );
+$content = preg_replace( '/<figcaption[^>]?\>(.|\s)*?<\/figcaption>/i', ' ', $content );
+
+// And finally, remove some tags.
+$content = wp_kses( $content, $allowed_tags_excerpt );
+
+// remove spare p tags and clean up these paragraphs
+$content = str_replace( '<p></p>', '', wpautop( $content ) );
+
+// Force the content to be UTF-8 escaped HTML.
+$content = htmlspecialchars( $content, ENT_HTML5, 'UTF-8', true );
+
 
 /**
  * The article source
@@ -49,12 +104,14 @@ $pixel = sprintf(
  */
 $article_info = sprintf(
 	// translators: %1$s is the post title, %2$s is the byline, %3$s is the site name, %4$s is the date in the format F j, Y
-	esc_html__( '<h1>%1$s</h1><p class="byline">by %2$s, %3$s <br />%4$s</p>', 'creative-commons-sharing' ),
+	__( '<h1>%1$s</h1><p class="byline">by %2$s, %3$s <br />%4$s</p>', 'creative-commons-sharing' ),
 	wp_kses_post( get_the_title( $post ) ),
 	wp_kses_post( get_the_author_meta( 'display_name', $post->post_author ) ),
 	wp_kses_post( get_bloginfo( 'name' ) ),
 	wp_kses_post( date( 'F j, Y', strtotime( $post->post_date ) ) )
 );
+// strip empty tags after automatically applying p tags
+$article_info = str_replace( '<p></p>', '', wpautop( $article_info ) );
 
 /**
  * The licensing statement from this plugin
@@ -62,15 +119,6 @@ $article_info = sprintf(
  * @var HTML $license_statement
  */
 $license_statement = wp_kses_post( get_option( 'creative_commons_sharing_policy' ) );
-
-// remove shortcodes
-$content = strip_shortcodes( $content );
-
-// Remove images from the content
-$content = preg_replace( '/<img[^>]+\>/i', ' ', $content );
-
-// force the content to be UTF-8 escaped HTML.
-$content = htmlspecialchars( $content, ENT_HTML5, 'UTF-8', true );
 
 echo '<div id="creative-commons-share-modal-content">';
 	echo '<div class="creative-commons-close">X</div>';
@@ -98,8 +146,10 @@ echo '<div id="creative-commons-share-modal-content">';
 
 	// the text area that is copyable
 	echo sprintf(
-		'<textarea id="creative-commons-shareable-content" rows="5">%1$s</textarea>',
-		wpautop( $article_info . $content . "\n\n" . $attribution_statement . $pixel )
+		'<textarea id="creative-commons-shareable-content" rows="5">%1$s %2$s %3$s</textarea>',
+		esc_html( $article_info ),
+		$content . "\n\n" ,
+		wpautop( $attribution_statement . $pixel )
 	);
 	echo wpautop(
 		sprintf( '<button onclick="copyToClipboard(\'#creative-commons-shareable-content\')">%s</button>', esc_html__( 'Copy to Clipboard', 'creative-commons-sharing' ) )
