@@ -6,7 +6,7 @@
  * Author URI:      https://labs.inn.org
  * Text Domain:     creative-commons-sharing
  * Domain Path:     /languages
- * Version:         0.1.0
+ * Version:         1.0.1
  *
  * @package         Creative_Commons_Sharing
  */
@@ -28,7 +28,7 @@ final class Creative_Commons_Sharing {
 	 * @var    string
 	 * @since  1.0
 	 */
-	const VERSION = '1.0';
+	const VERSION = '1.0.1';
 
 	/**
 	 * URL of plugin directory.

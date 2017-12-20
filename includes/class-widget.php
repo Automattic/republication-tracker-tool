@@ -27,6 +27,8 @@ class Creative_Commons_Sharing_Widget extends WP_Widget {
 	/**
 	 * Outputs the content of the widget
 	 *
+	 * If this is not a single post, don't output the widget. It won't work outside single posts.
+	 *
 	 * @param array $args Sidebar arguments.
 	 * @param array $instance This instance of the widget.
 	 */
@@ -37,8 +39,8 @@ class Creative_Commons_Sharing_Widget extends WP_Widget {
 
 		global $post;
 
-		wp_enqueue_script( 'creative-commons-sharing-js', plugins_url( 'assets/widget.js', dirname( __FILE__ ) ), array( 'jquery' ), '1.0', false );
-		wp_enqueue_style( 'creative-commons-sharing-css', plugins_url( 'assets/widget.css', dirname( __FILE__ ) ), array(), '1.0' );
+		wp_enqueue_script( 'creative-commons-sharing-js', plugins_url( 'assets/widget.js', dirname( __FILE__ ) ), array( 'jquery' ), Creative_Commons_Sharing::VERSION, false );
+		wp_enqueue_style( 'creative-commons-sharing-css', plugins_url( 'assets/widget.css', dirname( __FILE__ ) ), array(), Creative_Commons_Sharing::VERSION );
 		add_action( 'wp_ajax_my_action', 'my_action' );
 		add_action( 'wp_ajax_nopriv_my_action', 'my_action' );
 
