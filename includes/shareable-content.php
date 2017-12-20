@@ -98,7 +98,7 @@ echo '<div id="creative-commons-share-modal-content">';
 
 	// the text area that is copyable
 	echo sprintf(
-		'<textarea id="creative-commons-shareable-content" rows="5">%2$s</textarea>',
+		'<textarea id="creative-commons-shareable-content" rows="5">%1$s</textarea>',
 		wpautop( $article_info . $content . "\n\n" . $attribution_statement . $pixel )
 	);
 	echo wpautop(
