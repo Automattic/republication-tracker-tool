@@ -63,13 +63,8 @@ $article_info = sprintf(
  */
 $license_statement = wp_kses_post( get_option( 'creative_commons_sharing_policy' ) );
 
-global $shortcode_tags;
-if ( is_array( $shortcode_tags ) ) {
-	foreach ( $shortcode_tags as $tag ) {
-		$content = str_replace( $tag, '', $content );
-	}
-}
-
+// remove shortcodes
+$content = strip_shortcodes( $content );
 
 // Remove images from the content
 $content = preg_replace( '/<img[^>]+\>/i', ' ', $content );
