@@ -67,7 +67,7 @@ class Creative_Commons_Sharing_Widget extends WP_Widget {
 
 		echo sprintf(
 			'<div class="message">%s</div>',
-			wpautop( esc_html_( $instance['text'] ) )
+			wpautop( esc_html( $instance['text'] ) )
 		);
 
 		echo $args['after_widget'];
