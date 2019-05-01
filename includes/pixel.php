@@ -101,11 +101,15 @@ if ( isset( $_GET['post'] ) ) {
 		$analytics_ping_params = array(
 			'tid' => $_GET['ga'],
 			'cid' => '555',
-			't' => 'event',
-			'ec' => 'Republication Post View',
-			'ea' => 'Republished Pageview on ' . $url_host,
-			'el' => $post_slug . ' Republished at ' . $url,
-			'ev' => $post_id
+			't' => 'pageview',
+			'dl' => $url,
+			'dh' => $url_host,
+			'dp' => $url_path,
+			'dr' => $url,
+			'dt' => $url_title,
+			'an' => 'Republication',
+			'aid' => $url_host,
+			'av' => 'Republication Tracker v1'
 		);
 
 		// create query based on our params array
