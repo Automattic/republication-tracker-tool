@@ -69,6 +69,9 @@ $content = str_replace( '<p></p>', '', wpautop( $content ) );
 // Force the content to be UTF-8 escaped HTML.
 $content = htmlspecialchars( $content, ENT_HTML5, 'UTF-8', true );
 
+// TO-DO: Grab this value from an admin field
+$analytics_id = 'UA-139049972-1';
+
 
 /**
  * The article source
@@ -91,10 +94,10 @@ $attribution_statement = sprintf(
  */
 $pixel = sprintf(
 	// %1$s is the javascript source, %2$s is the post ID, %3$s is the plugins URL
-	'<script type="text/javascript" id="creative-commons-sharing-source" src="%1$s" data-postid="%2$s" data-pluginsdir="%3$s" async="true"></script>',
-	plugins_url( 'assets/pixel.js', dirname( __FILE__ ) ),
+	'<img id="creative-commons-sharing-source" src="%1$s?post=%2$s&ga=%3$s">',
+	plugins_url( 'includes/pixel.php', dirname( __FILE__ ) ),
 	esc_attr( $post->ID ),
-	plugins_url()
+	esc_attr( $analytics_id )
 );
 
 /**
