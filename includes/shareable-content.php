@@ -69,8 +69,9 @@ $content = str_replace( '<p></p>', '', wpautop( $content ) );
 // Force the content to be UTF-8 escaped HTML.
 $content = htmlspecialchars( $content, ENT_HTML5, 'UTF-8', true );
 
-// TO-DO: Grab this value from an admin field
-$analytics_id = 'UA-139049972-1';
+// grab our analytics id to pass as GA param
+$analytics_id = get_option( 'creative_commons_analytics_id' );
+
 
 
 /**

@@ -58,6 +58,7 @@ if ( isset( $_GET['post'] ) ) {
 	$post_id = absint( $_GET['post'] );
 	$post = get_post($post_id);
 	$post_slug = urlencode($post->post_name);
+	$post_permalink = get_permalink($post_id);
 
 	if( array_key_exists( 'HTTP_REFERER', $_SERVER ) ){
 
@@ -91,7 +92,7 @@ if ( isset( $_GET['post'] ) ) {
 	$update = update_post_meta( $post_id, 'creative_commons_sharing', $value );
 
 	// if our google analytics tag is set, let's push data to it
-	if( isset( $_GET['ga'] ) ) {
+	if( isset( $_GET['ga'] ) &&  !empty($_GET['ga'] ) ) {
 
 		// our base url to ping GA at
 		$analytics_ping_url = "https://www.google-analytics.com/collect?v=1";
@@ -102,9 +103,9 @@ if ( isset( $_GET['post'] ) ) {
 			'tid' => $_GET['ga'],
 			'cid' => '555',
 			't' => 'pageview',
-			'dl' => $url,
+			'dl' => $post_permalink,
 			'dh' => $url_host,
-			'dp' => $url_path,
+			'dp' => $page_slug,
 			'dr' => $url,
 			'dt' => $url_title,
 			'an' => 'Republication',

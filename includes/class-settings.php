@@ -57,9 +57,22 @@ class Creative_Commons_Sharing_Settings {
 			'reading'
 		);
 
+		add_settings_field(
+			'creative_commons_analytics_id',
+			esc_html__( 'Creative Commons Sharing Google Analytics ID', 'creative-commons-sharing' ),
+			array( $this, 'creative_commons_analytics_id_callback' ),
+			'reading'
+		);
+
 		register_setting(
 			'reading',
 			'creative_commons_sharing_policy',
+			'wp_kses_post'
+		);
+
+		register_setting(
+			'reading',
+			'creative_commons_analytics_id',
 			'wp_kses_post'
 		);
 	}
