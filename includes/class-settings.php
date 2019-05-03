@@ -92,4 +92,20 @@ class Creative_Commons_Sharing_Settings {
 		);
 		echo sprintf( '<p><em>%s</em></p>', esc_html__( 'This policy will display in the modal window when someone copies the content of your article for republishing.', 'creative-commons-sharing' ) );
 	}
+
+	public function creative_commons_analytics_id_callback( $arg ){
+		$content = get_option( 'creative_commons_analytics_id' );
+		wp_editor(
+			$content,
+			'creative_commons_analytics_id',
+			array(
+				'wpautop' 		=> false,
+				'media_buttons' => false,
+				'textarea_name' => 'creative_commons_analytics_id',
+				'textarea_rows' => 1,
+				'tinymce'		=> false,
+				'quicktags'     => array()
+			)
+		);
+	}
 }
