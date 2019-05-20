@@ -10,11 +10,10 @@ A plugin that allows users to add a widget to allow readers to easily acquire Cr
 
 ## [Documentation](docs/readme.md)
 
-1. [Collect and tag links](docs/saved-links.md)
-2. [Create link roundups](docs/link-roundups.md)
-3. [Send your roundup to MailChimp](docs/mailchimp.md)
-4. [Using Saved Link and Link Roundup widgets](docs/widgets.md)
-5. [__More →__](docs/readme.md)
+1. [Configuring plugin settings](docs/configuring-plugin-settings.md)
+2. [Styling the Republish button](docs/styling-the-republish-button.md)
+3. [Tracking republished posts](docs/tracking-republished-posts.md)
+4. [Tracking posts manually](docs/tracking-posts-manually.md)
 
 ## Development
 
