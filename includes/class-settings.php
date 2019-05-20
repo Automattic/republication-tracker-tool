@@ -50,18 +50,27 @@ class Creative_Commons_Sharing_Settings {
 	 */
 	public function create_settings() {
 
+		add_settings_section(
+			'creative_commons_sharing',
+			esc_html__( 'Creative Commons Sharing Settings', 'creative-commons-sharing' ),
+			array( $this, 'creative_commons_sharing_section_callback' ),
+			'reading'
+		);
+
 		add_settings_field(
 			'creative_commons_sharing_policy',
 			esc_html__( 'Creative Commons Sharing Policy', 'creative-commons-sharing' ),
-			array( $this, 'creative_commons_sharing_callback' ),
-			'reading'
+			array( $this, 'creative_commons_sharing_policy_callback' ),
+			'reading',
+			'creative_commons_sharing'
 		);
 
 		add_settings_field(
 			'creative_commons_analytics_id',
 			esc_html__( 'Creative Commons Sharing Google Analytics ID', 'creative-commons-sharing' ),
 			array( $this, 'creative_commons_analytics_id_callback' ),
-			'reading'
+			'reading',
+			'creative_commons_sharing'
 		);
 
 		register_setting(
@@ -75,9 +84,40 @@ class Creative_Commons_Sharing_Settings {
 			'creative_commons_analytics_id',
 			'wp_kses_post'
 		);
+
 	}
 
-	public function creative_commons_sharing_callback( $arg ) {
+	public function creative_commons_sharing_section_callback( $arg ){
+
+		// if our creative_commons_analytics_id field has been set and is not empty, let's display
+		// a sample tracking code for users to manually input into articles
+		if(get_option( 'creative_commons_analytics_id' ) && !empty(get_option( 'creative_commons_analytics_id' ) ) ){
+			$analytics_id = get_option( 'creative_commons_analytics_id' );
+			$pixel = sprintf(
+				// %1$s is the javascript source, %2$s is the post ID, %3$s is the plugins URL
+				'<img id="creative-commons-sharing-source" src="%1$s?post=%2$s&ga=%3$s">',
+				plugins_url( 'includes/pixel.php', dirname( __FILE__ ) ),
+				'YOUR-POST-ID',
+				esc_attr( $analytics_id )
+			);
+			printf('
+				<table class="form-table">
+					<tbody>
+						<tr>
+							<th scope="row">Creative Commons Tracking Code</th>
+							<td>
+								<p>You can copy and paste this tracking code into articles of your choice. Remember to replace <code>YOUR-POST-ID</code> with your actual post ID.</p><br/>
+								<code>'.htmlspecialchars($pixel).'</code>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			');
+		}
+
+	}
+
+	public function creative_commons_sharing_policy_callback( $arg ) {
 		$content = get_option( 'creative_commons_sharing_policy' );
 		wp_editor(
 			$content,
@@ -108,4 +148,5 @@ class Creative_Commons_Sharing_Settings {
 			)
 		);
 	}
+
 }
