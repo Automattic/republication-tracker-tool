@@ -19,7 +19,10 @@ In order to track your republished post pageviews in Google Analytics, you will 
 
 ## Creative Commons Tracking Code
 
-Once you have your Google Analytics ID set, you'll be able to view a sample tracking code that you will be able to copy and paste in order to manually insert into
-specific types of articles that you'd like to track. Just remember to swap out `YOUR-POST-ID` with the actual ID of the post you're going to insert the pixel into.
+Once you have your Google Analytics ID set, you'll be able to view a sample tracking code that you will be able to copy and paste in order to manually insert into specific types of articles that you'd like to track. Just remember to swap out `YOUR-POST-ID` with the actual ID of the post you're going to insert the pixel into.
 
 ![creative commons sharing manual tracking code](img/creative-commons-sharing-tracking-code.png)
+
+To find the ID of your post that you'd like to use, navigate to the edit page for the specific post. Once on the editor page, you can grab your post ID from the `post` parameter in the url.
+
+![how to grab post id](img/find-post-id.png)
