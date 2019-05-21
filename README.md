@@ -12,7 +12,7 @@ A plugin that allows users to add a widget to allow readers to easily acquire Cr
 
 1. [Installing in WordPress](docs/installation.md)
 2. [Configuring plugin settings](docs/configuring-plugin-settings.md)
-3. [Adding Republish button to posts](docs/adding-republihs-button-to-posts.md)
+3. [Adding Republish button to posts](docs/adding-republish-button-to-posts.md)
 4. [Styling the Republish button](docs/styling-the-republish-button.md)
 5. [Tracking republished posts](docs/tracking-republished-posts.md)
 6. [Tracking posts manually](docs/tracking-posts-manually.md)
