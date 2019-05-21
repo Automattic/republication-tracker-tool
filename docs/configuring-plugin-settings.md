@@ -7,7 +7,7 @@ and activated.
 
 ## Creative Commons Sharing Policy
 
-The `Creative Commons Sharing Policy` field is where you will be able to input your rules and policies for users to see before they copy and paste your content to republish.
+The `Creative Commons Sharing Policy` field is where you will be able to input your rules and policies for users to see before they copy and paste your content to republish. A good example of a CCS policy can be found [here](https://www.propublica.org/steal-our-stories/).
 
 ![creative commons sharing policy field](img/creative-commons-sharing-policy.png)
 
@@ -16,6 +16,18 @@ The `Creative Commons Sharing Policy` field is where you will be able to input y
 In order to track your republished post pageviews in Google Analytics, you will need to insert your Google Analytics tracking ID into the field labeled `Creative Commons Sharing Google Analytics ID`.
 
 ![creative commons sharing google analytics id field](img/creative-commons-sharing-analytics-id.png)
+
+To find your Google Analytics ID, first log into your Google Analytics account. Once logged in, click the `Admin` button on the bottom left corner.
+
+![google analytics admin button](img/google-analytics-admin-button.png)
+
+Once inside the admin panel, click into `Property Settings` for the property you want the tracking ID for.
+
+![google analytics property settings](img/google-analytics-property-settings.png)
+
+Inside of the `Property Settings` pane is where you will see your tracking ID.
+
+![google analytics tracking id](img/google-analytics-tracking-id.png)
 
 ## Creative Commons Tracking Code
 
