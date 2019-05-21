@@ -75,6 +75,9 @@
     box-sizing: border-box;
     width: 100%;
     margin:.5em 0 2em 0;
+    cursor: auto;
+    background-color: inherit;
+    border-color: inherit;
 }
 
 #creative-commons-share-modal-content h2,
