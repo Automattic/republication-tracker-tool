@@ -1,6 +1,6 @@
 # Tracking Republished Posts
 
-In order to use Google Analytics to view tracking metrics for posts that have been republished, make sure you have your Google Analytics ID set in the (Creative Commons Sharing Google Analytics ID)[configuring-plugin-settings.md] settings field.
+In order to use Google Analytics to view tracking metrics for posts that have been republished, make sure you have your Google Analytics ID set in the [Creative Commons Sharing Google Analytics ID](configuring-plugin-settings.md) settings field.
 
 ## Parameters Passed into Each Pageview
 
