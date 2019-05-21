@@ -5,4 +5,3 @@
 3. [Adding Republish button to posts](adding-republish-button-to-posts.md)
 4. [Styling the Republish button](styling-the-republish-button.md)
 5. [Tracking republished posts](tracking-republished-posts.md)
-6. [Tracking posts manually](tracking-posts-manually.md)
