@@ -6,7 +6,8 @@ If you'd like to alter the appearance of the default `Republish` button, you'll 
 
 Here are the default stylings of the `Republish` button:
 
-```.side-widget.creative_commons_sharing button.creative-commons-button, .widget.creative_commons_sharing button.creative-commons-button {
+```
+.side-widget.creative_commons_sharing button.creative-commons-button, .widget.creative_commons_sharing button.creative-commons-button {
     width: 100%;
     background-color: #5499db;
     border: 1px solid #2863a7;
@@ -18,6 +19,7 @@ Here are the default stylings of the `Republish` button:
     border-radius: .25em;
     font-weight: bold;
     text-shadow: 1px 1px 1px #2863a7;
-}```
+}
+```
 
 Go ahead and copy those styles into your theme's CSS file and replace any attributes that you'd like to modify.
