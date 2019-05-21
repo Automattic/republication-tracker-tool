@@ -8,7 +8,7 @@ A plugin that allows users to add a widget to allow readers to easily acquire Cr
 **License:** GPLv2 or later  
 **License URI:** https://www.gnu.org/licenses/gpl-2.0.html
 
-## [Documentation](docs/readme.md)
+## [Documentation](docs/README.md)
 
 1. [Installing in WordPress](docs/installation.md)
 2. [Configuring plugin settings](docs/configuring-plugin-settings.md)
