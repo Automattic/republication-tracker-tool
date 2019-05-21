@@ -12,3 +12,7 @@ Find the `Creative Commons Sharing` widget and drag it into the widget area that
 - Hidden on Desktop/Tablet/Phones
 
 ![creative commons sharing widget](img/creative-commons-sharing-widget.png)
+
+Once you have added the `Creative Commons Sharing` widget to a widget area, you should see the `Republish This Story` button appear on your selected widget area.
+
+![default republish button](img/default-republish-button.png)
