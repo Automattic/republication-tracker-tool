@@ -1,6 +1,6 @@
 # Styling the Republish Button
 
-If you'd like to alter the appearance of the default `Republish` button, you'll need to do so through your [child] theme's CSS.
+If you'd like to alter the appearance of the default `Republish` button, you'll need to do so through your theme or child theme CSS, or through the WordPress [Appearance Customize Screen](https://codex.wordpress.org/Appearance_Customize_Screen).
 
 ![default republish button](img/default-republish-button.png)
 
@@ -24,3 +24,5 @@ Here are the default stylings of the `Republish` button:
 ```
 
 Go ahead and copy those styles into your theme's CSS file and replace any attributes that you'd like to modify.
+
+For more information about CSS in WordPress, [we direct you to the Codex page](https://codex.wordpress.org/CSS).
