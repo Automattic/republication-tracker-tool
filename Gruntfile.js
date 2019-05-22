@@ -9,7 +9,7 @@ module.exports = function( grunt ) {
 
 		addtextdomain: {
 			options: {
-				textdomain: 'creative-commons-sharing',
+				textdomain: 'republication-tracker-tool',
 			},
 			update_all_domains: {
 				options: {
@@ -31,8 +31,8 @@ module.exports = function( grunt ) {
 			target: {
 				options: {
 					domainPath: '/languages',
-					mainFile: 'creative-commons-sharing.php',
-					potFilename: 'creative-commons-sharing.pot',
+					mainFile: 'republication-tracker-tool.php',
+					potFilename: 'republication-tracker-tool.pot',
 					potHeaders: {
 						poedit: true,
 						'x-poedit-keywordslist': true
