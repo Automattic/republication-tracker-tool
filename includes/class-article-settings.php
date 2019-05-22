@@ -70,7 +70,7 @@ class Republication_Tracker_Tool_Article_Settings {
 	 * @param obj $args Arguments object.
 	 */
 	public function render_metabox( $post, $args ) {
-		$shares = get_post_meta( $post->ID, 'Republication_Tracker_Tool', true );
+		$shares = get_post_meta( $post->ID, 'republication_tracker_tool_sharing', true );
 		$total_count = 0;
 		foreach ( $shares as $url => $count ) {
 			$total_count = $total_count + $count;
@@ -110,7 +110,7 @@ class Republication_Tracker_Tool_Article_Settings {
 	public function custom_column_content( $column, $post_id ) {
 		switch ( $column ) {
 			case 'republication_tracker_tool':
-				$shares = get_post_meta( $post_id, 'republication_tracker_tool', true );
+				$shares = get_post_meta( $post_id, 'republication_tracker_tool_sharing', true );
 				$total_count = 0;
 				if ( $shares ) {
 					foreach ( $shares as $url => $count ) {
