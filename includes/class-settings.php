@@ -95,7 +95,7 @@ class Republication_Tracker_Tool_Settings {
 			$analytics_id = get_option( 'republication_tracker_tool_analytics_id' );
 			$pixel = sprintf(
 				// %1$s is the javascript source, %2$s is the post ID, %3$s is the plugins URL
-				'<img id="creative-commons-sharing-source" src="%1$s?post=%2$s&ga=%3$s">',
+				'<img id="republication-tracker-tool-source" src="%1$s?post=%2$s&ga=%3$s">',
 				plugins_url( 'includes/pixel.php', dirname( __FILE__ ) ),
 				'YOUR-POST-ID',
 				esc_attr( $analytics_id )
