@@ -1,10 +1,10 @@
 # Adding Republish button to posts
 
-In order to add your `Republish` button to your posts, you will need to add the `Creative Commons Sharing` widget to the sidebar or widget area of your choice. Once this plugin is installed and activated, navigate to `Appearance` -> `Widgets`.
+In order to add your `Republish` button to your posts, you will need to add the `Republication Tracker Tool` widget to the sidebar or widget area of your choice. Once this plugin is installed and activated, navigate to `Appearance` -> `Widgets`.
 
 ![navigating to widgets](img/widgets.png)
 
-Find the `Creative Commons Sharing` widget and drag it into the widget area that you want it to appear in. You will be able to set these fields:
+Find the `Republication Tracker Tool` widget and drag it into the widget area that you want it to appear in. You will be able to set these fields:
 
 - Title
 - Title Link
@@ -12,9 +12,9 @@ Find the `Creative Commons Sharing` widget and drag it into the widget area that
 - Background
 - Hidden on Desktop/Tablet/Phones
 
-![creative commons sharing widget](img/creative-commons-sharing-widget.png)
+![Republication Tracker Tool widget](img/republication-tracker-tool-widget.png)
 
-Once you have added the `Creative Commons Sharing` widget to a widget area, you should see the `Republish This Story` button appear on your selected widget area.
+Once you have added the `Republication Tracker Tool` widget to a widget area, you should see the `Republish This Story` button appear on your selected widget area.
 
 ![default republish button](img/default-republish-button.png)
 

@@ -7,8 +7,8 @@ If you'd like to alter the appearance of the default `Republish` button, you'll 
 Here are the default stylings of the `Republish` button:
 
 ```
-.side-widget.creative_commons_sharing button.creative-commons-button, 
-.widget.creative_commons_sharing button.creative-commons-button {
+.side-widget.republication tracker tool button.republication-tracker-tool-button, 
+.widget.republication tracker tool button.republication-tracker-tool-button {
     width: 100%;
     background-color: #5499db;
     border: 1px solid #2863a7;
