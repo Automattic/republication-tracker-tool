@@ -1,4 +1,4 @@
-# Creative Commons Sharing
+# Republication Tracker Tool
 
 A plugin that allows users to add a widget to allow readers to easily acquire Creative-Commons-licensed HTML of articles to facilitate embedding posts on external sites. Includes a tracking mechanism similar to ProPublica's PixelPing. Built and maintained by [INN Labs](https://labs.inn.org).
 
