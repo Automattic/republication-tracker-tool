@@ -4,10 +4,10 @@
   if ( ! window.pixel_ping_tracked ) {
     loc = window.location;
 	currentUrl = encodeURIComponent( window.location.protocol + "//" + window.location.host + window.location.pathname );
-	postId = document.getElementById( 'creative-commons-sharing-source' ).getAttribute( 'data-postid' );
-	pluginsdir = document.getElementById( 'creative-commons-sharing-source' ).getAttribute( 'data-pluginsdir' );
+	postId = document.getElementById( 'republication-tracker-tool-source' ).getAttribute( 'data-postid' );
+	pluginsdir = document.getElementById( 'republication-tracker-tool-source' ).getAttribute( 'data-pluginsdir' );
     img = document.createElement( 'img' );
-    img.setAttribute( 'src', pluginsdir + '/creative-commons-sharing/includes/pixel.php?post=' + postId + '&url=' + currentUrl );
+    img.setAttribute( 'src', pluginsdir + '/republication-tracker-tool/includes/pixel.php?post=' + postId + '&url=' + currentUrl );
     img.setAttribute( 'width', '1' );
     img.setAttribute( 'height', '1' );
     document.body.appendChild( img );

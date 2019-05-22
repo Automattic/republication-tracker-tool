@@ -77,7 +77,7 @@ if ( isset( $_GET['post'] ) ) {
 
 	}
 
-	$value = get_post_meta( $post_id, 'creative_commons_sharing', true );
+	$value = get_post_meta( $post_id, 'republication_tracker_tool_sharing', true );
 	if ( $value ) {
 		if ( isset( $value[ $url ] ) ) {
 			$value[ $url ]++;
@@ -89,7 +89,7 @@ if ( isset( $_GET['post'] ) ) {
 			$url => 1
 		);
 	}
-	$update = update_post_meta( $post_id, 'creative_commons_sharing', $value );
+	$update = update_post_meta( $post_id, 'republication_tracker_tool_sharing', $value );
 
 	// if our google analytics tag is set, let's push data to it
 	if( isset( $_GET['ga'] ) &&  !empty($_GET['ga'] ) ) {

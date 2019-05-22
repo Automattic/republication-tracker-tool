@@ -1,21 +1,21 @@
 <?php
 /**
- * Creative Commons Sharing Article Settings.
+ * Republication Tracker Tool Article Settings.
  *
  * @since   1.0
- * @package Creative_Commons_Sharing
+ * @package Republication_Tracker_Tool
  */
 
 /**
- * Creative Commons Sharing Article Settings class.
+ * Republication Tracker Tool Article Settings class.
  *
  * @since 1.0
  */
-class Creative_Commons_Sharing_Article_Settings {
+class Republication_Tracker_Tool_Article_Settings {
 	/**
 	 * Parent plugin class.
 	 *
-	 * @var    Creative_Commons_Sharing
+	 * @var    Republication_Tracker_Tool
 	 * @since  1.0
 	 */
 	protected $plugin = null;
@@ -25,7 +25,7 @@ class Creative_Commons_Sharing_Article_Settings {
 	 *
 	 * @since  1.0
 	 *
-	 * @param  Creative_Commons_Sharing $plugin Main plugin object.
+	 * @param  Republication_Tracker_Tool $plugin Main plugin object.
 	 */
 	public function __construct( $plugin ) {
 		$this->plugin = $plugin;
@@ -53,8 +53,8 @@ class Creative_Commons_Sharing_Article_Settings {
 	public function register_meta_boxes() {
 
 		add_meta_box(
-			'creative-commons-sharing',
-			esc_html__( 'Creative Commons Sharing', 'creative-commons-sharing' ),
+			'republication-tracker-tool',
+			esc_html__( 'Republication Tracker Tool', 'republication-tracker-tool' ),
 			array( $this, 'render_metabox' ),
 			array( 'post', 'page' ),
 			'advanced',
@@ -70,7 +70,7 @@ class Creative_Commons_Sharing_Article_Settings {
 	 * @param obj $args Arguments object.
 	 */
 	public function render_metabox( $post, $args ) {
-		$shares = get_post_meta( $post->ID, 'creative_commons_sharing', true );
+		$shares = get_post_meta( $post->ID, 'Republication_Tracker_Tool', true );
 		$total_count = 0;
 		foreach ( $shares as $url => $count ) {
 			$total_count = $total_count + $count;
@@ -78,8 +78,8 @@ class Creative_Commons_Sharing_Article_Settings {
 		echo wpautop( 'Total number of views: ' . $total_count );
 		echo '<table class="wp-list-table widefat fixed striped posts">';
 			echo '<thead>';
-				echo sprintf( '<th scope="col" id="url" class="manage-column column-primary"><span>%s</span><span class="sorting-indicator"></span></th>', esc_html__( 'Republished URL', 'creative-commons-sharing' ) );
-				echo sprintf( '<th scope="col" id="views" class="manage-column ">%s</th>', esc_html__( 'Views', 'creative-commons-sharing' ) );
+				echo sprintf( '<th scope="col" id="url" class="manage-column column-primary"><span>%s</span><span class="sorting-indicator"></span></th>', esc_html__( 'Republished URL', 'republication-tracker-tool' ) );
+				echo sprintf( '<th scope="col" id="views" class="manage-column ">%s</th>', esc_html__( 'Views', 'republication-tracker-tool' ) );
 			echo '</thead>';
 			echo '<tbody id="the-list">';
 				foreach ( $shares as $url => $count ) {
@@ -91,26 +91,26 @@ class Creative_Commons_Sharing_Article_Settings {
 				}
 			echo '</tbody>';
 			echo '<tfoot>';
-				echo sprintf( '<th scope="col" id="url" class="manage-column column-primary"><span>%s</span><span class="sorting-indicator"></span></th>', esc_html__( 'Republished URL', 'creative-commons-sharing' ) );
-				echo sprintf( '<th scope="col" id="views" class="manage-column">%s</th>', esc_html__( 'Views', 'creative-commons-sharing' ) );
+				echo sprintf( '<th scope="col" id="url" class="manage-column column-primary"><span>%s</span><span class="sorting-indicator"></span></th>', esc_html__( 'Republished URL', 'republication-tracker-tool' ) );
+				echo sprintf( '<th scope="col" id="views" class="manage-column">%s</th>', esc_html__( 'Views', 'republication-tracker-tool' ) );
 			echo '</tfoot>';
 		echo '</table>';
 	}
 
 	public function add_custom_columns( $columns ) {
-		$columns['creative_commons_sharing'] = esc_html__( 'Total Views', 'creative-commons-sharing' );
+		$columns['republication_tracker_tool'] = esc_html__( 'Total Views', 'republication-tracker-tool' );
 		return $columns;
 	}
 
 	public function add_sortable_columns( $columns ) {
-		$columns['creative_commons_sharing'] = esc_html__( 'Total Views', 'creative-commons-sharing' );
+		$columns['republication_tracker_tool'] = esc_html__( 'Total Views', 'republication-tracker-tool' );
 		return $columns;
 	}
 
 	public function custom_column_content( $column, $post_id ) {
 		switch ( $column ) {
-			case 'creative_commons_sharing':
-				$shares = get_post_meta( $post_id, 'creative_commons_sharing', true );
+			case 'republication_tracker_tool':
+				$shares = get_post_meta( $post_id, 'republication_tracker_tool', true );
 				$total_count = 0;
 				if ( $shares ) {
 					foreach ( $shares as $url => $count ) {

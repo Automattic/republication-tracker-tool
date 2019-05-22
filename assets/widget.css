@@ -1,22 +1,22 @@
 /**
- * Styles for the Creative Commons Sharing widget.
+ * Styles for the Republication Tracker Tool widget.
  *
  * .side-widget on passblue.com replaces standard wordpress .widget class
  */
-.side-widget.creative_commons_sharing,
-.widget.creative_commons_sharing {
+.side-widget.republication_tracker_tool,
+.widget.republication_tracker_tool {
     text-align: center;
     max-width: 300px;
     margin: 0 auto;
 }
 
-.side-widget.creative_commons_sharing p,
-.widget.creative_commons_sharing p {
+.side-widget.republication_tracker_tool p,
+.widget.republication_tracker_tool p {
     margin-bottom: 1em;
 }
 
-.side-widget.creative_commons_sharing a.license,
-.widget.creative_commons_sharing a.license {
+.side-widget.republication_tracker_tool a.license,
+.widget.republication_tracker_tool a.license {
     border-top: 3px double #ddd;
     border-bottom: 3px double #ddd;
     padding: 1em 0;
@@ -24,8 +24,8 @@
     display: block;
 }
 
-.side-widget.creative_commons_sharing button.creative-commons-button,
-.widget.creative_commons_sharing button.creative-commons-button {
+.side-widget.republication_tracker_tool button.republication-tracker-tool-button,
+.widget.republication_tracker_tool button.republication-tracker-tool-button {
     width:100%;
     background-color: #5499db;
     border: 1px solid #2863a7;
@@ -39,14 +39,14 @@
     text-shadow: 1px 1px 1px #2863a7;
 }
 
-.side-widget.creative_commons_sharing button.creative-commons-button:hover,
-.widget.creative_commons_sharing button.creative-commons-button:hover {
+.side-widget.republication_tracker_tool button.republication-tracker-tool-button:hover,
+.widget.republication_tracker_tool button.republication-tracker-tool-button:hover {
     background-color: #2863a7;
     text-decoration: none;
     cursor: pointer;
 }
 
-#creative-commons-share-modal {
+#republication-tracker-tool-modal {
     position: fixed;
     z-index: 999999999;
     top: 0;
@@ -56,7 +56,7 @@
     background-color:rgba(0,0,0,.75);
 }
 
-#creative-commons-share-modal-content {
+#republication-tracker-tool-modal-content {
     position: absolute;
     width: 90%;
     max-width: 800px;
@@ -71,7 +71,7 @@
     width:
 }
 
-#creative-commons-share-modal-content textarea {
+#republication-tracker-tool-modal-content textarea {
     box-sizing: border-box;
     width: 100%;
     margin:.5em 0 2em 0;
@@ -80,27 +80,27 @@
     border-color: inherit;
 }
 
-#creative-commons-share-modal-content h2,
-#creative-commons-share-modal-content .cc-license,
-#creative-commons-share-modal-content .cc-policy {
+#republication-tracker-tool-modal-content h2,
+#republication-tracker-tool-modal-content .cc-license,
+#republication-tracker-tool-modal-content .cc-policy {
     border-bottom: 1px solid #ccc;
     padding-bottom: 1em;
 }
 
-#creative-commons-share-modal-content .cc-license,
-#creative-commons-share-modal-content .cc-policy {
+#republication-tracker-tool-modal-content .cc-license,
+#republication-tracker-tool-modal-content .cc-policy {
     margin-bottom: 2em;
 }
 
-#creative-commons-share-modal-content .cc-license img {
+#republication-tracker-tool-modal-content .cc-license img {
     margin-bottom: 1em;
 }
 
-#creative-commons-share-modal-content .article-info h1 {
+#republication-tracker-tool-modal-content .article-info h1 {
     margin-bottom: 0;
 }
 
-.creative-commons-close {
+.republication-tracker-tool-close {
     position: absolute;
     top: 0;
     right: .5em;
@@ -109,7 +109,7 @@
     font-size: 2em;
 }
 
-.creative-commons-close:hover {
+.republication-tracker-tool-close:hover {
     cursor:pointer;
     opacity:.8;
 }

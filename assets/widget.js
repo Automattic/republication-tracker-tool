@@ -9,7 +9,7 @@ function copyToClipboard( element ) {
 function ajaxCallback(data){
 	// Remove captions from shareable text
 	var $ = jQuery;
-	var $shareable = $('#creative-commons-shareable-content');
+	var $shareable = $('#republication-tracker-tool-shareable-content');
 	var html = $shareable.text();
 
 	var parser = new DOMParser();
@@ -19,14 +19,14 @@ function ajaxCallback(data){
 	$shareable.text(captionless);
 
 	// Responsive modal
-	var $modal = $('#creative-commons-share-modal');
+	var $modal = $('#republication-tracker-tool-modal');
 	var $btn = $('#cc-btn');
-	var $close = $('.creative-commons-close');
+	var $close = $('.republication-tracker-tool-close');
 
 	$btn.click(function(){
 		//$modal.html( html );
 		$modal.show();
-		$('#creative-commons-share-modal-content').unbind().click(function(e) {
+		$('#republication-tracker-tool-modal-content').unbind().click(function(e) {
 			e.stopPropagation();
 		});
 	});
@@ -42,14 +42,14 @@ function ajaxCallback(data){
 
 jQuery(document).ready(function(){
 	var $ = jQuery,
-		postId = $( '#creative-commons-share-modal' ).attr( 'data-postid' ),
-		pluginsdir = $( '#creative-commons-share-modal' ).attr( 'data-pluginsdir' );
+		postId = $( '#republication-tracker-tool-modal' ).attr( 'data-postid' ),
+		pluginsdir = $( '#republication-tracker-tool-modal' ).attr( 'data-pluginsdir' );
 
 	$.ajax({
-		url: pluginsdir + '/creative-commons-sharing/includes/shareable-content.php?post=' + postId,
+		url: pluginsdir + '/republication-tracker-tool/includes/shareable-content.php?post=' + postId,
 		cache: false,
 		success: function( data ){
-			$('#creative-commons-share-modal').append(data);
+			$('#republication-tracker-tool-modal').append(data);
 			ajaxCallback(data);
 		}
 	});
