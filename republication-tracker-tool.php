@@ -11,9 +11,9 @@
  * @package         Republication_Tracker_Tool
  */
 
-require 'includes/class-settings.php';
-require 'includes/class-article-settings.php';
-require 'includes/class-widget.php';
+require plugin_dir_path( __FILE__ ).'includes/class-settings.php';
+require plugin_dir_path( __FILE__ ).'includes/class-article-settings.php';
+require plugin_dir_path( __FILE__ ).'includes/class-widget.php';
 
 /**
 * Main initiation class.

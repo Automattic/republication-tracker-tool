@@ -39,15 +39,16 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 
 		global $post;
 
+
 		wp_enqueue_script( 'republication-tracker-tool-js', plugins_url( 'assets/widget.js', dirname( __FILE__ ) ), array( 'jquery' ), Republication_Tracker_Tool::VERSION, false );
 		wp_enqueue_style( 'republication-tracker-tool-css', plugins_url( 'assets/widget.css', dirname( __FILE__ ) ), array(), Republication_Tracker_Tool::VERSION );
 		add_action( 'wp_ajax_my_action', 'my_action' );
 		add_action( 'wp_ajax_nopriv_my_action', 'my_action' );
 
-		echo $args['before_widget'];
+		echo wp_kses_post( $args['before_widget'] );
 
 		if ( ! empty( $instance['title'] ) ) {
-			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
+			echo wp_kses_post( $args['before_title'] . esc_html( apply_filters( 'widget_title', $instance['title'] ) ) . $args['after_title'] );
 		}
 
 		echo sprintf(
@@ -69,10 +70,10 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 
 		echo sprintf(
 			'<div class="message">%s</div>',
-			wpautop( esc_html( $instance['text'] ) )
+			wp_kses_post( wpautop( esc_html( $instance['text'] ) ) )
 		);
 
-		echo $args['after_widget'];
+		// echo $args['after_widget'];
 	}
 
 	/**
@@ -106,7 +107,7 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 	public function update( $new_instance, $old_instance ) {
 		$instance = array();
 
-		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? wp_strip_all_tags( $new_instance['title'] ) : '';
 		$instance['text'] = ( ! empty( $new_instance['text'] ) ) ? $new_instance['text'] : '';
 
 		return $instance;

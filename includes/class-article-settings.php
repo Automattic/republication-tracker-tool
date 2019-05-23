@@ -72,10 +72,12 @@ class Republication_Tracker_Tool_Article_Settings {
 	public function render_metabox( $post, $args ) {
 		$shares = get_post_meta( $post->ID, 'republication_tracker_tool_sharing', true );
 		$total_count = 0;
-		foreach ( $shares as $url => $count ) {
-			$total_count = $total_count + $count;
+		if( is_array( $shares) ){
+			foreach ( $shares as $url => $count ) {
+				$total_count = $total_count + $count;
+			}
 		}
-		echo wpautop( 'Total number of views: ' . $total_count );
+		echo wp_kses_post( wpautop( 'Total number of views: ' . $total_count ) );
 		echo '<table class="wp-list-table widefat fixed striped posts">';
 			echo '<thead>';
 				echo sprintf( '<th scope="col" id="url" class="manage-column column-primary"><span>%s</span><span class="sorting-indicator"></span></th>', esc_html__( 'Republished URL', 'republication-tracker-tool' ) );
@@ -85,8 +87,8 @@ class Republication_Tracker_Tool_Article_Settings {
 				foreach ( $shares as $url => $count ) {
 					echo sprintf(
 						'<tr><td class="column-primary" data-colname="URL"><a href="%1$s" target="_blank">%1$s</a></td><td class="views" data-colname="Views">%2$s</td></tr>',
-						$url,
-						$count
+						wp_kses_post( $url ),
+						wp_kses_post( $count )
 					);
 				}
 			echo '</tbody>';

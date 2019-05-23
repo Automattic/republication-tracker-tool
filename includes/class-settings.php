@@ -107,7 +107,7 @@ class Republication_Tracker_Tool_Settings {
 							<th scope="row">Republication Tracker Tool Tracking Code</th>
 							<td>
 								<p>You can copy and paste this tracking code into articles of your choice. Remember to replace <code>YOUR-POST-ID</code> with your actual post ID.</p><br/>
-								<code>'.htmlspecialchars($pixel).'</code>
+								<code>'.wp_kses_post( htmlspecialchars($pixel) ).'</code>
 							</td>
 						</tr>
 					</tbody>

@@ -35,7 +35,7 @@ function get_page_title( $url ){
 			// clean up title: remove EOL's and excessive whitespace.
 			$title = preg_replace( '/\s+/', ' ', $title_matches[1] );
 			$title = trim( $title );
-			$title = urlencode( $title );
+			$title = rawurlencode( $title );
 
 			// return our found title
 			return $title;
@@ -55,14 +55,17 @@ function get_page_title( $url ){
 if ( isset( $_GET['post'] ) ) {
 
 	// set up all of our post vars we want to track
-	$post_id = absint( $_GET['post'] );
-	$post = get_post($post_id);
-	$post_slug = urlencode($post->post_name);
-	$post_permalink = get_permalink($post_id);
+	$shared_post_id = absint( $_GET['post'] );
+	$shared_post = get_post($shared_post_id);
+
+	$shared_post_slug = rawurlencode($shared_post->post_name);
+	$shared_post_permalink = get_permalink($shared_post_id);
 
 	if( array_key_exists( 'HTTP_REFERER', $_SERVER ) ){
 
-		$url = $_SERVER['HTTP_REFERER'];
+		if( isset( $_SERVER['HTTP_REFERER'] ) ){
+			$url = esc_url_raw( $_SERVER['HTTP_REFERER'] );
+		}
 
 		$url_title = get_page_title( $url );
 		$url_title = str_replace( ' ', '%20', $url_title );
@@ -77,7 +80,7 @@ if ( isset( $_GET['post'] ) ) {
 
 	}
 
-	$value = get_post_meta( $post_id, 'republication_tracker_tool_sharing', true );
+	$value = get_post_meta( $shared_post_id, 'republication_tracker_tool_sharing', true );
 	if ( $value ) {
 		if ( isset( $value[ $url ] ) ) {
 			$value[ $url ]++;
@@ -89,7 +92,7 @@ if ( isset( $_GET['post'] ) ) {
 			$url => 1
 		);
 	}
-	$update = update_post_meta( $post_id, 'republication_tracker_tool_sharing', $value );
+	$update = update_post_meta( $shared_post_id, 'republication_tracker_tool_sharing', $value );
 
 	// if our google analytics tag is set, let's push data to it
 	if( isset( $_GET['ga'] ) &&  !empty($_GET['ga'] ) ) {
@@ -100,10 +103,10 @@ if ( isset( $_GET['post'] ) ) {
 		// create all of our necessary params to track
 		// the docs for these params can be found at: https://developers.google.com/analytics/devguides/collection/analyticsjs/events
 		$analytics_ping_params = array(
-			'tid' => $_GET['ga'],
+			'tid' => sanitize_text_field( $_GET['ga'] ),
 			'cid' => '555',
 			't' => 'pageview',
-			'dl' => $post_permalink,
+			'dl' => $shared_post_permalink,
 			'dh' => $url_host,
 			'dp' => $page_slug,
 			'dr' => $url,
