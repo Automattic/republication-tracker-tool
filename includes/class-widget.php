@@ -73,7 +73,7 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 			wp_kses_post( wpautop( esc_html( $instance['text'] ) ) )
 		);
 
-		// echo $args['after_widget'];
+		echo wp_kses_post( $args['after_widget'] );
 	}
 
 	/**
