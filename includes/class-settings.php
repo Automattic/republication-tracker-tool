@@ -136,7 +136,7 @@ class Republication_Tracker_Tool_Settings {
 	public function republication_tracker_tool_analytics_id_callback( $arg ){
 		$content = get_option( 'republication_tracker_tool_analytics_id' );
 		echo sprintf( 
-			'<input name="%1$s" value="%2$s">',
+			'<input type="text" name="%1$s" value="%2$s">',
 			'republication_tracker_tool_analytics_id',
 			esc_html( $content )
 		);
