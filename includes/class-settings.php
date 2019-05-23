@@ -130,7 +130,7 @@ class Republication_Tracker_Tool_Settings {
 	            'teeny'         => true,
 	        )
 		);
-		echo sprintf( '<p><em>%s</em></p>', esc_html__( 'This policy will display in the modal window when someone copies the content of your article for republishing.', 'republication-tracker-tool' ) );
+		echo sprintf( '<p><em>%s</em></p>', wp_kses_post( 'The Republication Tracker Tool Policy field is where you will be able to input your rules and policies for users to see before they copy and paste your content to republish. A good example of a Creative Commons Sharing policy can be found <a href="https://www.propublica.org/steal-our-stories/" target="_blank">here</a>' ) );
 	}
 
 	public function republication_tracker_tool_analytics_id_callback( $arg ){
