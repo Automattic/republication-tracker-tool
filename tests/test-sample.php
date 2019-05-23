@@ -2,7 +2,7 @@
 /**
  * Class SampleTest
  *
- * @package Creative_Commons_Sharing
+ * @package Republication_Tracker_Tool
  */
 
 /**

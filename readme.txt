@@ -1,4 +1,4 @@
-=== Creative Commons Sharing ===
+=== Republication Tracker Tool ===
 Contributors: (this should be a list of wordpress.org userid's)
 Donate link: http://example.com/
 Tags: comments, spam
@@ -11,6 +11,8 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Adds a widget to allow readers to easily acquire Creative-Commons-licensed HTML of articles to facilitate embedding posts on external sites. Includes a tracking mechanism similar to ProPublica's PixelPing.
 
 == Description ==
+
+A plugin that allows users to add a widget to allow readers to easily acquire Creative-Commons-licensed HTML of articles to facilitate embedding posts on external sites. Includes a tracking mechanism similar to ProPublica's PixelPing. Built and maintained by [INN Labs](https://labs.inn.org/).
 
 == Installation ==
 
