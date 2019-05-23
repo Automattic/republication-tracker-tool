@@ -99,7 +99,7 @@ class Republication_Tracker_Tool_Article_Settings {
 				echo '</tfoot>';
 			echo '</table>';
 		} else {
-			echo 'There are no shares to display.';
+			echo esc_html_e('There are no shares to display.', 'republication-tracker-tool');
 		}
 	}
 
