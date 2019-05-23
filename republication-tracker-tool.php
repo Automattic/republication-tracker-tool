@@ -123,6 +123,8 @@ final class Republication_Tracker_Tool {
 
 		add_action( 'widgets_init', array( $this, 'register_widgets' ) );
 
+		add_filter( 'plugin_row_meta', array( $this, '_plugin_row_meta' ), 10, 2 );
+
 	}
 
 
@@ -149,6 +151,23 @@ final class Republication_Tracker_Tool {
 	 * @since  1.0
 	 */
 	public function _deactivate() {}
+
+	public function _plugin_row_meta( $links, $file ){
+
+		if ( strpos( $file, 'republication-tracker-tool/republication-tracker-tool.php' ) !== false ) {
+
+			$new_links = array(
+				'donate' => '<a href="options-reading.php">Settings</a>',
+				'documentation' => '<a href="https://github.com/INN/republication-tracker-tool/tree/master/docs" target="_blank">Documentation</a>'
+			);
+			
+			$links = array_merge( $links, $new_links );
+
+		}
+		
+		return $links;
+
+	}
 }
 
 /**
