@@ -49,6 +49,7 @@ jQuery(document).ready(function(){
 		url: pluginsdir + '/republication-tracker-tool/includes/shareable-content.php?post=' + postId,
 		cache: false,
 		success: function( data ){
+			$('body').append($('#republication-tracker-tool-modal'));
 			$('#republication-tracker-tool-modal').append(data);
 			ajaxCallback(data);
 		}
