@@ -38,3 +38,9 @@ Once you have your Google Analytics ID set, you'll be able to view a sample trac
 To find the ID of your post that you'd like to use, navigate to the edit page for the specific post. Once on the editor page, you can grab your post ID from the `post` parameter in the url.
 
 ![how to grab post id](img/find-post-id.png)
+
+## Troubleshooting
+
+### Why isn't my site logo appearing on republished posts?
+
+The Republication Tracker Tool uses `get_site_icon_url` to grab your site favicon to display in republished posts. If your favicon is not appearing, please make sure your site has a favicon set in the way described in the [WordPress docs](https://wordpress.org/support/article/creating-a-favicon/).
