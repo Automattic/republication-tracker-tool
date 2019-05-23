@@ -115,7 +115,7 @@ if ( isset( $_GET['post'] ) ) {
 			't' => 'pageview',
 			'dl' => $shared_post_permalink,
 			'dh' => $url_host,
-			'dp' => $page_slug,
+			'dp' => $shared_post_slug,
 			'dr' => $url,
 			'dt' => $url_title,
 			'an' => 'Republication',
