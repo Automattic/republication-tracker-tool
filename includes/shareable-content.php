@@ -166,9 +166,7 @@ echo '<div id="republication-tracker-tool-modal-content">';
 			wpautop( $attribution_statement . $pixel )
 		)
 	);
-	echo wp_kses_post( 
-		wpautop(
-			sprintf( '<button onclick="copyToClipboard(\'#republication-tracker-tool-shareable-content\')">%s</button>', esc_html__( 'Copy to Clipboard', 'republication-tracker-tool' ) )
-		)
-	);
+	?>
+	<button onclick="copyToClipboard('#republication-tracker-tool-shareable-content')"><?php echo esc_html__( 'Copy to Clipboard', 'republication-tracker-tool' ); ?></button>
+	<?php
 echo '</div>'; // #republication-tracker-tool-modal-content
