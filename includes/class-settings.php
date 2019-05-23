@@ -135,17 +135,10 @@ class Republication_Tracker_Tool_Settings {
 
 	public function republication_tracker_tool_analytics_id_callback( $arg ){
 		$content = get_option( 'republication_tracker_tool_analytics_id' );
-		wp_editor(
-			$content,
+		echo sprintf( 
+			'<input name="%1$s" value="%2$s">',
 			'republication_tracker_tool_analytics_id',
-			array(
-				'wpautop' 		=> false,
-				'media_buttons' => false,
-				'textarea_name' => 'republication_tracker_tool_analytics_id',
-				'textarea_rows' => 1,
-				'tinymce'		=> false,
-				'quicktags'     => array()
-			)
+			esc_html( $content )
 		);
 	}
 
