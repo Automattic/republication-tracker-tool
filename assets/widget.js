@@ -26,16 +26,19 @@ function ajaxCallback(data){
 	$btn.click(function(){
 		//$modal.html( html );
 		$modal.show();
+		$('body').addClass('modal-open-disallow-scrolling');
 		$('#republication-tracker-tool-modal-content').unbind().click(function(e) {
 			e.stopPropagation();
 		});
 	});
 
 	$modal.click(function(){
+		$('body').removeClass('modal-open-disallow-scrolling');
 		$modal.hide();
 	});
 
 	$close.click(function(){
+		$('body').removeClass('modal-open-disallow-scrolling');
 		$modal.hide();
 	});
 }

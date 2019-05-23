@@ -113,3 +113,7 @@
     cursor:pointer;
     opacity:.8;
 }
+
+.modal-open-disallow-scrolling {
+    overflow: hidden;
+}
