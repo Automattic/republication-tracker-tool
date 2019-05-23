@@ -6,7 +6,14 @@
  * We aren't passing a NONCE; this isn't a form.
  */
 
-require_once( '../../../../wp-load.php' );
+//include wp-load.php
+$home_path = dirname( dirname( dirname( dirname( dirname( __FILE__ ) ) ) ) );
+
+if ( file_exists( $home_path.'/wp-load.php' ) ) {
+	require_once( $home_path.'/wp-load.php' );
+} else {
+	return;
+}
 
 if ( ! isset( $_GET['post'] ) ) {
 	return;

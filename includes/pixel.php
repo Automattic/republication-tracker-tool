@@ -1,5 +1,12 @@
 <?php
-require_once( '../../../../wp-load.php' );
+//include wp-load.php
+$home_path = dirname( dirname( dirname( dirname( dirname( __FILE__ ) ) ) ) );
+
+if ( file_exists( $home_path.'/wp-load.php' ) ) {
+	require_once( $home_path.'/wp-load.php' );
+} else {
+	return;
+}
 
 // function to get the title of the referring url
 function get_page_title( $url ){
