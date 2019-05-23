@@ -78,25 +78,29 @@ class Republication_Tracker_Tool_Article_Settings {
 			}
 		}
 		echo wp_kses_post( wpautop( 'Total number of views: ' . $total_count ) );
-		echo '<table class="wp-list-table widefat fixed striped posts">';
-			echo '<thead>';
-				echo sprintf( '<th scope="col" id="url" class="manage-column column-primary"><span>%s</span><span class="sorting-indicator"></span></th>', esc_html__( 'Republished URL', 'republication-tracker-tool' ) );
-				echo sprintf( '<th scope="col" id="views" class="manage-column ">%s</th>', esc_html__( 'Views', 'republication-tracker-tool' ) );
-			echo '</thead>';
-			echo '<tbody id="the-list">';
-				foreach ( $shares as $url => $count ) {
-					echo sprintf(
-						'<tr><td class="column-primary" data-colname="URL"><a href="%1$s" target="_blank">%1$s</a></td><td class="views" data-colname="Views">%2$s</td></tr>',
-						wp_kses_post( $url ),
-						wp_kses_post( $count )
-					);
-				}
-			echo '</tbody>';
-			echo '<tfoot>';
-				echo sprintf( '<th scope="col" id="url" class="manage-column column-primary"><span>%s</span><span class="sorting-indicator"></span></th>', esc_html__( 'Republished URL', 'republication-tracker-tool' ) );
-				echo sprintf( '<th scope="col" id="views" class="manage-column">%s</th>', esc_html__( 'Views', 'republication-tracker-tool' ) );
-			echo '</tfoot>';
-		echo '</table>';
+		if( is_array( $shares ) && !empty ( $shares ) ){
+			echo '<table class="wp-list-table widefat fixed striped posts">';
+				echo '<thead>';
+					echo sprintf( '<th scope="col" id="url" class="manage-column column-primary"><span>%s</span><span class="sorting-indicator"></span></th>', esc_html__( 'Republished URL', 'republication-tracker-tool' ) );
+					echo sprintf( '<th scope="col" id="views" class="manage-column ">%s</th>', esc_html__( 'Views', 'republication-tracker-tool' ) );
+				echo '</thead>';
+				echo '<tbody id="the-list">';
+					foreach ( $shares as $url => $count ) {
+						echo sprintf(
+							'<tr><td class="column-primary" data-colname="URL"><a href="%1$s" target="_blank">%1$s</a></td><td class="views" data-colname="Views">%2$s</td></tr>',
+							wp_kses_post( $url ),
+							wp_kses_post( $count )
+						);
+					}
+				echo '</tbody>';
+				echo '<tfoot>';
+					echo sprintf( '<th scope="col" id="url" class="manage-column column-primary"><span>%s</span><span class="sorting-indicator"></span></th>', esc_html__( 'Republished URL', 'republication-tracker-tool' ) );
+					echo sprintf( '<th scope="col" id="views" class="manage-column">%s</th>', esc_html__( 'Views', 'republication-tracker-tool' ) );
+				echo '</tfoot>';
+			echo '</table>';
+		} else {
+			echo 'There are no shares to display.';
+		}
 	}
 
 	public function add_custom_columns( $columns ) {
