@@ -63,7 +63,7 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 				esc_html__( 'Republish This Story', 'republication-tracker-tool' )
 			);
 			echo sprintf(
-				'<p><a class="license" rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nd/4.0/"><img alt="%s" style="border-width:0" src="https://i.creativecommons.org/l/by-nd/4.0/88x31.png" /></a></p>',
+				'<p><a class="license" rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nd/4.0/"><img alt="%s" style="border-width:0" src="'.esc_url( plugin_dir_url( dirname( __FILE__ ) ) ).'assets/img/creative-commons-sharing.png" /></a></p>',
 				esc_html__( 'Creative Commons License', 'republication-tracker-tool' )
 			);
 		echo '</div>';
