@@ -9,7 +9,7 @@ if ( file_exists( $home_path.'/wp-load.php' ) ) {
 }
 
 // function to get the title of the referring url
-function get_page_title( $url ){
+function get_referring_page_title( $url ){
 
 	$response = wp_remote_get( $url );
 	$body = wp_remote_retrieve_body( $response );
@@ -52,7 +52,7 @@ if ( isset( $_GET['post'] ) ) {
 			$url = esc_url_raw( $_SERVER['HTTP_REFERER'] );
 		}
 
-		$url_title = get_page_title( $url );
+		$url_title = get_referring_title( $url );
 		$url_title = str_replace( ' ', '%20', $url_title );
 
 		$url_host = parse_url( $url, PHP_URL_HOST );
