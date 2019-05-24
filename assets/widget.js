@@ -6,7 +6,7 @@ function copyToClipboard( element ) {
 	$temp.remove();
 }
 
-function ajaxCallback(data){
+function modal_actions(){
 	// Remove captions from shareable text
 	var $ = jQuery;
 	var $shareable = $('#republication-tracker-tool-shareable-content');
@@ -20,12 +20,14 @@ function ajaxCallback(data){
 
 	// Responsive modal
 	var $modal = $('#republication-tracker-tool-modal');
+	var $modal_content = $('#republication-tracker-tool-modal-content');
 	var $btn = $('#cc-btn');
 	var $close = $('.republication-tracker-tool-close');
 
 	$btn.click(function(){
 		//$modal.html( html );
 		$modal.show();
+		$modal_content.show();
 		$('body').addClass('modal-open-disallow-scrolling');
 		$('#republication-tracker-tool-modal-content').unbind().click(function(e) {
 			e.stopPropagation();
@@ -48,14 +50,9 @@ jQuery(document).ready(function(){
 		postId = $( '#republication-tracker-tool-modal' ).attr( 'data-postid' ),
 		pluginsdir = $( '#republication-tracker-tool-modal' ).attr( 'data-pluginsdir' );
 
-	$.ajax({
-		url: pluginsdir + '/republication-tracker-tool/includes/shareable-content.php?post=' + postId,
-		cache: false,
-		success: function( data ){
-			$('body').append($('#republication-tracker-tool-modal'));
-			$('#republication-tracker-tool-modal').append(data);
-			ajaxCallback(data);
-		}
-	});
+		$('#republication-tracker-tool-modal').append($('#republication-tracker-tool-modal-content'));
+		$('body').append($('#republication-tracker-tool-modal'));
+
+		modal_actions();
 
 });

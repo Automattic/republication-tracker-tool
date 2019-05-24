@@ -38,7 +38,9 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 		}
 
 		global $post;
-
+		
+		// define our path to grab file content from
+		define( 'WPRTT_PATH', plugin_dir_path( __FILE__ ) );
 
 		wp_enqueue_script( 'republication-tracker-tool-js', plugins_url( 'assets/widget.js', dirname( __FILE__ ) ), array( 'jquery' ), Republication_Tracker_Tool::VERSION, false );
 		wp_enqueue_style( 'republication-tracker-tool-css', plugins_url( 'assets/widget.css', dirname( __FILE__ ) ), array(), Republication_Tracker_Tool::VERSION );
@@ -51,10 +53,11 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 			echo wp_kses_post( $args['before_title'] . esc_html( apply_filters( 'widget_title', $instance['title'] ) ) . $args['after_title'] );
 		}
 
-		echo sprintf(
-			'<div id="republication-tracker-tool-modal" style="display:none;" data-postid="%s" data-pluginsdir="%s"></div>',
+		printf(
+			'<div id="republication-tracker-tool-modal" style="display:none;" data-postid="%1$s" data-pluginsdir="%2$s">%3$s</div>',
 			esc_attr( $post->ID ),
-			esc_attr( plugins_url() )
+			esc_attr( plugins_url() ),
+			esc_html( include_once( WPRTT_PATH . 'shareable-content.php' ) )
 		);
 
 		echo '<div class="license">';
@@ -63,8 +66,9 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 				esc_html__( 'Republish This Story', 'republication-tracker-tool' )
 			);
 			echo sprintf(
-				'<p><a class="license" rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nd/4.0/"><img alt="%s" style="border-width:0" src="https://i.creativecommons.org/l/by-nd/4.0/88x31.png" /></a></p>',
-				esc_html__( 'Creative Commons License', 'republication-tracker-tool' )
+				'<p><a class="license" rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nd/4.0/"><img alt="%s" style="border-width:0" src="%s" /></a></p>',
+				esc_html__( 'Creative Commons License', 'republication-tracker-tool' ),
+				esc_url( plugin_dir_url( dirname( __FILE__ ) ) ).'assets/img/creative-commons-sharing.png'
 			);
 		echo '</div>';
 

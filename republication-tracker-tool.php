@@ -125,6 +125,15 @@ final class Republication_Tracker_Tool {
 
 		add_filter( 'plugin_row_meta', array( $this, '_plugin_row_meta' ), 10, 2 );
 
+		add_filter( 'query_vars', array( $this, 'enable_pixel_query_vars' ) );
+
+		// fire our pixel is the correct param is set
+		if( isset( $_GET['republication-pixel'] ) && isset( $_GET['post'] ) && isset( $_GET['ga'] ) ){
+
+			return include_once( plugin_dir_path( __FILE__ ).'includes/pixel.php' );
+
+		}
+
 	}
 
 
@@ -166,6 +175,16 @@ final class Republication_Tracker_Tool {
 		}
 		
 		return $links;
+
+	}
+
+	public function enable_pixel_query_vars($vars){
+
+		$vars[] .= 'republication-pixel';
+		$vars[] .= 'GA';
+		$vars[] .= 'post';
+
+		return $vars;
 
 	}
 }
