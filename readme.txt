@@ -1,10 +1,11 @@
 === Republication Tracker Tool ===
-Contributors: (this should be a list of wordpress.org userid's)
-Donate link: http://example.com/
-Tags: comments, spam
+Contributors: innlabs
+Donate link: http://inn.org/donate
+Tags: publishers, news
 Requires at least: 4.4
-Tested up to: 4.8.2
-Stable tag: 1.0.1
+Requires PHP: 5.3
+Tested up to: 5.1.1
+Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,21 +21,15 @@ A plugin that allows users to add a widget to allow readers to easily acquire Cr
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Add the widget to your per-post sidebars. It doesn't work outside of single post pages.
 
-== Frequently Asked Questions ==
+== Frequently Asked Questions == 
 
-= What is the PixelPing-style tracking mechanism? =
+= How does the tracking mechanism work? = 
 
-[PixelPing](https://www.propublica.org/pixelping) is a tracking technology developed by ProPublica to allow them to track where their stories are embedded on external sites, and how many readers those stories achieve.
+The tracking mechanism is similiar to ProPublica's [PixelPing](https://www.propublica.org/pixelping) tracking technology. 
 
-In this plugin, the tracking is achieved through a small JavaScript tag that is added to the HTML of stories when the reader copies the story HTML using the widget's share dialog.
+In this plugin, the tracking is achieved throug an image element included inside of the republishable content that collects data from the republishing site and sends that data to Google Analytics.
 
 == Changelog ==
-
-= 1.0.1 =
-* improved post HTML cleaning through better stripping of shortcodes, figures, images, audio, and video
-* Cleanup of the shareable text generation endpoint code
-* fixes bug where certain plugins interfered with shortcode removal
-* fixes widget CSS on passblue.com
 
 = 1.0 =
 * Initial release
