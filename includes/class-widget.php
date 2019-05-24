@@ -38,7 +38,9 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 		}
 
 		global $post;
-
+		
+		// define our path to grab file content from
+		define('WPRTT_PATH', plugin_dir_path( __FILE__ ) );
 
 		wp_enqueue_script( 'republication-tracker-tool-js', plugins_url( 'assets/widget.js', dirname( __FILE__ ) ), array( 'jquery' ), Republication_Tracker_Tool::VERSION, false );
 		wp_enqueue_style( 'republication-tracker-tool-css', plugins_url( 'assets/widget.css', dirname( __FILE__ ) ), array(), Republication_Tracker_Tool::VERSION );
@@ -52,9 +54,10 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 		}
 
 		echo sprintf(
-			'<div id="republication-tracker-tool-modal" style="display:none;" data-postid="%s" data-pluginsdir="%s"></div>',
+			'<div id="republication-tracker-tool-modal" style="display:none;" data-postid="%1$s" data-pluginsdir="%2$s">%3$s</div>',
 			esc_attr( $post->ID ),
-			esc_attr( plugins_url() )
+			esc_attr( plugins_url() ),
+			esc_html( include_once( WPRTT_PATH . 'shareable-content.php' ) )
 		);
 
 		echo '<div class="license">';

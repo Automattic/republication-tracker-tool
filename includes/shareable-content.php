@@ -6,19 +6,6 @@
  * We aren't passing a NONCE; this isn't a form.
  */
 
-//include wp-load.php
-$home_path = dirname( dirname( dirname( dirname( dirname( __FILE__ ) ) ) ) );
-
-if ( file_exists( $home_path.'/wp-load.php' ) ) {
-	require_once( $home_path.'/wp-load.php' );
-} else {
-	return;
-}
-
-if ( ! isset( $_GET['post'] ) ) {
-	return;
-}
-
 /**
  * What tags do we want to keep in the embed?
  * Not things from our server.
@@ -46,16 +33,16 @@ unset( $allowed_tags_excerpt['video'] );
 /**
  * The article WP_Post object
  *
- * @var WP_Post $the_post the post ID
+ * @var WP_Post $post the post object
  */
-$the_post = get_post( intval( $_GET['post'] ) );
+global $post;
 
 /**
  * The content of the aforementioned post
  *
  * @var HTML $content
  */
-$content = $the_post->post_content;
+$content = $post->post_content;
 
 // Remove shortcodes from the content.
 $content = strip_shortcodes( $content );
@@ -89,7 +76,7 @@ $analytics_id = get_option( 'republication_tracker_tool_analytics_id' );
 $attribution_statement = sprintf(
 	// translators: %1$s is a URL, %2$s is the site home URL, and %3$s is the site title.
 	esc_html__( 'This <a target="_blank" href="%1$s">article</a> first appeared on <a target="_blank" href="%2$s">%3$s</a> and is republished here under a Creative Commons license.', 'republication-tracker-tool' ),
-	get_permalink( $the_post ),
+	get_permalink( $post ),
 	home_url(),
 	esc_html( get_bloginfo() )
 );
@@ -104,7 +91,7 @@ $pixel = sprintf(
 	// %1$s is the javascript source, %2$s is the post ID, %3$s is the plugins URL
 	'<img id="republication-tracker-tool-source" src="%1$s?post=%2$s&ga=%3$s">',
 	plugins_url( 'includes/pixel.php', dirname( __FILE__ ) ),
-	esc_attr( $the_post->ID ),
+	esc_attr( $post->ID ),
 	esc_attr( $analytics_id )
 );
 
@@ -116,10 +103,10 @@ $pixel = sprintf(
 $article_info = sprintf(
 	// translators: %1$s is the post title, %2$s is the byline, %3$s is the site name, %4$s is the date in the format F j, Y
 	__( '<h1>%1$s</h1><p class="byline">by %2$s, %3$s <br />%4$s</p>', 'republication-tracker-tool' ),
-	wp_kses_post( get_the_title( $the_post ) ),
-	wp_kses_post( get_the_author_meta( 'display_name', $the_post->post_author ) ),
+	wp_kses_post( get_the_title( $post ) ),
+	wp_kses_post( get_the_author_meta( 'display_name', $post->post_author ) ),
 	wp_kses_post( get_bloginfo( 'name' ) ),
-	wp_kses_post( date( 'F j, Y', strtotime( $the_post->post_date ) ) )
+	wp_kses_post( date( 'F j, Y', strtotime( $post->post_date ) ) )
 );
 // strip empty tags after automatically applying p tags
 $article_info = str_replace( '<p></p>', '', wpautop( $article_info ) );
@@ -131,7 +118,7 @@ $article_info = str_replace( '<p></p>', '', wpautop( $article_info ) );
  */
 $license_statement = wp_kses_post( get_option( 'republication_tracker_tool_policy' ) );
 
-echo '<div id="republication-tracker-tool-modal-content">';
+echo '<div id="republication-tracker-tool-modal-content" style="display:none;">';
 	echo '<div class="republication-tracker-tool-close">X</div>';
 	echo sprintf( '<h2>%s</h2>', esc_html__( 'Republish this article', 'republication-tracker-tool' ) );
 
