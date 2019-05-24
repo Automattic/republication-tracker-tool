@@ -1,18 +1,9 @@
 <?php
-//include wp-load.php
-$home_path = dirname( dirname( dirname( dirname( dirname( __FILE__ ) ) ) ) );
-
-if ( file_exists( $home_path.'/wp-load.php' ) ) {
-	require_once( $home_path.'/wp-load.php' );
-} else {
-	return;
-}
 
 // function to get the title of the referring url
 function get_referring_page_title( $url ){
 
 	$response = wp_remote_get( $url );
-	$body = wp_remote_retrieve_body( $response );
 
 	// find the title element inside of the response body
 	$response = preg_match( "/<title.[^>]*>(.*)<\/title>/siU", $response['body'], $title_matches );
@@ -52,7 +43,7 @@ if ( isset( $_GET['post'] ) ) {
 			$url = esc_url_raw( $_SERVER['HTTP_REFERER'] );
 		}
 
-		$url_title = get_referring_title( $url );
+		$url_title = get_referring_page_title( $url );
 		$url_title = str_replace( ' ', '%20', $url_title );
 
 		$url_host = parse_url( $url, PHP_URL_HOST );
