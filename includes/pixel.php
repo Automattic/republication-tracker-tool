@@ -10,54 +10,32 @@ if ( file_exists( $home_path.'/wp-load.php' ) ) {
 
 // function to get the title of the referring url
 function get_page_title( $url ){
+
+	$response = wp_remote_get( $url );
+	$body = wp_remote_retrieve_body( $response );
+
+	// find the title element inside of the response body
+	$response = preg_match( "/<title.[^>]*>(.*)<\/title>/siU", $response['body'], $title_matches );
+
+	// if a title element was found, let's get the text from it
+	if( $title_matches ){
+
+		// clean up title: remove EOL's and excessive whitespace.
+		$title = preg_replace( '/\s+/', ' ', $title_matches[1] );
+		$title = trim( $title );
+		$title = rawurlencode( $title );
+
+		// return our found title
+		return $title;
 	
-	// create curl request with a max timeout of 2 seconds
-	$ch = curl_init();
-
-	curl_setopt( $ch, CURLOPT_URL, $url );
-	curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
-	curl_setopt( $ch, CURLOPT_MAXREDIRS, 10 );
-	curl_setopt( $ch, CURLOPT_TIMEOUT, 2 );
-
-	// execute our curl request
-	// then close it out
-	$response = curl_exec( $ch );
-	$error = curl_error( $ch );
-	curl_close( $ch );
-
-	// if there was an error, don't continue
-	if( $error ){
-
-		return;
-	
-	// everything looks good, let's carry on getting the title
+	// if there were no title matches found, don't continue
 	} else {
 
-		// find the title element inside of the response body
-		$response = preg_match( "/<title>(.*)<\/title>/siU", $response, $title_matches );
-
-		// if a title element was found, let's get the text from it
-		if( $title_matches ){
-
-			// clean up title: remove EOL's and excessive whitespace.
-			$title = preg_replace( '/\s+/', ' ', $title_matches[1] );
-			$title = trim( $title );
-			$title = rawurlencode( $title );
-
-			// return our found title
-			return $title;
-		
-		// if there were no title matches found, don't continue
-		} else {
-
-			return;
-
-		}
+		return;
 
 	}
 
 }
-		
 
 if ( isset( $_GET['post'] ) ) {
 
@@ -84,7 +62,8 @@ if ( isset( $_GET['post'] ) ) {
 
 		$url = '';
 		$url_title = '';
-
+		$url_host = '';
+		
 	}
 
 	$value = get_post_meta( $shared_post_id, 'republication_tracker_tool_sharing', true );
@@ -126,17 +105,7 @@ if ( isset( $_GET['post'] ) ) {
 		// create query based on our params array
 		$analytics_ping_params = http_build_query( $analytics_ping_params );
 
-		// create curl request
-		$ch = curl_init(); 
-
-		curl_setopt( $ch, CURLOPT_URL, $analytics_ping_url.'&'.$analytics_ping_params ); 
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
-
-		// $response contains the response string 
-		$response = curl_exec( $ch ); 
-
-		// close curl resource to free up system resources 
-		curl_close( $ch );      
+		$response = wp_remote_post( $analytics_ping_url.'&'.$analytics_ping_params );   
 
 	}
 
