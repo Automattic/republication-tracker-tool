@@ -53,7 +53,7 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 			echo wp_kses_post( $args['before_title'] . esc_html( apply_filters( 'widget_title', $instance['title'] ) ) . $args['after_title'] );
 		}
 
-		echo sprintf(
+		printf(
 			'<div id="republication-tracker-tool-modal" style="display:none;" data-postid="%1$s" data-pluginsdir="%2$s">%3$s</div>',
 			esc_attr( $post->ID ),
 			esc_attr( plugins_url() ),
@@ -66,8 +66,9 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 				esc_html__( 'Republish This Story', 'republication-tracker-tool' )
 			);
 			echo sprintf(
-				'<p><a class="license" rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nd/4.0/"><img alt="%s" style="border-width:0" src="'.esc_url( plugin_dir_url( dirname( __FILE__ ) ) ).'assets/img/creative-commons-sharing.png" /></a></p>',
-				esc_html__( 'Creative Commons License', 'republication-tracker-tool' )
+				'<p><a class="license" rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nd/4.0/"><img alt="%s" style="border-width:0" src="%s" /></a></p>',
+				esc_html__( 'Creative Commons License', 'republication-tracker-tool' ),
+				esc_url( plugin_dir_url( dirname( __FILE__ ) ) ).'assets/img/creative-commons-sharing.png'
 			);
 		echo '</div>';
 

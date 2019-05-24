@@ -1,7 +1,7 @@
 <?php
 
 // function to get the title of the referring url
-function get_referring_page_title( $url ){
+function wprtt_get_referring_page_title( $url ){
 
 	$response = wp_remote_get( $url );
 

@@ -1,10 +1,10 @@
 === Republication Tracker Tool ===
 Contributors: innlabs
-Donate link: http://inn.org/donate
+Donate link: https://inn.org/donate
 Tags: publishers, news
 Requires at least: 4.4
 Requires PHP: 5.3
-Tested up to: 5.1.1
+Tested up to: 5.2.1
 Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -27,7 +27,7 @@ A plugin that allows users to add a widget to allow readers to easily acquire Cr
 
 The tracking mechanism is similiar to ProPublica's [PixelPing](https://www.propublica.org/pixelping) tracking technology. 
 
-In this plugin, the tracking is achieved throug an image element included inside of the republishable content that collects data from the republishing site and sends that data to Google Analytics.
+In this plugin, the tracking is achieved through an image element included inside of the republishable content that collects data from the republishing site and sends that data to Google Analytics.
 
 == Changelog ==
 
