@@ -43,7 +43,7 @@ if ( isset( $_GET['post'] ) ) {
 			$url = esc_url_raw( $_SERVER['HTTP_REFERER'] );
 		}
 
-		$url_title = get_referring_page_title( $url );
+		$url_title = wprtt_get_referring_page_title( $url );
 		$url_title = str_replace( ' ', '%20', $url_title );
 
 		$url_host = parse_url( $url, PHP_URL_HOST );
