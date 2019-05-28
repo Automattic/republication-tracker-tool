@@ -6,7 +6,7 @@
 #
 RELEASE_DIR=release;
 SVN_PATH=$RELEASE_DIR/svn;
-SVN_REPO="https://plugins.svn.wordpress.org/plugin-slug-goes-here/";
+SVN_REPO="https://plugins.svn.wordpress.org/republication-tracker-tool";
 BLACKLIST=(
 .\*
 release.sh
