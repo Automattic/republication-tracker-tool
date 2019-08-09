@@ -4,8 +4,8 @@ Donate link: https://inn.org/donate
 Tags: publishers, news
 Requires at least: 4.4
 Requires PHP: 5.3
-Tested up to: 5.2.1
-Stable tag: 1.0
+Tested up to: 5.2.2
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,6 +30,11 @@ The tracking mechanism is similiar to ProPublica's [PixelPing](https://www.propu
 In this plugin, the tracking is achieved through an image element included inside of the republishable content that collects data from the republishing site and sends that data to Google Analytics.
 
 == Changelog ==
+
+= 1.0.1 =
+
+- Changes the way we fire the pixel. Instead of firing it at /wp-content/plugins/republication-tracker-tool/?query_params, we'll now fire it at site.com/*?query_params. This should be backwards compatible so sites experiencing the 403 issue in their republished posts should have the issue resolved once updated.
+- Updates the modal_actions function to use .html() instead of .text() when copying the content into the sharable modal so that the pixel &'s don't get encoded into &amp; and cause issues if pasted into a CMS that doesn't automatically decode html entities.
 
 = 1.0 =
 * Initial release

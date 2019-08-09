@@ -3,8 +3,8 @@
 A plugin that allows users to add a widget to allow readers to easily acquire Creative-Commons-licensed HTML of articles to facilitate embedding posts on external sites. Includes a tracking mechanism similar to ProPublica's PixelPing. Built and maintained by [INN Labs](https://labs.inn.org).
 
 **Requires at least:** 4.1  
-**Tested up to:** 5.2  
-**Stable tag:** See https://github.com/INN/creative-commons-sharing/releases
+**Tested up to:** 5.2.2
+**Stable tag:** See https://github.com/INN/republication-tracker-tool/releases
 **License:** GPLv2 or later  
 **License URI:** https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -18,6 +18,6 @@ A plugin that allows users to add a widget to allow readers to easily acquire Cr
 
 ## Development
 
-For information on the development status of this plugin, check the [development milestones on github](https://github.com/INN/creative-commons-sharing/milestones).
+For information on the development status of this plugin, check the [development milestones on github](https://github.com/INN/republication-tracker-tool/milestones).
 
 If you'd like to contribute to the project, please see our [contributing guidelines](contributing.md).
