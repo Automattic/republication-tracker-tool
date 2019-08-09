@@ -128,11 +128,15 @@ final class Republication_Tracker_Tool {
 		add_filter( 'query_vars', array( $this, 'enable_pixel_query_vars' ) );
 
 		// fire our pixel is the correct param is set
-		if( isset( $_GET['republication-pixel'] ) && isset( $_GET['post'] ) && isset( $_GET['ga'] ) ){
-
-			return include_once( plugin_dir_path( __FILE__ ).'includes/pixel.php' );
-
-		}
+		add_filter( 'template_include', function( $template ) {
+			// if the params are set, use our pixel functions
+			if( isset( $_GET['republication-pixel'] ) && isset( $_GET['post'] ) && isset( $_GET['ga'] ) ){
+				return include_once( plugin_dir_path( __FILE__ ).'includes/pixel.php' );
+			// else, continue with whatever template was being loaded
+			} else {
+				return $template;
+			}
+		}, 99 );
 
 	}
 

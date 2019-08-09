@@ -5,24 +5,29 @@ function wprtt_get_referring_page_title( $url ){
 
 	$response = wp_remote_get( $url );
 
-	// find the title element inside of the response body
-	$response = preg_match( "/<title.[^>]*>(.*)<\/title>/siU", $response['body'], $title_matches );
+	// if there was no issue grabbing the url, continue
+	if( !is_wp_error( $response ) ){
 
-	// if a title element was found, let's get the text from it
-	if( $title_matches ){
+		// find the title element inside of the response body
+		$response = preg_match( "/<title.[^>]*>(.*)<\/title>/siU", $response['body'], $title_matches );
 
-		// clean up title: remove EOL's and excessive whitespace.
-		$title = preg_replace( '/\s+/', ' ', $title_matches[1] );
-		$title = trim( $title );
-		$title = rawurlencode( $title );
+		// if a title element was found, let's get the text from it
+		if( $title_matches ){
 
-		// return our found title
-		return $title;
-	
-	// if there were no title matches found, don't continue
-	} else {
+			// clean up title: remove EOL's and excessive whitespace.
+			$title = preg_replace( '/\s+/', ' ', $title_matches[1] );
+			$title = trim( $title );
+			$title = rawurlencode( $title );
 
-		return;
+			// return our found title
+			return $title;
+		
+		// if there were no title matches found, don't continue
+		} else {
+
+			return;
+
+		}
 
 	}
 
