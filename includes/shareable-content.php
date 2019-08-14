@@ -20,15 +20,7 @@
  */
 global $allowedposttags;
 $allowed_tags_excerpt = $allowedposttags;
-unset( $allowed_tags_excerpt['audio'] );
-unset( $allowed_tags_excerpt['figure'] );
-unset( $allowed_tags_excerpt['figcaption'] );
-unset( $allowed_tags_excerpt['img'] );
 unset( $allowed_tags_excerpt['form'] );
-unset( $allowed_tags_excerpt['button'] );
-unset( $allowed_tags_excerpt['track'] );
-unset( $allowed_tags_excerpt['video'] );
-
 
 /**
  * The article WP_Post object
