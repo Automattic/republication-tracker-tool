@@ -157,7 +157,6 @@ class Republication_Tracker_Tool_Article_Settings {
 			echo '<input type="checkbox" name="republication-tracker-tool-hide-widget" id="republication-tracker-tool-hide-widget" '.$checked.'>';
 			echo __('Hide the Republication sharing widget on this post?', 'republication-tracker-tool');
 		echo '</label>';
-		
 
 	} 
 
