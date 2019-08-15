@@ -39,7 +39,11 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 
 		global $post;
 
-		$hide_republication_widget_on_post = get_post_meta( $post->ID, 'republication-tracker-tool-hide-widget' )[0];
+		$hide_republication_widget_on_post = get_post_meta( $post->ID, 'republication-tracker-tool-hide-widget' );
+
+		if( $hide_republication_widget_on_post ){
+			$hide_republication_widget_on_post = $hide_republication_widget_on_post[0];
+		}
 
 		$hide_republication_widget_filter = apply_filters( 'hide_republication_widget', false );
 
