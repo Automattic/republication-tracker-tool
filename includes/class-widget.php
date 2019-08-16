@@ -39,17 +39,12 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 
 		global $post;
 
-		$hide_republication_widget_on_post = get_post_meta( $post->ID, 'republication-tracker-tool-hide-widget' );
-
-		if( $hide_republication_widget_on_post ){
-			$hide_republication_widget_on_post = $hide_republication_widget_on_post[0];
-		}
-
-		$hide_republication_widget_filter = apply_filters( 'hide_republication_widget', false );
+		// our post `republication-tracker-tool-hide-widget` meta is our default filter value
+		$hide_republication_widget_on_post = apply_filters( 'hide_republication_widget', get_post_meta( $post->ID, 'republication-tracker-tool-hide-widget', true ) );
 
 		// if `republication-tracker-tool-hide-widget` meta is set to true, don't show the shareable content widget
 		// OR if the `hide_republication_widget` filter is set to true, don't show the shareable content widget
-		if( true == $hide_republication_widget_on_post || true == $hide_republication_widget_filter ) {
+		if( true == $hide_republication_widget_on_post ) {
 				
 			return;
 			
