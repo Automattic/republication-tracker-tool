@@ -23,6 +23,17 @@ $allowed_tags_excerpt = $allowedposttags;
 unset( $allowed_tags_excerpt['form'] );
 
 /**
+ * Allow sites to configure which tags are allowed to be output in the republication content
+ * 
+ * Default value is the standard global $allowedposttags, except form elements.
+ *
+ * @link https://github.com/INN/republication-tracker-tool/issues/49
+ * @link https://developer.wordpress.org/reference/functions/wp_kses_allowed_html/
+ * @param Array $allowed_tags_excerpt an associative array of element tags that are allowed
+ */
+$allowed_tags_excerpt = apply_filters( 'republication_tracker_tool_allowed_tags_excerpt', $allowed_tags_excerpt );
+
+/**
  * The article WP_Post object
  *
  * @var WP_Post $post the post object
@@ -41,10 +52,6 @@ $content = strip_shortcodes( $content );
 
 // Remove comments from the content. (Lookin' at you, Gutenberg.)
 $content = preg_replace( '/<!--(.|\s)*?-->/i', ' ', $content );
-
-// Remove captions and figures from the content
-$content = preg_replace( '/<figure[^>]?\>(.|\s)*?<\/figure>/i', ' ', $content );
-$content = preg_replace( '/<figcaption[^>]?\>(.|\s)*?<\/figcaption>/i', ' ', $content );
 
 // And finally, remove some tags.
 $content = wp_kses( $content, $allowed_tags_excerpt );
