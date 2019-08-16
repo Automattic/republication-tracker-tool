@@ -7,6 +7,12 @@ The `hide_republication_widget` filter allows you to target specific posts/categ
 Here's an example of how to hide the Republish button on all posts in the category with an ID of 14.
 
 ```
+/**
+* Hide the Republication sharing widget on posts that are
+* included in the category with the ID of 14.
+*
+* @return bool Whether or not the sharing widget should be hidden
+*/
 function remove_republish_button_from_category(){
 
     // grab our current post object
@@ -19,6 +25,8 @@ function remove_republish_button_from_category(){
 		return true;
 
 	}
+
+    return false;
 
 }
 add_filter( 'hide_republication_widget', 'remove_republish_button_from_category', 10 );
