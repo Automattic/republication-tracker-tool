@@ -68,7 +68,10 @@ class Republication_Tracker_Tool_Article_Settings {
 			array( $this, 'render_hide_widget_metabox' ),
 			array( 'post', 'page' ),
 			'side',
-			'default'
+			'default',
+			array(
+				'__block_editor_compatible_meta_box' => true,
+			)
 		);
 
 	}
@@ -153,10 +156,18 @@ class Republication_Tracker_Tool_Article_Settings {
 
 		}
 
-		echo '<label>';
-			echo '<input type="checkbox" name="republication-tracker-tool-hide-widget" id="republication-tracker-tool-hide-widget" '.$checked.'>';
-			echo __('Hide the Republication sharing widget on this post?', 'republication-tracker-tool');
-		echo '</label>';
+		$hide_republication_widget = apply_filters( 'hide_republication_widget', $hide_republication_widget );
+
+		if( true == $hide_republication_widget ){
+			echo '<p>The Republication sharing widget on this post is programatically disabled through the hide_republication_widget filter.</p>';
+		} else {
+
+			echo '<label>';
+				echo '<input type="checkbox" name="republication-tracker-tool-hide-widget" id="republication-tracker-tool-hide-widget" '.$checked.'>';
+				echo __('Hide the Republication sharing widget on this post?', 'republication-tracker-tool');
+			echo '</label>';
+
+		}
 
 	} 
 
