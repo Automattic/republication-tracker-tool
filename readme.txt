@@ -5,7 +5,7 @@ Tags: publishers, news
 Requires at least: 4.4
 Requires PHP: 5.3
 Tested up to: 5.2.2
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,6 +30,13 @@ The tracking mechanism is similiar to ProPublica's [PixelPing](https://www.propu
 In this plugin, the tracking is achieved through an image element included inside of the republishable content that collects data from the republishing site and sends that data to Google Analytics.
 
 == Changelog ==
+
+= 1.0.2 =
+
+- Sets a default width for the site icon that is displayed at the bottom of republished articles. Previously it did not have a width set which was causing some sites to experience larger than expected images at the end of their republished articles.
+- Added the new `republication_tracker_tool_allowed_tags_excerpt` filter which allows developers to choose what tags to allow and exclude from their shareable content. The only tags that are now excluded by default are `form` tags. Read more about it <a href="https://github.com/INN/republication-tracker-tool/blob/master/docs/removing-republish-button-from-categories.md" target="_blank">here</a>.
+- Added the ability to toggle the Republication sharing widget on or off for individual posts.
+- Added the new `hide_republication_widget` filter which allows developers to programatically hide the Republication sharing widget on specific posts, categories, tags, etc. Read more about it <a href="https://github.com/INN/republication-tracker-tool/blob/master/docs/removing-republish-button-from-categories.md" target="_blank">here</a>.
 
 = 1.0.1 =
 

@@ -14,7 +14,9 @@ A plugin that allows users to add a widget to allow readers to easily acquire Cr
 2. [Configuring plugin settings](docs/configuring-plugin-settings.md)
 3. [Adding Republish button to posts](docs/adding-republish-button-to-posts.md)
 4. [Styling the Republish button](docs/styling-the-republish-button.md)
-5. [Tracking republished posts](docs/tracking-republished-posts.md)
+5. [Removing elements from shareable content](docs/removing-elements-from-shareable-content.md)
+6. [Programatically removing the Republish button from certain categories](docs/removing-republish-button-from-categories.md)
+7. [Tracking republished posts](docs/tracking-republished-posts.md)
 
 ## Development
 
