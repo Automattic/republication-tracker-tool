@@ -108,6 +108,6 @@ if ( isset( $_GET['post'] ) ) {
 }
 
 // grab our site icon and redirect to it once the script finishes
-$site_icon_url = get_site_icon_url();
+$site_icon_url = get_site_icon_url( 150 );
 wp_safe_redirect($site_icon_url, 303);
 exit;

@@ -7,6 +7,13 @@
  */
 
 /**
+ * The article WP_Post object
+ *
+ * @var WP_Post $post the post object
+ */
+global $post;
+
+/**
  * What tags do we want to keep in the embed?
  * Not things from our server.
  *
@@ -20,22 +27,18 @@
  */
 global $allowedposttags;
 $allowed_tags_excerpt = $allowedposttags;
-unset( $allowed_tags_excerpt['audio'] );
-unset( $allowed_tags_excerpt['figure'] );
-unset( $allowed_tags_excerpt['figcaption'] );
-unset( $allowed_tags_excerpt['img'] );
 unset( $allowed_tags_excerpt['form'] );
-unset( $allowed_tags_excerpt['button'] );
-unset( $allowed_tags_excerpt['track'] );
-unset( $allowed_tags_excerpt['video'] );
-
 
 /**
- * The article WP_Post object
+ * Allow sites to configure which tags are allowed to be output in the republication content
+ * 
+ * Default value is the standard global $allowedposttags, except form elements.
  *
- * @var WP_Post $post the post object
+ * @link https://github.com/INN/republication-tracker-tool/issues/49
+ * @link https://developer.wordpress.org/reference/functions/wp_kses_allowed_html/
+ * @param Array $allowed_tags_excerpt an associative array of element tags that are allowed
  */
-global $post;
+$allowed_tags_excerpt = apply_filters( 'republication_tracker_tool_allowed_tags_excerpt', $allowed_tags_excerpt, $post );
 
 /**
  * The content of the aforementioned post
@@ -49,10 +52,6 @@ $content = strip_shortcodes( $content );
 
 // Remove comments from the content. (Lookin' at you, Gutenberg.)
 $content = preg_replace( '/<!--(.|\s)*?-->/i', ' ', $content );
-
-// Remove captions and figures from the content
-$content = preg_replace( '/<figure[^>]?\>(.|\s)*?<\/figure>/i', ' ', $content );
-$content = preg_replace( '/<figcaption[^>]?\>(.|\s)*?<\/figcaption>/i', ' ', $content );
 
 // And finally, remove some tags.
 $content = wp_kses( $content, $allowed_tags_excerpt );
@@ -89,7 +88,7 @@ $attribution_statement = sprintf(
  */
 $pixel = sprintf(
 	// %1$s is the javascript source, %2$s is the post ID, %3$s is the plugins URL
-	'<img id="republication-tracker-tool-source" src="%1$s/?republication-pixel=true&post=%2$s&ga=%3$s">',
+	'<img id="republication-tracker-tool-source" src="%1$s/?republication-pixel=true&post=%2$s&ga=%3$s" style="max-width:200px;">',
 	esc_attr( get_site_url( ) ),
 	esc_attr( $post->ID ),
 	esc_attr( $analytics_id )
