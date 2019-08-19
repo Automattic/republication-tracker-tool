@@ -13,21 +13,22 @@ Here's an example of how to hide the Republish button on all posts in the catego
 *
 * @return bool Whether or not the sharing widget should be hidden
 */
-function remove_republish_button_from_category(){
+function remove_republish_button_from_category( $hide_republication_widget, $post ){
 
-    // grab our current post object
-	global $post;
+    if( true !== $hide_republication_widget ){
 
-    // if the current post is in this category, return true
-	if( in_category( 14, $post->ID ) ){
-		
-        // returning true will cause the filter to hide the button
-		return true;
+        // if the current post is in this category, return true
+        if( in_category( 14, $post->ID ) ){
+            
+            // returning true will cause the filter to hide the button
+            $hide_republication_widget = true;
 
-	}
+        }
+    
+    }
 
-    return false;
+    return $hide_republication_widget;
 
 }
-add_filter( 'hide_republication_widget', 'remove_republish_button_from_category', 10 );
+add_filter( 'hide_republication_widget', 'remove_republish_button_from_category', 10, 2 );
 ```
