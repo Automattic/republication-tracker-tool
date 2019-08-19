@@ -40,7 +40,7 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 		global $post;
 
 		// our post `republication-tracker-tool-hide-widget` meta is our default filter value
-		$hide_republication_widget_on_post = apply_filters( 'hide_republication_widget', get_post_meta( $post->ID, 'republication-tracker-tool-hide-widget', true ) );
+		$hide_republication_widget_on_post = apply_filters( 'hide_republication_widget', get_post_meta( $post->ID, 'republication-tracker-tool-hide-widget', true ), $post );
 
 		// if `republication-tracker-tool-hide-widget` meta is set to true, don't show the shareable content widget
 		// OR if the `hide_republication_widget` filter is set to true, don't show the shareable content widget
