@@ -7,6 +7,13 @@
  */
 
 /**
+ * The article WP_Post object
+ *
+ * @var WP_Post $post the post object
+ */
+global $post;
+
+/**
  * What tags do we want to keep in the embed?
  * Not things from our server.
  *
@@ -31,14 +38,7 @@ unset( $allowed_tags_excerpt['form'] );
  * @link https://developer.wordpress.org/reference/functions/wp_kses_allowed_html/
  * @param Array $allowed_tags_excerpt an associative array of element tags that are allowed
  */
-$allowed_tags_excerpt = apply_filters( 'republication_tracker_tool_allowed_tags_excerpt', $allowed_tags_excerpt );
-
-/**
- * The article WP_Post object
- *
- * @var WP_Post $post the post object
- */
-global $post;
+$allowed_tags_excerpt = apply_filters( 'republication_tracker_tool_allowed_tags_excerpt', $allowed_tags_excerpt, $post );
 
 /**
  * The content of the aforementioned post
