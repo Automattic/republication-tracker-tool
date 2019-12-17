@@ -136,7 +136,7 @@ $email_article = sprintf(
 	rawurlencode( html_entity_decode( get_the_title(), ENT_QUOTES, get_option( 'blog_charset' ) ) ), // subject
 	rawurlencode( html_entity_decode( $article_info, ENT_QUOTES, get_option( 'blog_charset' ) ) ), // start of post content with article info
 	rawurlencode( html_entity_decode( $content, ENT_QUOTES, get_option( 'blog_charset' ) ) ), // post content
-	rawurlencode( html_entity_decode( $attribution_statement, ENT_QUOTES, get_option( 'blog_charset' ) ) ), // post content
+	rawurlencode( html_entity_decode( $attribution_statement, ENT_QUOTES, get_option( 'blog_charset' ) ) ), // republication attribution statement
 	rawurlencode( htmlspecialchars_decode( $pixel ) ), // tracking pixel
 );
 
