@@ -156,9 +156,10 @@ class Republication_Tracker_Tool_Article_Settings {
 
 		}
 
-		$hide_republication_widget = apply_filters( 'hide_republication_widget', $hide_republication_widget, $post );
+		$hide_republication_widget_by_filter = false;
+		$hide_republication_widget_by_filter = apply_filters( 'hide_republication_widget', $hide_republication_widget_by_filter, $post ); 
 
-		if( true == $hide_republication_widget ){
+		if( true == $hide_republication_widget_by_filter ){
 			echo '<p>The Republication sharing widget on this post is programatically disabled through the <code>hide_republication_widget</code> filter. <a href="https://github.com/INN/republication-tracker-tool/blob/master/docs/removing-republish-button-from-categories.md" target="_blank">Read more about this filter</a>.</p>';
 		} else {
 
