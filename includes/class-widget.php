@@ -13,6 +13,8 @@
  */
 class Republication_Tracker_Tool_Widget extends WP_Widget {
 
+	public $has_instance = false;
+
 	/**
 	 * Sets up the widgets name etc
 	 */
@@ -51,7 +53,7 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 		}
 		
 		// define our path to grab file content from
-		define( 'WPRTT_PATH', plugin_dir_path( __FILE__ ) );
+		$republication_plugin_path = plugin_dir_path( __FILE__ );
 
 		wp_enqueue_script( 'republication-tracker-tool-js', plugins_url( 'assets/widget.js', dirname( __FILE__ ) ), array( 'jquery' ), Republication_Tracker_Tool::VERSION, false );
 		wp_enqueue_style( 'republication-tracker-tool-css', plugins_url( 'assets/widget.css', dirname( __FILE__ ) ), array(), Republication_Tracker_Tool::VERSION );
@@ -63,13 +65,6 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 		if ( ! empty( $instance['title'] ) ) {
 			echo wp_kses_post( $args['before_title'] . esc_html( apply_filters( 'widget_title', $instance['title'] ) ) . $args['after_title'] );
 		}
-
-		printf(
-			'<div id="republication-tracker-tool-modal" style="display:none;" data-postid="%1$s" data-pluginsdir="%2$s">%3$s</div>',
-			esc_attr( $post->ID ),
-			esc_attr( plugins_url() ),
-			esc_html( include_once( WPRTT_PATH . 'shareable-content.php' ) )
-		);
 
 		echo '<div class="license">';
 			echo sprintf(
@@ -89,6 +84,21 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 		);
 
 		echo wp_kses_post( $args['after_widget'] );
+
+		// if has_instance is false, we can continue with displaying the modal
+		if( isset( $this->has_instance ) && false === $this->has_instance ){
+
+			// update has_instance so the next time the widget is created on the same page, it does not create a second modal
+			$this->has_instance = true;
+
+			printf(
+				'<div id="republication-tracker-tool-modal" style="display:none;" data-postid="%1$s" data-pluginsdir="%2$s">%3$s</div>',
+				esc_attr( $post->ID ),
+				esc_attr( plugins_url() ),
+				esc_html( include_once( $republication_plugin_path . 'shareable-content.php' ) )
+			);
+
+		}
 	}
 
 	/**
