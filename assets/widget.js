@@ -21,7 +21,7 @@ function modal_actions(){
 	// Responsive modal
 	var $modal = $('#republication-tracker-tool-modal');
 	var $modal_content = $('#republication-tracker-tool-modal-content');
-	var $btn = $('#cc-btn');
+	var $btn = $('.republication-tracker-tool-button');
 	var $close = $('.republication-tracker-tool-close');
 
 	$btn.click(function(){
