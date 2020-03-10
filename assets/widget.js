@@ -52,6 +52,7 @@ function modal_actions(){
 }
 
 function show_modal( $modal ) {
+	var $ = jQuery;
 	var $modal_content = $('#republication-tracker-tool-modal-content');
 	//$modal.html( html );
 	$modal.show();
@@ -63,6 +64,7 @@ function show_modal( $modal ) {
 }
 
 function close_modal( $modal ) {
+	var $ = jQuery;
 	$('body').removeClass('modal-open-disallow-scrolling');
 	$modal.hide();
 }
