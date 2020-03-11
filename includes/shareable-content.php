@@ -91,7 +91,7 @@ $pixel = sprintf(
 	'<img id="republication-tracker-tool-source" src="%1$s/?republication-pixel=true&post=%2$s&ga=%3$s" style="max-width:200px;">',
 	esc_attr( get_site_url( ) ),
 	esc_attr( $post->ID ),
-	esc_attr( $analytics_id )
+	esc_attr( $analytics_id ),
 );
 
 /**
@@ -109,6 +109,36 @@ $article_info = sprintf(
 );
 // strip empty tags after automatically applying p tags
 $article_info = str_replace( '<p></p>', '', wpautop( $article_info ) );
+
+/**
+ * The shareable article title, content, etc. in emailable form
+ * 
+ * @var HTML $email_article The mailto: link to email the entire article content in the following order:
+ * 
+ * Subject:
+ * %2$s - "Republish this story:"
+ * %3$s - post permalink
+ * 
+ * Body:
+ * %5$s - $article_info The article title, byline, source site, and date
+ * %0D%0A - carriage return, line feed
+ * %6$s - $content The article content
+ * %0D%0A - carriage return, line feed
+ * %7$s - $attribution_statement The article source
+ * %0D%0A - carriage return, line feed
+ * %8$s - $pixel The link for the republication tracking pixel
+ */
+$email_article = sprintf(
+	'<a class="btn" href="mailto:?subject=%2$s%3$s&body=%5$s%0D%0A%6$s%0D%0A%7$s%0D%0A%8$s" target="_blank"><i class="icon-mail"></i> %1$s</a>',
+	esc_attr( __( 'Email Article', 'republication-tracker-tool' ) ), // button text
+	esc_attr( __( 'Republish this story: ', 'republication-tracker-tool' ) ), // start of email subject
+	rawurlencode( html_entity_decode( get_the_permalink() ) ), // url
+	rawurlencode( html_entity_decode( get_the_title(), ENT_QUOTES, get_option( 'blog_charset' ) ) ), // subject
+	rawurlencode( html_entity_decode( $article_info, ENT_QUOTES, get_option( 'blog_charset' ) ) ), // start of post content with article info
+	rawurlencode( html_entity_decode( $content, ENT_QUOTES, get_option( 'blog_charset' ) ) ), // post content
+	rawurlencode( html_entity_decode( $attribution_statement, ENT_QUOTES, get_option( 'blog_charset' ) ) ), // republication attribution statement
+	rawurlencode( htmlspecialchars_decode( $pixel ) ), // tracking pixel
+);
 
 /**
  * The licensing statement from this plugin
@@ -153,6 +183,8 @@ echo '<div id="republication-tracker-tool-modal-content" style="display:none;">'
 		)
 	);
 	?>
-	<button onclick="copyToClipboard('#republication-tracker-tool-shareable-content')"><?php echo esc_html__( 'Copy to Clipboard', 'republication-tracker-tool' ); ?></button>
+	<button class="btn" onclick="copyToClipboard('#republication-tracker-tool-shareable-content')"><?php echo esc_html__( 'Copy to Clipboard', 'republication-tracker-tool' ); ?></button>
 	<?php
+	echo $email_article;
+
 echo '</div>'; // #republication-tracker-tool-modal-content
