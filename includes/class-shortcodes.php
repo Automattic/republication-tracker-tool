@@ -28,7 +28,10 @@ class Republication_Tracker_Tool_Shortcodes {
 		add_action( 'wp_ajax_my_action', 'my_action' );
 		add_action( 'wp_ajax_nopriv_my_action', 'my_action' );
 
+		ob_start();
 		echo Republication_Tracker_Tool_Widget::button_output();
-		Republication_Tracker_Tool_Widget::maybe_print_modal_content();
+		echo Republication_Tracker_Tool_Widget::maybe_print_modal_content();
+		return ob_get_clean();
 	}
 }
+add_shortcode( 'republication_modal_button', array( 'Republication_Tracker_Tool_Shortcodes', 'button_shortcode' ) );
