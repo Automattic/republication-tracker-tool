@@ -71,6 +71,11 @@ final class Republication_Tracker_Tool {
 	protected $settings;
 
 	/**
+	 * Has a widget or button been output upon the page?
+	 */
+	public $has_instance = false;
+
+	/**
 	 * Creates or returns an instance of this class.
 	 *
 	 * @since   1.0
