@@ -28,8 +28,14 @@ class Republication_Tracker_Tool_Shortcodes {
 		add_action( 'wp_ajax_my_action', 'my_action' );
 		add_action( 'wp_ajax_nopriv_my_action', 'my_action' );
 
+		if ( isset( $atts['label'] ) ) {
+			$label = $atts['label'];
+		} else {
+			$label = null;
+		}
+
 		ob_start();
-		echo Republication_Tracker_Tool_Widget::button_output();
+		echo Republication_Tracker_Tool_Widget::button_output( $label );
 		echo Republication_Tracker_Tool_Widget::maybe_print_modal_content();
 		return ob_get_clean();
 	}
