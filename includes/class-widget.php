@@ -76,7 +76,7 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 
 		echo wp_kses_post( $args['after_widget'] );
 
-		$this->maybe_print_modal_content();
+		echo $this->maybe_print_modal_content();
 	}
 
 	/**
@@ -98,10 +98,8 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 			// update has_instance so the next time the widget is created on the same page, it does not create a second modal
 			$Republication_Tracker_Tool->has_instance = true;
 
-			error_log(var_export( 'aaa', true));
 			return Republication_Tracker_Tool_Widget::modal_content();
 		} else {
-			error_log(var_export( 'no need', true));
 			return '';
 		}
 	}
@@ -117,12 +115,14 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 		// define our path to grab file content from
 		$republication_plugin_path = plugin_dir_path( __FILE__ );
 
-		return sprintf(
+		ob_start();
+		printf(
 			'<div id="republication-tracker-tool-modal" style="display:none;" data-postid="%1$s" data-pluginsdir="%2$s">%3$s</div>',
 			esc_attr( $post->ID ),
 			esc_attr( plugins_url() ),
 			esc_html( include_once( $republication_plugin_path . 'shareable-content.php' ) )
 		);
+		return ob_get_clean();
 	}
 
 	/**
