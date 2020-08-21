@@ -42,8 +42,14 @@
 		 * Optional block extended support features.
 		 */
 		supports: {
-			// Removes support for an HTML mode.
+			align: false,
+			alignWide: false,
+			anchor: false,
+			customClassName: false,
+			className: false,
 			html: false,
+			multiple: true,
+			reusable: false,
 		},
 
 		/**

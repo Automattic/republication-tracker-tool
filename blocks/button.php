@@ -12,7 +12,7 @@
  *
  * @see https://wordpress.org/gutenberg/handbook/designers-developers/developers/tutorials/block-tutorial/applying-styles-with-stylesheets/
  */
-function button_block_init() {
+function republication_tracker_tool_button_block_init() {
 	// Skip block registration if Gutenberg is not enabled/merged.
 	if ( ! function_exists( 'register_block_type' ) ) {
 		return;
@@ -44,7 +44,7 @@ function button_block_init() {
 		'editor_style'  => 'button-block-editor',
 		'style'         => 'republication-tracker-tool-css',
 		'script'        => 'republication-tracker-tool-js',
-		'render_clalback' => array( 'Republication_Tracker_Tool_Shortcodes', 'button_shortcode' );
+		'render_clalback' => array( 'Republication_Tracker_Tool_Shortcodes', 'button_shortcode' ),
 	) );
 }
-add_action( 'init', 'button_block_init' );
+add_action( 'init', 'republication_tracker_tool_button_block_init' );
