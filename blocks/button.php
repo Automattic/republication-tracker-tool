@@ -27,6 +27,7 @@ function republication_tracker_tool_button_block_init() {
 			'wp-blocks',
 			'wp-i18n',
 			'wp-element',
+			'wp-components',
 		),
 		filemtime( "$dir/$index_js" )
 	);
@@ -40,11 +41,16 @@ function republication_tracker_tool_button_block_init() {
 	);
 
 	register_block_type( 'republication-tracker-tool/button', array(
+		'attributes'    => array(
+			'label' => array(
+				'type' => 'string',
+			),
+		),
 		'editor_script' => 'button-block-editor',
 		'editor_style'  => 'button-block-editor',
 		'style'         => 'republication-tracker-tool-css',
 		'script'        => 'republication-tracker-tool-js',
-		'render_clalback' => array( 'Republication_Tracker_Tool_Shortcodes', 'button_shortcode' ),
+		'render_callback' => array( 'Republication_Tracker_Tool_Shortcodes', 'button_shortcode' ),
 	) );
 }
 add_action( 'init', 'republication_tracker_tool_button_block_init' );
