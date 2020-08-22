@@ -24,7 +24,6 @@
     display: block;
 }
 
-button.republication-tracker-tool-button,
 button.republication-tracker-tool-button {
     width:100%;
     background-color: #5499db;
@@ -39,7 +38,6 @@ button.republication-tracker-tool-button {
     text-shadow: 1px 1px 1px #2863a7;
 }
 
-button.republication-tracker-tool-button:hover,
 button.republication-tracker-tool-button:hover {
     background-color: #2863a7;
     text-decoration: none;
