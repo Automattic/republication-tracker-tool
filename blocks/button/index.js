@@ -15,6 +15,9 @@
 	 */
 	var __ = wp.i18n.__;
 
+	var TextControl = wp.components.TextControl;
+	var Placeholder = wp.components.Placeholder;
+
 	/**
 	 * Every block starts by registering a new block type definition.
 	 * @see https://wordpress.org/gutenberg/handbook/designers-developers/developers/block-api/#registering-a-block
@@ -25,6 +28,11 @@
 		 * The block inserter will show this name.
 		 */
 		title: __( 'Republication Modal Button', 'republication-tracker-tool' ),
+
+		/**
+		 * Describe the block for the block inspector
+		 */
+		description: __( 'Add a button which opens the Republication Tracker Tool sharing modal.', 'republication-tracker-tool' ),
 
 		/**
 		 * An icon property should be specified to make it easier to identify a block.
@@ -46,7 +54,7 @@
 			alignWide: false,
 			anchor: false,
 			customClassName: false,
-			className: false,
+			className: true,
 			html: false,
 			multiple: true,
 			reusable: false,
@@ -62,9 +70,17 @@
 		 */
 		edit: function( props ) {
 			return el(
-				'p',
-				{ className: props.className },
-				__( 'Hello from the editor!', 'republication-tracker-tool' )
+				Placeholder,
+				{
+					className: props.className + ' republication-tracker-tool-button',
+					label: __( 'Republication Modal Button', 'republication-tracker-tool' ),
+				},
+				el ( TextControl, {
+					label: __( 'Button Label', 'republication-tracker-tool' ),
+					value: props.attributes.label,
+					placeholder: __( 'Republish This Story', 'republication-tracker-tool' ),
+					onChange: ( value ) => { props.setAttributes( { label: value } ); },
+				} )
 			);
 		},
 
@@ -73,14 +89,11 @@
 		 * into the final markup, which is then serialized by Gutenberg into `post_content`.
 		 * @see https://wordpress.org/gutenberg/handbook/designers-developers/developers/block-api/block-edit-save/#save
 		 *
-		 * @return {Element}       Element to render.
+		 * @return {null}  There is no element to render
 		 */
-		save: function() {
-			return el(
-				'p',
-				{},
-				__( 'Hello from the saved content!', 'republication-tracker-tool' )
-			);
+		save: function( props ) {
+			// no element created here, but this function is needed in order to let the props get passed along.
+			return null;
 		}
 	} );
 } )(
