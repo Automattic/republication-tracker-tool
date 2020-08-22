@@ -1,11 +1,14 @@
 <?php
 /**
- * The [republication_button] shortcode and related functions
+ * The [republication_modal_button] shortcode and related functions
  *
  * @package Republication_Tracker_Tool
  * @link https://github.com/INN/republication-tracker-tool/issues/66#issuecomment-671607012
  */
 
+/**
+ * A container class for shortcodes
+ */
 class Republication_Tracker_Tool_Shortcodes {
 	/**
 	 * A shortcode to output the button that opens the Republication Tracking Tool modal

@@ -1,9 +1,3 @@
-/**
- * The following styles get applied inside the editor only.
- *
- * Replace them with your own styles or remove the file completely.
- */
-
 .wp-block-republication-tracker-tool-button.components-placeholder {
   min-height: unset;
 }
@@ -20,8 +14,6 @@
   flex-shrink: 0;
 
   margin-bottom: 0;
-
-  font-size: 13px;
 }
 .wp-block-republication-tracker-tool-button .components-base-control__field input {
   flex-grow: 1;
