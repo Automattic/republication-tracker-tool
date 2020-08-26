@@ -2,6 +2,8 @@
 /**
  * This file provides an AJAX response containing the body of a post as well as some sharing information.
  *
+ * This operates within The Loop. $post is set to a specific post.
+ *
  * Expected URLs is something like /wp-content/plugins/republication-tracker-tool/includes/shareable-content.php?post=22078&_=1512494948576 or something
  * We aren't passing a NONCE; this isn't a form.
  */
@@ -97,17 +99,29 @@ $pixel = sprintf(
 /**
  * The article title, byline, source site, and date
  *
+ * In version TKTK, this switched from get_the_author_meta
+ *
  * @var HTML $article_info The article title, etc.
  */
 $article_info = sprintf(
-	// translators: %1$s is the post title, %2$s is the byline, %3$s is the site name, %4$s is the date in the format F j, Y
+	// translators: %1$s is the post title, %2$s is the byline, %3$s is the site name, %4$s is the date in the format F j, Y.
 	__( '<h1>%1$s</h1><p class="byline">by %2$s, %3$s <br />%4$s</p>', 'republication-tracker-tool' ),
 	wp_kses_post( get_the_title( $post ) ),
-	wp_kses_post( get_the_author_meta( 'display_name', $post->post_author ) ),
+	/**
+	 * Allow filtering of the byline that is output in the share dialog and the copyable plaintext.
+	 *
+	 * This is to provide support for plugins that do not implement
+	 * a filter on 'the_author', or in cases where the 'the_author'
+	 * filter returns incomplete information.
+	 *
+	 * @link https://developer.wordpress.org/reference/functions/get_the_author/
+	 * @link https://github.com/INN/republication-tracker-tool/issues/46
+	 */
+	wp_kses_post( apply_filters( 'republication_tracker_tool_byline', get_the_author() ) ),
 	wp_kses_post( get_bloginfo( 'name' ) ),
 	wp_kses_post( date( 'F j, Y', strtotime( $post->post_date ) ) )
 );
-// strip empty tags after automatically applying p tags
+// strip empty tags after automatically applying p tags.
 $article_info = str_replace( '<p></p>', '', wpautop( $article_info ) );
 
 /**
