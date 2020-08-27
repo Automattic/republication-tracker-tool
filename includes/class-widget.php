@@ -112,6 +112,10 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 	 */
 	public static function modal_content() {
 		global $post;
+		if ( ! is_a( $post, 'WP_Post' ) ) {
+			return;
+		}
+
 		// define our path to grab file content from
 		$republication_plugin_path = plugin_dir_path( __FILE__ );
 
