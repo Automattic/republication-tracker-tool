@@ -24,8 +24,7 @@
     display: block;
 }
 
-.side-widget.republication_tracker_tool button.republication-tracker-tool-button,
-.widget.republication_tracker_tool button.republication-tracker-tool-button {
+button.republication-tracker-tool-button {
     width:100%;
     background-color: #5499db;
     border: 1px solid #2863a7;
@@ -39,8 +38,7 @@
     text-shadow: 1px 1px 1px #2863a7;
 }
 
-.side-widget.republication_tracker_tool button.republication-tracker-tool-button:hover,
-.widget.republication_tracker_tool button.republication-tracker-tool-button:hover {
+button.republication-tracker-tool-button:hover {
     background-color: #2863a7;
     text-decoration: none;
     cursor: pointer;

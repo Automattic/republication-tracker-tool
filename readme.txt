@@ -31,6 +31,16 @@ In this plugin, the tracking is achieved through an image element included insid
 
 == Changelog ==
 
+= Unreleased changes =
+
+- Adds the "Republication Modal Button" block, with configurable label, which opens the Republication modal. Pull request TKTK for https://github.com/INN/republication-tracker-tool/issues/66, sponsored by [the Center for Public Integrity](https://publicintegrity.org/).
+- Adds the `[republication_modal_button]` shortcode, with optional `label=""` parameter, which opens the Republication modal.  Pull request TKTK for https://github.com/INN/republication-tracker-tool/issues/66, sponsored by [the Center for Public Integrity](https://publicintegrity.org/).
+- Adds static function `Republication_Tracker_Tool_Widget::button_output( $label = '' );` to return the button markup, and `Republication_Tracker_Tool_Widget::maybe_print_modal_content();` to enqueue the modal markup. Pull request TKTK for https://github.com/INN/republication-tracker-tool/issues/66, sponsored by [the Center for Public Integrity](https://publicintegrity.org/).
+- Reduces selector specificity for widget-provided styles on `button.republication-tracker-tool-button`. Pull request TKTK.
+
+Potentially-breaking changes:
+- The property `Republication_Tracker_Tool_Widget->has_instance` is now `Republication_Tracker_Tool->has_instance`.
+
 = 1.0.2 =
 
 - Sets a default width for the site icon that is displayed at the bottom of republished articles. Previously it did not have a width set which was causing some sites to experience larger than expected images at the end of their republished articles.

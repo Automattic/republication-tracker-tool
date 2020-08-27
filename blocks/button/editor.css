@@ -1,0 +1,20 @@
+.wp-block-republication-tracker-tool-button.components-placeholder {
+  min-height: unset;
+}
+.wp-block-republication-tracker-tool-button .components-base-control__field {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.wp-block-republication-tracker-tool-button .components-base-control__field label {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
+
+  margin-bottom: 0;
+}
+.wp-block-republication-tracker-tool-button .components-base-control__field input {
+  flex-grow: 1;
+}

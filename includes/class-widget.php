@@ -3,7 +3,7 @@
  * Republication Tracker Tool Settings.
  *
  * @since   1.0
- * @package Trust_Indicators
+ * @package Republication_Tracker_Tool
  */
 
 /**
@@ -13,7 +13,6 @@
  */
 class Republication_Tracker_Tool_Widget extends WP_Widget {
 
-	public $has_instance = false;
 
 	/**
 	 * Sets up the widgets name etc
@@ -47,13 +46,8 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 		// if `republication-tracker-tool-hide-widget` meta is set to true, don't show the shareable content widget
 		// OR if the `hide_republication_widget` filter is set to true, don't show the shareable content widget
 		if( true == $hide_republication_widget_on_post ) {
-				
 			return;
-			
 		}
-		
-		// define our path to grab file content from
-		$republication_plugin_path = plugin_dir_path( __FILE__ );
 
 		wp_enqueue_script( 'republication-tracker-tool-js', plugins_url( 'assets/widget.js', dirname( __FILE__ ) ), array( 'jquery' ), Republication_Tracker_Tool::VERSION, false );
 		wp_enqueue_style( 'republication-tracker-tool-css', plugins_url( 'assets/widget.css', dirname( __FILE__ ) ), array(), Republication_Tracker_Tool::VERSION );
@@ -67,10 +61,7 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 		}
 
 		echo '<div class="license">';
-			echo sprintf(
-				'<p><button name="%1$s" id="cc-btn" class="republication-tracker-tool-button">%1$s</button></p>',
-				esc_html__( 'Republish This Story', 'republication-tracker-tool' )
-			);
+			echo $this->button_output();
 			echo sprintf(
 				'<p><a class="license" rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nd/4.0/"><img alt="%s" style="border-width:0" src="%s" /></a></p>',
 				esc_html__( 'Creative Commons License', 'republication-tracker-tool' ),
@@ -85,20 +76,74 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 
 		echo wp_kses_post( $args['after_widget'] );
 
+		echo $this->maybe_print_modal_content();
+	}
+
+	/**
+	 * Consider whether to output the markup for the button, and if so, do so
+	 *
+	 * @uses $this::print_modal_content()
+	 * @return String Empty string if there is no need to output the modal contents, or
+	 *                the output of $this::print_modal_content() if there is a need.
+	 */
+	public static function maybe_print_modal_content() {
+		/**
+		 * The parent singleton class, grabbed here so that we can check whether an instance already exists
+		 */
+		$Republication_Tracker_Tool = Republication_Tracker_Tool::get_instance();
+
 		// if has_instance is false, we can continue with displaying the modal
-		if( isset( $this->has_instance ) && false === $this->has_instance ){
+		if( isset( $Republication_Tracker_Tool->has_instance ) && false === $Republication_Tracker_Tool->has_instance ){
 
 			// update has_instance so the next time the widget is created on the same page, it does not create a second modal
-			$this->has_instance = true;
+			$Republication_Tracker_Tool->has_instance = true;
 
-			printf(
-				'<div id="republication-tracker-tool-modal" style="display:none;" data-postid="%1$s" data-pluginsdir="%2$s">%3$s</div>',
-				esc_attr( $post->ID ),
-				esc_attr( plugins_url() ),
-				esc_html( include_once( $republication_plugin_path . 'shareable-content.php' ) )
-			);
-
+			return Republication_Tracker_Tool_Widget::modal_content();
+		} else {
+			return '';
 		}
+	}
+
+	/**
+	 * Output the markup for the button
+	 *
+	 * @global $post;
+	 * @return String HTML of the modal contents.
+	 */
+	public static function modal_content() {
+		global $post;
+		if ( ! is_a( $post, 'WP_Post' ) ) {
+			return;
+		}
+
+		// define our path to grab file content from
+		$republication_plugin_path = plugin_dir_path( __FILE__ );
+
+		ob_start();
+		printf(
+			'<div id="republication-tracker-tool-modal" style="display:none;" data-postid="%1$s" data-pluginsdir="%2$s">%3$s</div>',
+			esc_attr( $post->ID ),
+			esc_attr( plugins_url() ),
+			esc_html( include_once( $republication_plugin_path . 'shareable-content.php' ) )
+		);
+		return ob_get_clean();
+	}
+
+	/**
+	 * Output the modal-opening button.
+	 *
+	 * @param String $label The label for the button. Defaults to "Republish This Story".
+	 * @return String HTML for the button.
+	 */
+	public static function button_output( $label = '' ) {
+		if ( empty( trim( $label ) ) ) {
+			$label = __( 'Republish This Story', 'republication-tracker-tool' );
+		}
+
+		return sprintf(
+			'<p><button name="%1$s" id="cc-btn" class="republication-tracker-tool-button">%1$s</button></p>',
+			esc_html( $label )
+		);
 	}
 
 	/**

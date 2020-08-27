@@ -14,6 +14,8 @@
 require plugin_dir_path( __FILE__ ).'includes/class-settings.php';
 require plugin_dir_path( __FILE__ ).'includes/class-article-settings.php';
 require plugin_dir_path( __FILE__ ).'includes/class-widget.php';
+require plugin_dir_path( __FILE__ ).'includes/class-shortcodes.php';
+require plugin_dir_path( __FILE__ ).'blocks/button.php';
 
 /**
 * Main initiation class.
@@ -69,6 +71,11 @@ final class Republication_Tracker_Tool {
 	 * @var Republication_Tracker_Tool_Settings
 	 */
 	protected $settings;
+
+	/**
+	 * Has a widget or button been output upon the page?
+	 */
+	public $has_instance = false;
 
 	/**
 	 * Creates or returns an instance of this class.
