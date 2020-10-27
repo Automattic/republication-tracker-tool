@@ -3,7 +3,14 @@
 // function to get the title of the referring url
 function wprtt_get_referring_page_title( $url ){
 
-	$response = wp_remote_get( $url );
+	$args = array(
+		'redirection' => 1,
+		'headers' => array (
+			'Referer' => '',
+		),
+	);
+
+	$response = wp_remote_get( $url, $args );
 
 	// if there was no issue grabbing the url, continue
 	if( !is_wp_error( $response ) ){
@@ -42,24 +49,21 @@ if ( isset( $_GET['post'] ) ) {
 	$shared_post_slug = rawurlencode($shared_post->post_name);
 	$shared_post_permalink = get_permalink($shared_post_id);
 
-	if( array_key_exists( 'HTTP_REFERER', $_SERVER ) ){
+	$url = '';
+	$url_title = '';
+	$url_host = '';
 
-		if( isset( $_SERVER['HTTP_REFERER'] ) ){
-			$url = esc_url_raw( $_SERVER['HTTP_REFERER'] );
-		}
+	if ( ! empty( $_SERVER['HTTP_REFERER'] ) ){
 
-		$url_title = wprtt_get_referring_page_title( $url );
-		$url_title = str_replace( ' ', '%20', $url_title );
-
-		$url_host = parse_url( $url, PHP_URL_HOST );
-		$url_path = parse_url( $url, PHP_URL_PATH );
-
-	} else {
-
-		$url = '';
-		$url_title = '';
-		$url_host = '';
+		$url = esc_url_raw( $_SERVER['HTTP_REFERER'] );
 		
+		if ( ! empty( $url ) ) {
+			$url_title = wprtt_get_referring_page_title( $url );
+			$url_title = str_replace( ' ', '%20', $url_title );
+
+			$url_host = parse_url( $url, PHP_URL_HOST );
+			$url_path = parse_url( $url, PHP_URL_PATH );
+		}
 	}
 
 	$value = get_post_meta( $shared_post_id, 'republication_tracker_tool_sharing', true );
