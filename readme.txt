@@ -31,6 +31,10 @@ In this plugin, the tracking is achieved through an image element included insid
 
 == Changelog ==
 
+= Unreleased changes =
+
+- Fixes bug where Republication pixel's referer lookup function could lead to a loop of looking up itself. Pull request TKTK for issues [#80](https://github.com/Automattic/republication-tracker-tool/issues/80) and [#91](https://github.com/Automattic/republication-tracker-tool/issues/91).
+
 = 1.0.2 =
 
 - Sets a default width for the site icon that is displayed at the bottom of republished articles. Previously it did not have a width set which was causing some sites to experience larger than expected images at the end of their republished articles.
