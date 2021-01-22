@@ -57,8 +57,6 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 
 		wp_enqueue_script( 'republication-tracker-tool-js', plugins_url( 'assets/widget.js', dirname( __FILE__ ) ), array( 'jquery' ), Republication_Tracker_Tool::VERSION, false );
 		wp_enqueue_style( 'republication-tracker-tool-css', plugins_url( 'assets/widget.css', dirname( __FILE__ ) ), array(), Republication_Tracker_Tool::VERSION );
-		add_action( 'wp_ajax_my_action', 'my_action' );
-		add_action( 'wp_ajax_nopriv_my_action', 'my_action' );
 
 		echo wp_kses_post( $args['before_widget'] );
 
