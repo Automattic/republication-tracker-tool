@@ -147,7 +147,7 @@ echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 's
 			'<textarea readonly id="republication-tracker-tool-shareable-content" rows="5">%1$s %2$s %3$s</textarea>',
 			esc_html( $article_info ),
 			$content . "\n\n",
-			wpautop( $attribution_statement . $pixel )
+			wpautop( $attribution_statement . htmlentities( $pixel ) )
 		)
 	);
 	if ( ! $is_amp ) {
