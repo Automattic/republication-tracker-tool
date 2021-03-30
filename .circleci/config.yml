@@ -15,11 +15,19 @@ jobs:
     steps:
       - checkout_with_workspace
       - run:
+          name: Install npm dependencies
+          command: npm ci
+      - run:
           name: Install rsync
           command: sudo apt install rsync
       - run:
           name: Release new version
           command: npm run release
+      - run:
+          name: Update WPORG version of the plugin
+          command: |
+            wget -O release-wporg.sh https://raw.githubusercontent.com/Automattic/newspack-scripts/master/release-wporg.sh
+            ./release-wporg.sh
 
   # Reset alpha branch after a release
   post_release:
