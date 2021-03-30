@@ -8,7 +8,6 @@ commands:
           at: ~/
 
 jobs:
-  # Release job
   release:
     docker:
       - image: circleci/php:7.2-node-browsers
@@ -27,21 +26,18 @@ jobs:
           name: Release new version on WordPress.org
           command: |
             wget -O release-wporg.sh https://raw.githubusercontent.com/Automattic/newspack-scripts/master/release-wporg.sh
-            ./release-wporg.sh
+            chmod 755 ./release-wporg.sh && ./release-wporg.sh
 
-  # Reset alpha branch after a release
   post_release:
     docker:
       - image: circleci/php:7.2-node-browsers
     steps:
       - checkout_with_workspace
       - run:
-          name: Set tip of alpha branch on top of release and force-push it to remote
+          name: Perform post-release chores
           command: |
-            git pull origin release
-            git checkout alpha
-            git reset --hard release --
-            git push "https://$GITHUB_TOKEN@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git" --force
+            wget -O post-release.sh https://raw.githubusercontent.com/Automattic/newspack-scripts/master/post-release.sh
+            chmod 755 ./post-release.sh && ./post-release.sh
 
 workflows:
   version: 2
