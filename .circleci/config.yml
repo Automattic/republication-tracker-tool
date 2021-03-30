@@ -21,10 +21,10 @@ jobs:
           name: Install rsync
           command: sudo apt install rsync
       - run:
-          name: Release new version
+          name: Release new version on Github
           command: npm run release
       - run:
-          name: Update WPORG version of the plugin
+          name: Release new version on WordPress.org
           command: |
             wget -O release-wporg.sh https://raw.githubusercontent.com/Automattic/newspack-scripts/master/release-wporg.sh
             ./release-wporg.sh
