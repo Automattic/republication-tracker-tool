@@ -8,7 +8,7 @@ commands:
           at: ~/
 
 jobs:
-  release:
+  release_github:
     docker:
       - image: circleci/php:7.2-node-browsers
     steps:
@@ -22,6 +22,12 @@ jobs:
       - run:
           name: Release new version on Github
           command: npm run release
+
+  release_wporg:
+    docker:
+      - image: circleci/php:7.2-node-browsers
+    steps:
+      - checkout_with_workspace
       - run:
           name: Release new version on WordPress.org
           command: |
@@ -43,7 +49,7 @@ workflows:
   version: 2
   main:
     jobs:
-      - release:
+      - release_github:
           filters:
             branches:
               only:
@@ -51,7 +57,14 @@ workflows:
                 - alpha
       - post_release:
           requires:
-            - release
+            - release_github
+          filters:
+            branches:
+              only:
+                - release
+      - release_wporg:
+          requires:
+            - release_github
           filters:
             branches:
               only:
