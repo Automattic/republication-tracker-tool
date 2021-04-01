@@ -1,0 +1,71 @@
+version: 2.1
+
+commands:
+  checkout_with_workspace:
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/
+
+jobs:
+  release_github:
+    docker:
+      - image: circleci/php:7.2-node-browsers
+    steps:
+      - checkout_with_workspace
+      - run:
+          name: Install npm dependencies
+          command: npm ci
+      - run:
+          name: Install rsync
+          command: sudo apt install rsync
+      - run:
+          name: Release new version on Github
+          command: npm run release
+
+  release_wporg:
+    docker:
+      - image: circleci/php:7.2-node-browsers
+    steps:
+      - checkout_with_workspace
+      - run:
+          name: Release new version on WordPress.org
+          command: |
+            wget -O release-wporg.sh https://raw.githubusercontent.com/Automattic/newspack-scripts/master/release-wporg.sh
+            chmod 755 ./release-wporg.sh && ./release-wporg.sh
+
+  post_release:
+    docker:
+      - image: circleci/php:7.2-node-browsers
+    steps:
+      - checkout_with_workspace
+      - run:
+          name: Perform post-release chores
+          command: |
+            wget -O post-release.sh https://raw.githubusercontent.com/Automattic/newspack-scripts/master/post-release.sh
+            chmod 755 ./post-release.sh && ./post-release.sh
+
+workflows:
+  version: 2
+  main:
+    jobs:
+      - release_github:
+          filters:
+            branches:
+              only:
+                - release
+                - alpha
+      - post_release:
+          requires:
+            - release_github
+          filters:
+            branches:
+              only:
+                - release
+      - release_wporg:
+          requires:
+            - release_github
+          filters:
+            branches:
+              only:
+                - release
