@@ -22,6 +22,11 @@ jobs:
       - run:
           name: Release new version on Github
           command: npm run release
+      # Persist assets generated for the GH release, so that they are available for WPORG release.
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project
 
   release_wporg:
     docker:
