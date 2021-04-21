@@ -132,7 +132,7 @@ class Republication_Tracker_Tool_Settings {
 				'teeny'         => true,
 			)
 		);
-		echo sprintf( '<p><em>%s</em></p>', wp_kses_post( 'The Republication Tracker Tool Policy field is where you will be able to input your rules and policies for users to see before they copy and paste your content to republish.As an example of a republication policy hat uses a Creative Commons license, check out the list in this plugin\'s <a href="https://github.com/INN/republication-tracker-tool/blob/master/docs/configuring-plugin-settings.md#republication-tracker-tool-policy" target="_blank">documentation</a> on GitHub.' ) );
+		echo sprintf( '<p><em>%s</em></p>', wp_kses_post( 'The Republication Tracker Tool Policy field is where you will be able to input your rules and policies for users to see before they copy and paste your content to republish.As an example of a republication policy hat uses a Creative Commons license, check out the list in this plugin\'s <a href="https://github.com/Automattic/republication-tracker-tool/blob/master/docs/configuring-plugin-settings.md#republication-tracker-tool-policy" target="_blank">documentation</a> on GitHub.' ) );
 	}
 
 	public function republication_tracker_tool_analytics_id_callback( $arg ) {

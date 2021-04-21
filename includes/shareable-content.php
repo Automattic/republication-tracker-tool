@@ -34,7 +34,7 @@ unset( $allowed_tags_excerpt['form'] );
  *
  * Default value is the standard global $allowedposttags, except form elements.
  *
- * @link https://github.com/INN/republication-tracker-tool/issues/49
+ * @link https://github.com/Automattic/republication-tracker-tool/issues/49
  * @link https://developer.wordpress.org/reference/functions/wp_kses_allowed_html/
  * @param Array $allowed_tags_excerpt an associative array of element tags that are allowed
  */
