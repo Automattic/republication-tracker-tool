@@ -105,7 +105,6 @@ if ( isset( $_GET['post'] ) ) {
 	}
 }
 
-// grab our site icon and redirect to it once the script finishes
-$site_icon_url = get_site_icon_url( 150 );
-wp_safe_redirect( $site_icon_url, 303 );
+header( 'Content-Type: image/png' );
+echo base64_decode( 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CYII=' );
 exit;

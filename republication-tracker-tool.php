@@ -205,7 +205,7 @@ final class Republication_Tracker_Tool {
 		$analytics_id = get_option( 'republication_tracker_tool_analytics_id' );
 		return sprintf(
 			// %1$s is the javascript source, %2$s is the post ID, %3$s is the plugins URL
-			'<img id="republication-tracker-tool-source" src="%1$s/?republication-pixel=true&post=%2$s&ga=%3$s" style="max-width:200px;">',
+			'<img id="republication-tracker-tool-source" src="%1$s/?republication-pixel=true&post=%2$s&ga=%3$s" style="width:1px;height:1px;">',
 			esc_attr( get_site_url() ),
 			esc_attr( $post_id ),
 			esc_attr( $analytics_id )
