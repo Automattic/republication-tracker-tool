@@ -62,14 +62,6 @@ $content = str_replace( '<p></p>', '', wpautop( $content ) );
 // Force the content to be UTF-8 escaped HTML.
 $content = htmlspecialchars( $content, ENT_HTML5, 'UTF-8', true );
 
-// grab our analytics id to pass as GA param
-$analytics_id = get_option( 'republication_tracker_tool_analytics_id' );
-
-/**
- * The article source
- *
- * @var HTML $attribution_statment
- */
 $attribution_statement = sprintf(
 	// translators: %1$s is a URL, %2$s is the site home URL, and %3$s is the site title.
 	esc_html__( 'This <a target="_blank" href="%1$s">article</a> first appeared on <a target="_blank" href="%2$s">%3$s</a> and is republished here under a Creative Commons license.', 'republication-tracker-tool' ),
@@ -78,19 +70,7 @@ $attribution_statement = sprintf(
 	esc_html( get_bloginfo() )
 );
 
-/**
- * The "pixel" tag for tracking embeds
- * WordPress Core PHPCS complains about this, but it's invalid
- *
- * @var HTML $pixel The tracking tag, which is a script tag.
- */
-$pixel = sprintf(
-	// %1$s is the javascript source, %2$s is the post ID, %3$s is the plugins URL
-	'<img id="republication-tracker-tool-source" src="%1$s/?republication-pixel=true&post=%2$s&ga=%3$s" style="max-width:200px;">',
-	esc_attr( get_site_url() ),
-	esc_attr( $post->ID ),
-	esc_attr( $analytics_id )
-);
+$pixel = Republication_Tracker_Tool::create_tracking_pixel_markup( $post->ID );
 
 /**
  * The article title, byline, source site, and date

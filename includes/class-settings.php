@@ -20,8 +20,6 @@ class Republication_Tracker_Tool_Settings {
 	 */
 	protected $plugin = null;
 
-	protected $settings_page = 'republication-tracker-tool';
-
 	/**
 	 * Constructor.
 	 *
@@ -31,15 +29,6 @@ class Republication_Tracker_Tool_Settings {
 	 */
 	public function __construct( $plugin ) {
 		$this->plugin = $plugin;
-		$this->hooks();
-	}
-
-	/**
-	 * Initiate our hooks.
-	 *
-	 * @since  1.0
-	 */
-	public function hooks() {
 		add_action( 'admin_init', array( $this, 'create_settings' ) );
 	}
 
@@ -49,7 +38,6 @@ class Republication_Tracker_Tool_Settings {
 	 * @since 1.0
 	 */
 	public function create_settings() {
-
 		add_settings_section(
 			'republication_tracker_tool',
 			esc_html__( 'Republication Tracker Tool Settings', 'republication-tracker-tool' ),
@@ -57,49 +45,40 @@ class Republication_Tracker_Tool_Settings {
 			'reading'
 		);
 
-		add_settings_field(
-			'republication_tracker_tool_policy',
-			esc_html__( 'Republication Tracker Tool Policy', 'republication-tracker-tool' ),
-			array( $this, 'republication_tracker_tool_policy_callback' ),
-			'reading',
-			'republication_tracker_tool'
-		);
-
-		add_settings_field(
-			'republication_tracker_tool_analytics_id',
-			esc_html__( 'Republication Tracker Tool Google Analytics ID', 'republication-tracker-tool' ),
-			array( $this, 'republication_tracker_tool_analytics_id_callback' ),
-			'reading',
-			'republication_tracker_tool'
-		);
-
-		register_setting(
-			'reading',
-			'republication_tracker_tool_policy',
-			'wp_kses_post'
-		);
-
-		register_setting(
-			'reading',
-			'republication_tracker_tool_analytics_id',
-			'wp_kses_post'
-		);
-
+		$settings = [
+			[
+				'key'      => 'republication_tracker_tool_policy',
+				'label'    => esc_html__( 'Republication Tracker Tool Policy', 'republication-tracker-tool' ),
+				'callback' => array( $this, 'republication_tracker_tool_policy_callback' ),
+			],
+			[
+				'key'      => 'republication_tracker_tool_analytics_id',
+				'label'    => esc_html__( 'Republication Tracker Google Analytics ID', 'republication-tracker-tool' ),
+				'callback' => array( $this, 'republication_tracker_tool_analytics_id_callback' ),
+			],
+		];
+		foreach ( $settings as $setting ) {
+			add_settings_field(
+				$setting['key'],
+				$setting['label'],
+				$setting['callback'],
+				'reading',
+				'republication_tracker_tool'
+			);
+			register_setting(
+				'reading',
+				$setting['key'],
+				'wp_kses_post'
+			);
+		}
 	}
 
 	public function republication_tracker_tool_section_callback( $arg ) {
-
 		// if our republication_tracker_tool_analytics_id field has been set and is not empty, let's display
 		// a sample tracking code for users to manually input into articles
 		if ( get_option( 'republication_tracker_tool_analytics_id' ) && ! empty( get_option( 'republication_tracker_tool_analytics_id' ) ) ) {
 			$analytics_id = get_option( 'republication_tracker_tool_analytics_id' );
-			$pixel        = sprintf(
-				// %1$s is the javascript source, %2$s is the post ID, %3$s is the plugins URL
-				'<img id="republication-tracker-tool-source" src="%1$s/?republication-pixel=true&post=%2$s&ga=%3$s">',
-				esc_attr( get_site_url() ),
-				'YOUR-POST-ID',
-				esc_attr( $analytics_id )
-			);
+			$pixel        = Republication_Tracker_Tool::create_tracking_pixel_markup( 'YOUR-POST-ID' );
 			printf(
 				'
 				<table class="form-table">
