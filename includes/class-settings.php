@@ -48,13 +48,18 @@ class Republication_Tracker_Tool_Settings {
 		$settings = [
 			[
 				'key'      => 'republication_tracker_tool_policy',
-				'label'    => esc_html__( 'Republication Tracker Tool Policy', 'republication-tracker-tool' ),
+				'label'    => esc_html__( 'Policy', 'republication-tracker-tool' ),
 				'callback' => array( $this, 'republication_tracker_tool_policy_callback' ),
 			],
 			[
 				'key'      => 'republication_tracker_tool_analytics_id',
-				'label'    => esc_html__( 'Republication Tracker Google Analytics ID', 'republication-tracker-tool' ),
+				'label'    => esc_html__( 'Google Analytics ID', 'republication-tracker-tool' ),
 				'callback' => array( $this, 'republication_tracker_tool_analytics_id_callback' ),
+			],
+			[
+				'key'      => 'republication_tracker_tool_display_attribution',
+				'label'    => esc_html__( 'Display attribution', 'republication-tracker-tool' ),
+				'callback' => array( $this, 'republication_tracker_tool_display_attribution_callback' ),
 			],
 		];
 		foreach ( $settings as $setting ) {
@@ -73,7 +78,7 @@ class Republication_Tracker_Tool_Settings {
 		}
 	}
 
-	public function republication_tracker_tool_section_callback( $arg ) {
+	public function republication_tracker_tool_section_callback() {
 		// if our republication_tracker_tool_analytics_id field has been set and is not empty, let's display
 		// a sample tracking code for users to manually input into articles
 		if ( get_option( 'republication_tracker_tool_analytics_id' ) && ! empty( get_option( 'republication_tracker_tool_analytics_id' ) ) ) {
@@ -98,7 +103,7 @@ class Republication_Tracker_Tool_Settings {
 
 	}
 
-	public function republication_tracker_tool_policy_callback( $arg ) {
+	public function republication_tracker_tool_policy_callback() {
 		$content = get_option( 'republication_tracker_tool_policy' );
 		wp_editor(
 			$content,
@@ -114,7 +119,7 @@ class Republication_Tracker_Tool_Settings {
 		echo sprintf( '<p><em>%s</em></p>', wp_kses_post( 'The Republication Tracker Tool Policy field is where you will be able to input your rules and policies for users to see before they copy and paste your content to republish.As an example of a republication policy hat uses a Creative Commons license, check out the list in this plugin\'s <a href="https://github.com/Automattic/republication-tracker-tool/blob/master/docs/configuring-plugin-settings.md#republication-tracker-tool-policy" target="_blank">documentation</a> on GitHub.' ) );
 	}
 
-	public function republication_tracker_tool_analytics_id_callback( $arg ) {
+	public function republication_tracker_tool_analytics_id_callback() {
 		$content = get_option( 'republication_tracker_tool_analytics_id' );
 		echo sprintf(
 			'<input type="text" name="%1$s" value="%2$s">',
@@ -123,4 +128,18 @@ class Republication_Tracker_Tool_Settings {
 		);
 	}
 
+	public function republication_tracker_tool_display_attribution_callback() {
+		$display_attribution = get_option( 'republication_tracker_tool_display_attribution', true );
+		?>
+			<input
+				type="checkbox"
+				id="<?php echo esc_attr( 'republication_tracker_tool_display_attribution' ); ?>"
+				name="<?php echo esc_attr( 'republication_tracker_tool_display_attribution' ); ?>"
+				<?php if ( ! empty( $display_attribution ) ) : ?>
+					checked
+				<?php endif; ?>
+			/>
+			<p><em><?php echo esc_html__( 'If checked, an attribution statement will be appended to the copied content.', 'republication-tracker-tool' ); ?></em></p>
+		<?php
+	}
 }

@@ -62,13 +62,7 @@ $content = str_replace( '<p></p>', '', wpautop( $content ) );
 // Force the content to be UTF-8 escaped HTML.
 $content = htmlspecialchars( $content, ENT_HTML5, 'UTF-8', true );
 
-$attribution_statement = sprintf(
-	// translators: %1$s is a URL, %2$s is the site home URL, and %3$s is the site title.
-	esc_html__( 'This <a target="_blank" href="%1$s">article</a> first appeared on <a target="_blank" href="%2$s">%3$s</a> and is republished here under a Creative Commons license.', 'republication-tracker-tool' ),
-	get_permalink( $post ),
-	home_url(),
-	esc_html( get_bloginfo() )
-);
+$attribution_statement = Republication_Tracker_Tool::create_attribution_markup( get_permalink( $post ) );
 
 $pixel = Republication_Tracker_Tool::create_tracking_pixel_markup( $post->ID );
 
