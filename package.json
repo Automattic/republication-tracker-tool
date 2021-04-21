@@ -2,7 +2,7 @@
   "name": "republication-tracker-tool",
   "version": "1.1.1",
   "main": "Gruntfile.js",
-  "author": "innlabs",
+  "author": "Automattic",
   "scripts": {
     "semantic-release": "semantic-release",
     "release:archive": "rm -rf release && mkdir -p release && rsync -r . ./release/republication-tracker-tool --exclude-from='./.distignore' && cd release && zip -r republication-tracker-tool.zip republication-tracker-tool",
