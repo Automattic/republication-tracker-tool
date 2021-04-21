@@ -11,9 +11,9 @@
  * @package         Republication_Tracker_Tool
  */
 
-require plugin_dir_path( __FILE__ ).'includes/class-settings.php';
-require plugin_dir_path( __FILE__ ).'includes/class-article-settings.php';
-require plugin_dir_path( __FILE__ ).'includes/class-widget.php';
+require plugin_dir_path( __FILE__ ) . 'includes/class-settings.php';
+require plugin_dir_path( __FILE__ ) . 'includes/class-article-settings.php';
+require plugin_dir_path( __FILE__ ) . 'includes/class-widget.php';
 
 /**
 * Main initiation class.
@@ -118,7 +118,7 @@ final class Republication_Tracker_Tool {
 		// Load translated strings for plugin.
 		load_plugin_textdomain( 'republication-tracker-tool', false, dirname( $this->basename ) . '/languages/' );
 
-		$this->settings = new Republication_Tracker_Tool_Settings( $this );
+		$this->settings         = new Republication_Tracker_Tool_Settings( $this );
 		$this->article_settings = new Republication_Tracker_Tool_Article_Settings( $this );
 
 		add_action( 'widgets_init', array( $this, 'register_widgets' ) );
@@ -128,15 +128,19 @@ final class Republication_Tracker_Tool {
 		add_filter( 'query_vars', array( $this, 'enable_pixel_query_vars' ) );
 
 		// fire our pixel is the correct param is set
-		add_filter( 'template_include', function( $template ) {
-			// if the params are set, use our pixel functions
-			if( isset( $_GET['republication-pixel'] ) && isset( $_GET['post'] ) && isset( $_GET['ga'] ) ){
-				return include_once( plugin_dir_path( __FILE__ ).'includes/pixel.php' );
-			// else, continue with whatever template was being loaded
-			} else {
-				return $template;
-			}
-		}, 99 );
+		add_filter(
+			'template_include',
+			function( $template ) {
+				// if the params are set, use our pixel functions
+				if ( isset( $_GET['republication-pixel'] ) && isset( $_GET['post'] ) && isset( $_GET['ga'] ) ) {
+					return include_once plugin_dir_path( __FILE__ ) . 'includes/pixel.php';
+					// else, continue with whatever template was being loaded
+				} else {
+					return $template;
+				}
+			},
+			99
+		);
 
 	}
 
@@ -165,13 +169,13 @@ final class Republication_Tracker_Tool {
 	 */
 	public function _deactivate() {}
 
-	public function _plugin_row_meta( $links, $file ){
+	public function _plugin_row_meta( $links, $file ) {
 
 		if ( strpos( $file, 'republication-tracker-tool/republication-tracker-tool.php' ) !== false ) {
 
 			$new_links = array(
-				'donate' => '<a href="options-reading.php">Settings</a>',
-				'documentation' => '<a href="https://github.com/Automattic/republication-tracker-tool/tree/master/docs" target="_blank">Documentation</a>'
+				'donate'        => '<a href="options-reading.php">Settings</a>',
+				'documentation' => '<a href="https://github.com/Automattic/republication-tracker-tool/tree/master/docs" target="_blank">Documentation</a>',
 			);
 
 			$links = array_merge( $links, $new_links );
@@ -182,7 +186,7 @@ final class Republication_Tracker_Tool {
 
 	}
 
-	public function enable_pixel_query_vars($vars){
+	public function enable_pixel_query_vars( $vars ) {
 
 		$vars[] .= 'republication-pixel';
 		$vars[] .= 'GA';
@@ -194,12 +198,12 @@ final class Republication_Tracker_Tool {
 }
 
 /**
-* Grab the Republication_Tracker_Tool object and return it.
-* Wrapper for Republication_Tracker_Tool::get_instance().
-*
-* @since  1.0
-* @return Republication_Tracker_Tool  Singleton instance of plugin class.
-*/
+ * Grab the Republication_Tracker_Tool object and return it.
+ * Wrapper for Republication_Tracker_Tool::get_instance().
+ *
+ * @since  1.0
+ * @return Republication_Tracker_Tool  Singleton instance of plugin class.
+ */
 function Republication_Tracker_Tool() {
 	return Republication_Tracker_Tool::get_instance();
 }
