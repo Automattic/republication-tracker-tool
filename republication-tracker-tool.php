@@ -220,13 +220,13 @@ final class Republication_Tracker_Tool {
 	public static function create_attribution_markup( $post_permalink = '' ) {
 		$display_attribution = get_option( 'republication_tracker_tool_display_attribution', 'on' );
 		if ( 'on' === $display_attribution ) {
-			return sprintf(
+			return wpautop( sprintf(
 				// translators: %1$s is a URL, %2$s is the site home URL, and %3$s is the site title.
 				esc_html__( 'This <a target="_blank" href="%1$s">article</a> first appeared on <a target="_blank" href="%2$s">%3$s</a> and is republished here under a Creative Commons license.', 'republication-tracker-tool' ),
 				$post_permalink,
 				home_url(),
 				esc_html( get_bloginfo() )
-			);
+			) );
 		}
 		return '';
 	}
