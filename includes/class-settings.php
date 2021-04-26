@@ -129,13 +129,13 @@ class Republication_Tracker_Tool_Settings {
 	}
 
 	public function republication_tracker_tool_display_attribution_callback() {
-		$display_attribution = get_option( 'republication_tracker_tool_display_attribution', true );
+		$display_attribution = get_option( 'republication_tracker_tool_display_attribution', 'on' );
 		?>
 			<input
 				type="checkbox"
 				id="<?php echo esc_attr( 'republication_tracker_tool_display_attribution' ); ?>"
 				name="<?php echo esc_attr( 'republication_tracker_tool_display_attribution' ); ?>"
-				<?php if ( ! empty( $display_attribution ) ) : ?>
+				<?php if ( 'on' === $display_attribution ) : ?>
 					checked
 				<?php endif; ?>
 			/>
