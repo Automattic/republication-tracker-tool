@@ -87,32 +87,34 @@ class Republication_Tracker_Tool_Settings {
 
 	}
 
-	public function republication_tracker_tool_section_callback( $arg ){
+	public function republication_tracker_tool_section_callback( $arg ) {
 
 		// if our republication_tracker_tool_analytics_id field has been set and is not empty, let's display
 		// a sample tracking code for users to manually input into articles
-		if(get_option( 'republication_tracker_tool_analytics_id' ) && !empty(get_option( 'republication_tracker_tool_analytics_id' ) ) ){
+		if ( get_option( 'republication_tracker_tool_analytics_id' ) && ! empty( get_option( 'republication_tracker_tool_analytics_id' ) ) ) {
 			$analytics_id = get_option( 'republication_tracker_tool_analytics_id' );
-			$pixel = sprintf(
+			$pixel        = sprintf(
 				// %1$s is the javascript source, %2$s is the post ID, %3$s is the plugins URL
 				'<img id="republication-tracker-tool-source" src="%1$s/?republication-pixel=true&post=%2$s&ga=%3$s">',
-				esc_attr( get_site_url( ) ),
+				esc_attr( get_site_url() ),
 				'YOUR-POST-ID',
 				esc_attr( $analytics_id )
 			);
-			printf('
+			printf(
+				'
 				<table class="form-table">
 					<tbody>
 						<tr>
 							<th scope="row">Republication Tracker Tool Tracking Code</th>
 							<td>
 								<p>You can copy and paste this tracking code into articles of your choice. Remember to replace <code>YOUR-POST-ID</code> with your actual post ID.</p><br/>
-								<code>'.wp_kses_post( htmlspecialchars($pixel) ).'</code>
+								<code>' . wp_kses_post( htmlspecialchars( $pixel ) ) . '</code>
 							</td>
 						</tr>
 					</tbody>
 				</table>
-			');
+			'
+			);
 		}
 
 	}
@@ -123,19 +125,19 @@ class Republication_Tracker_Tool_Settings {
 			$content,
 			'republication_tracker_tool_policy',
 			array(
-	            'wpautop'       => true,
-	            'media_buttons' => false,
-	            'textarea_name' => 'republication_tracker_tool_policy',
-	            'textarea_rows' => 10,
-	            'teeny'         => true,
-	        )
+				'wpautop'       => true,
+				'media_buttons' => false,
+				'textarea_name' => 'republication_tracker_tool_policy',
+				'textarea_rows' => 10,
+				'teeny'         => true,
+			)
 		);
-		echo sprintf( '<p><em>%s</em></p>', wp_kses_post( 'The Republication Tracker Tool Policy field is where you will be able to input your rules and policies for users to see before they copy and paste your content to republish.As an example of a republication policy hat uses a Creative Commons license, check out the list in this plugin\'s <a href="https://github.com/INN/republication-tracker-tool/blob/master/docs/configuring-plugin-settings.md#republication-tracker-tool-policy" target="_blank">documentation</a> on GitHub.' ) );
+		echo sprintf( '<p><em>%s</em></p>', wp_kses_post( 'The Republication Tracker Tool Policy field is where you will be able to input your rules and policies for users to see before they copy and paste your content to republish.As an example of a republication policy hat uses a Creative Commons license, check out the list in this plugin\'s <a href="https://github.com/Automattic/republication-tracker-tool/blob/master/docs/configuring-plugin-settings.md#republication-tracker-tool-policy" target="_blank">documentation</a> on GitHub.' ) );
 	}
 
-	public function republication_tracker_tool_analytics_id_callback( $arg ){
+	public function republication_tracker_tool_analytics_id_callback( $arg ) {
 		$content = get_option( 'republication_tracker_tool_analytics_id' );
-		echo sprintf( 
+		echo sprintf(
 			'<input type="text" name="%1$s" value="%2$s">',
 			'republication_tracker_tool_analytics_id',
 			esc_html( $content )

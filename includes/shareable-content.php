@@ -34,7 +34,7 @@ unset( $allowed_tags_excerpt['form'] );
  *
  * Default value is the standard global $allowedposttags, except form elements.
  *
- * @link https://github.com/INN/republication-tracker-tool/issues/49
+ * @link https://github.com/Automattic/republication-tracker-tool/issues/49
  * @link https://developer.wordpress.org/reference/functions/wp_kses_allowed_html/
  * @param Array $allowed_tags_excerpt an associative array of element tags that are allowed
  */
@@ -132,28 +132,28 @@ echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 's
 					)
 				)
 			);
-		echo '</div>'; // .cc-license
-		echo wp_kses_post( $license_statement );
-	echo '</div>'; // .cc-policy
+			echo '</div>'; // .cc-license
+			echo wp_kses_post( $license_statement );
+			echo '</div>'; // .cc-policy
 
-	// what we display to the embedder
-	echo '<div class="article-info">';
-		echo wp_kses_post( $article_info );
-	echo '</div>'; // .article-info
+			// what we display to the embedder
+			echo '<div class="article-info">';
+			echo wp_kses_post( $article_info );
+			echo '</div>'; // .article-info
 
-	// the text area that is copyable
-	echo wp_kses_post(
-		sprintf(
-			'<textarea readonly id="republication-tracker-tool-shareable-content" rows="5">%1$s %2$s %3$s</textarea>',
-			esc_html( $article_info ),
-			$content . "\n\n",
-			wpautop( $attribution_statement . htmlentities( $pixel ) )
-		)
-	);
-	if ( ! $is_amp ) {
-		?>
+			// the text area that is copyable
+			echo wp_kses_post(
+				sprintf(
+					'<textarea readonly id="republication-tracker-tool-shareable-content" rows="5">%1$s %2$s %3$s</textarea>',
+					esc_html( $article_info ),
+					$content . "\n\n",
+					wpautop( $attribution_statement . htmlentities( $pixel ) )
+				)
+			);
+			if ( ! $is_amp ) {
+				?>
 			<button onclick="copyToClipboard('#republication-tracker-tool-shareable-content')"><?php echo esc_html__( 'Copy to Clipboard', 'republication-tracker-tool' ); ?></button>
-		<?php
-	}
+				<?php
+			}
 
-echo '</div>'; // #republication-tracker-tool-modal-content
+			echo '</div>'; // #republication-tracker-tool-modal-content
