@@ -82,7 +82,6 @@ class Republication_Tracker_Tool_Settings {
 		// if our republication_tracker_tool_analytics_id field has been set and is not empty, let's display
 		// a sample tracking code for users to manually input into articles
 		if ( get_option( 'republication_tracker_tool_analytics_id' ) && ! empty( get_option( 'republication_tracker_tool_analytics_id' ) ) ) {
-			$analytics_id = get_option( 'republication_tracker_tool_analytics_id' );
 			$pixel        = Republication_Tracker_Tool::create_tracking_pixel_markup( 'YOUR-POST-ID' );
 			printf(
 				'
