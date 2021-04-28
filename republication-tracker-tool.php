@@ -220,13 +220,22 @@ final class Republication_Tracker_Tool {
 	public static function create_attribution_markup( $post_permalink = '' ) {
 		$display_attribution = get_option( 'republication_tracker_tool_display_attribution', 'on' );
 		if ( 'on' === $display_attribution ) {
+			$site_icon_markup = '';
+			$site_icon_url = get_site_icon_url( 150 );
+			if (!empty($site_icon_url)) {
+				$site_icon_markup = sprintf(
+					'<img  src="%1$s" style="width:1em;height:1em;margin-left:10px;">',
+					esc_attr( $site_icon_url ),
+				);
+			}
+
 			return wpautop( sprintf(
 				// translators: %1$s is a URL, %2$s is the site home URL, and %3$s is the site title.
 				esc_html__( 'This <a target="_blank" href="%1$s">article</a> first appeared on <a target="_blank" href="%2$s">%3$s</a> and is republished here under a Creative Commons license.', 'republication-tracker-tool' ),
 				$post_permalink,
 				home_url(),
 				esc_html( get_bloginfo() )
-			) );
+			) . $site_icon_markup);
 		}
 		return '';
 	}
