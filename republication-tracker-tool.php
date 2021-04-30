@@ -224,7 +224,7 @@ final class Republication_Tracker_Tool {
 			$site_icon_url = get_site_icon_url( 150 );
 			if (!empty($site_icon_url)) {
 				$site_icon_markup = sprintf(
-					'<img  src="%1$s" style="width:1em;height:1em;margin-left:10px;">',
+					'<img src="%1$s" style="width:1em;height:1em;margin-left:10px;">',
 					esc_attr( $site_icon_url ),
 				);
 			}
@@ -235,7 +235,7 @@ final class Republication_Tracker_Tool {
 				$post_permalink,
 				home_url(),
 				esc_html( get_bloginfo() )
-			) . $site_icon_markup);
+			) . htmlentities($site_icon_markup));
 		}
 		return '';
 	}
