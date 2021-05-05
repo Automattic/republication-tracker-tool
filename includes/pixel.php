@@ -106,5 +106,6 @@ if ( isset( $_GET['post'] ) ) {
 }
 
 header( 'Content-Type: image/png' );
+// A transparent 1x1 px .gif image.
 echo base64_decode( 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CYII=' );
 exit;
