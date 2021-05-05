@@ -62,9 +62,7 @@ $content = str_replace( '<p></p>', '', wpautop( $content ) );
 // Force the content to be UTF-8 escaped HTML.
 $content = htmlspecialchars( $content, ENT_HTML5, 'UTF-8', true );
 
-$attribution_statement = Republication_Tracker_Tool::create_attribution_markup( get_permalink( $post ) );
-
-$pixel = Republication_Tracker_Tool::create_tracking_pixel_markup( $post->ID );
+$attribution_statement = Republication_Tracker_Tool::create_attribution_markup( $post );
 
 /**
  * The article title, byline, source site, and date
@@ -121,7 +119,7 @@ echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 's
 					'<textarea readonly id="republication-tracker-tool-shareable-content" rows="5">%1$s %2$s %3$s</textarea>',
 					esc_html( $article_info ),
 					$content . "\n\n",
-					$attribution_statement . htmlentities( $pixel )
+					$attribution_statement
 				)
 			);
 			if ( ! $is_amp ) {
