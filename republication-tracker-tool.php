@@ -195,6 +195,54 @@ final class Republication_Tracker_Tool {
 		return $vars;
 
 	}
+
+	/**
+	 * Create tracking pixel HTML markup.
+	 *
+	 * @param $post_id Id of the post to track.
+	 */
+	public static function create_tracking_pixel_markup( $post_id ) {
+		$analytics_id = get_option( 'republication_tracker_tool_analytics_id' );
+		return sprintf(
+			// %1$s is the javascript source, %2$s is the post ID, %3$s is the plugins URL
+			'<img id="republication-tracker-tool-source" src="%1$s/?republication-pixel=true&post=%2$s&ga=%3$s" style="width:1px;height:1px;">',
+			esc_attr( get_site_url() ),
+			esc_attr( $post_id ),
+			esc_attr( $analytics_id )
+		);
+	}
+
+	/**
+	 * Get attribution text, which will be inserted at the end of the copyable content.
+	 *
+	 * @param $post The shared post.
+	 */
+	public static function create_attribution_markup( $post = null ) {
+		$display_attribution = get_option( 'republication_tracker_tool_display_attribution', 'on' );
+		if ( 'on' === $display_attribution && null !== $post ) {
+			$site_icon_markup = '';
+			$site_icon_url    = get_site_icon_url( 150 );
+			if ( ! empty( $site_icon_url ) ) {
+				$site_icon_markup = sprintf(
+					'<img src="%1$s" style="width:1em;height:1em;margin-left:10px;">',
+					esc_attr( $site_icon_url ),
+				);
+			}
+
+			$pixel = self::create_tracking_pixel_markup( $post->ID );
+
+			return wpautop(
+				sprintf(
+				// translators: %1$s is a URL, %2$s is the site home URL, and %3$s is the site title.
+					esc_html__( 'This <a target="_blank" href="%1$s">article</a> first appeared on <a target="_blank" href="%2$s">%3$s</a> and is republished here under a Creative Commons license.', 'republication-tracker-tool' ),
+					get_permalink( $post ),
+					home_url(),
+					esc_html( get_bloginfo() )
+				) . htmlentities( $site_icon_markup ) . htmlentities( $pixel )
+			);
+		}
+		return '';
+	}
 }
 
 /**
