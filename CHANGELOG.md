@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/Automattic/republication-tracker-tool/compare/v1.2.0...v1.2.1) (2021-05-18)
+
+
+### Bug Fixes
+
+* add tracking pixel if attribution statement is not displayed ([c99bf26](https://github.com/Automattic/republication-tracker-tool/commit/c99bf262f697048ae0d2c132aead05a8c72aa93e))
+
 # [1.2.0](https://github.com/Automattic/republication-tracker-tool/compare/v1.1.1...v1.2.0) (2021-05-13)
 
 
