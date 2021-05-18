@@ -217,7 +217,9 @@ final class Republication_Tracker_Tool {
 	 *
 	 * @param $post The shared post.
 	 */
-	public static function create_attribution_markup( $post = null ) {
+	public static function create_content_footer( $post = null ) {
+		$pixel = self::create_tracking_pixel_markup( $post->ID );
+
 		$display_attribution = get_option( 'republication_tracker_tool_display_attribution', 'on' );
 		if ( 'on' === $display_attribution && null !== $post ) {
 			$site_icon_markup = '';
@@ -229,8 +231,6 @@ final class Republication_Tracker_Tool {
 				);
 			}
 
-			$pixel = self::create_tracking_pixel_markup( $post->ID );
-
 			return wpautop(
 				sprintf(
 				// translators: %1$s is a URL, %2$s is the site home URL, and %3$s is the site title.
@@ -241,7 +241,7 @@ final class Republication_Tracker_Tool {
 				) . htmlentities( $site_icon_markup ) . htmlentities( $pixel )
 			);
 		}
-		return '';
+		return htmlentities( $pixel );
 	}
 }
 
