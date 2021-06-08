@@ -1,3 +1,10 @@
+## [1.2.2-alpha.1](https://github.com/Automattic/republication-tracker-tool/compare/v1.2.1...v1.2.2-alpha.1) (2021-06-08)
+
+
+### Bug Fixes
+
+* change 'rel' attribute on links ([#113](https://github.com/Automattic/republication-tracker-tool/issues/113)) ([bff4883](https://github.com/Automattic/republication-tracker-tool/commit/bff48834a36c4e01d3b90359c755778f712b1566))
+
 ## [1.2.1](https://github.com/Automattic/republication-tracker-tool/compare/v1.2.0...v1.2.1) (2021-05-18)
 
 
