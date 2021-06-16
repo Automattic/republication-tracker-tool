@@ -94,12 +94,12 @@ echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 's
 	// Explain Creative Commons
 	echo '<div class="cc-policy">';
 		echo '<div class="cc-license">';
-			echo sprintf( '<a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nd/4.0/"><img alt="%s" style="border-width:0" src="https://i.creativecommons.org/l/by-nd/4.0/88x31.png" /></a>', esc_html__( 'Creative Commons License' ) );
+			echo sprintf( '<a rel="noreferrer license" target="_blank" href="http://creativecommons.org/licenses/by-nd/4.0/"><img alt="%s" style="border-width:0" src="https://i.creativecommons.org/l/by-nd/4.0/88x31.png" /></a>', esc_html__( 'Creative Commons License' ) );
 			echo wp_kses_post(
 				wpautop(
 					sprintf(
 						// translators: %1$s is the URL to the particular Creative Commons license.
-						__( 'This work is licensed under a <a rel="license" target="_blank" href="%1$s">Creative Commons Attribution-NoDerivatives 4.0 International License</a>.' ),
+						__( 'This work is licensed under a <a rel="noreferrer license" target="_blank" href="%1$s">Creative Commons Attribution-NoDerivatives 4.0 International License</a>.' ),
 						'http://creativecommons.org/licenses/by-nd/4.0/'
 					)
 				)
