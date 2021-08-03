@@ -1,3 +1,10 @@
+## [1.2.3-alpha.1](https://github.com/Automattic/republication-tracker-tool/compare/v1.2.2...v1.2.3-alpha.1) (2021-08-03)
+
+
+### Bug Fixes
+
+* prevent GA pings from WP Admin ([8c0e1b1](https://github.com/Automattic/republication-tracker-tool/commit/8c0e1b1610dcceec233d7ac2757b8607b28dbe94))
+
 ## [1.2.2](https://github.com/Automattic/republication-tracker-tool/compare/v1.2.1...v1.2.2) (2021-06-16)
 
 
