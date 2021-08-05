@@ -63,7 +63,7 @@ if ( isset( $_GET['post'] ) ) {
 
 	// If the request is coming from WP Admin, bail out (when the copied content is inserted into the WP editor, the pixel will be pinged).
 	if ( false !== stripos( $url, '/wp-admin/' ) ) {
-		return;
+		exit;
 	}
 
 	$value = get_post_meta( $shared_post_id, 'republication_tracker_tool_sharing', true );
