@@ -115,10 +115,10 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 	public function form( $instance ) {
 		echo sprintf( '<p><em>%s</em></p>', esc_html__( 'This widget will only display on single articles.', 'republication-tracker-tool' ) );
 		$title = ! empty( $instance['title'] ) ? $instance['title'] : '';
-		$text  = ! empty( $instance['text'] ) ? $instance['text'] : esc_html__( 'Republish our articles for free, online or in print, under a Creative Commons license.', 'text_domain' );
+		$text  = ! empty( $instance['text'] ) ? $instance['text'] : esc_html__( 'Republish our articles for free, online or in print, under a Creative Commons license.', 'republication-tracker-tool' );
 		?>
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'text_domain' ); ?></label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'republication-tracker-tool' ); ?></label>
 			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
 		</p>
 		<p>
