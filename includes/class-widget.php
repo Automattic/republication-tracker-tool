@@ -93,13 +93,13 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 
 			if ( $is_amp ) {
 				?>
-					<amp-lightbox id="republication-tracker-tool-modal" layout="nodisplay">
+					<amp-lightbox id="republication-tracker-tool-modal" layout="nodisplay" role="dialog" aria-modal="true">
 						<?php echo esc_html( include_once $modal_content_path ); ?>
 					</amp-lightbox>
 				<?php
 			} else {
 				?>
-					<div id="republication-tracker-tool-modal" style="display:none;" data-postid="<?php echo esc_attr( $post->ID ); ?>" data-pluginsdir="<?php echo esc_attr( plugins_url() ); ?>">
+					<div id="republication-tracker-tool-modal" style="display:none;" data-postid="<?php echo esc_attr( $post->ID ); ?>" data-pluginsdir="<?php echo esc_attr( plugins_url() ); ?>" role="dialog" aria-modal="true">
 						<?php echo esc_html( include_once $modal_content_path ); ?>
 					</div>
 				<?php
