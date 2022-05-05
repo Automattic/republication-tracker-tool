@@ -28,8 +28,8 @@
   button.republication-tracker-tool-button,
 .widget.republication_tracker_tool button.republication-tracker-tool-button {
   width: 100%;
-  background-color: #5499db;
-  border: 1px solid #2863a7;
+  background: #2a7ac2;
+  border: 1px solid #255b98;
   color: #fff;
   padding: 1em;
   font-size: 1.25em;
@@ -37,7 +37,7 @@
   display: block;
   border-radius: 0.25em;
   font-weight: bold;
-  text-shadow: 1px 1px 1px #2863a7;
+  text-shadow: 1px 1px 1px #255b98;
 }
 
 .side-widget.republication_tracker_tool
