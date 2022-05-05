@@ -88,7 +88,8 @@ $article_info = str_replace( '<p></p>', '', wpautop( $article_info ) );
 $license_statement = wp_kses_post( get_option( 'republication_tracker_tool_policy' ) );
 
 echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 'style="display:none;"' ) . '>';
-	echo '<div ' . ( $is_amp ? 'on="tap:republication-tracker-tool-modal.close"' : '' ) . ' class="republication-tracker-tool-close">X</div>';
+	echo '<div ' . ( $is_amp ? 'on="tap:republication-tracker-tool-modal.close"' : '' ) . ' class="republication-tracker-tool-close">';
+	echo '<span class="screen-reader-text">' . esc_html( 'Close window', 'republication-tracker-tool' ) . '</span> <span aria-hidden="true">X</span></div>';
 	echo sprintf( '<h2>%s</h2>', esc_html__( 'Republish this article', 'republication-tracker-tool' ) );
 
 	// Explain Creative Commons
