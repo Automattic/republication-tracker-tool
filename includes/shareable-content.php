@@ -69,8 +69,6 @@ $content_footer = Republication_Tracker_Tool::create_content_footer( $post );
 /**
  * The article title, byline, source site, and date
  *
- * In version TKTK, this switched from get_the_author_meta
- *
  * @var HTML $article_info The article title, etc.
  */
 $article_info = sprintf(
