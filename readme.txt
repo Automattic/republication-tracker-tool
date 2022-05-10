@@ -31,6 +31,9 @@ In this plugin, the tracking is achieved through an image element included insid
 
 == Changelog ==
 
+- Adds a new filter, `republication_tracker_tool_byline`, which allows developers to change the byline that is output in the modal and in the sharable text. Pull request TKTK for https://github.com/INN/republication-tracker-tool/issues/46, sponsored by [the Center for Public Integrity](https://publicintegrity.org/).
+- Adds compatibility for Automattic's [Co-Authors Plus](https://wpvip.com/plugins/co-authors-plus/) plugin. Pull request TKTK for https://github.com/INN/republication-tracker-tool/issues/46, sponsored by [the Center for Public Integrity](https://publicintegrity.org/).
+
 = 1.0.2 =
 
 - Sets a default width for the site icon that is displayed at the bottom of republished articles. Previously it did not have a width set which was causing some sites to experience larger than expected images at the end of their republished articles.
