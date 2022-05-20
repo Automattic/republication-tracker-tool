@@ -17,9 +17,8 @@ A plugin that allows users to add a widget to allow readers to easily acquire Cr
 
 == Installation ==
 
-1. Upload `plugin-name.php` to the `/wp-content/plugins/` directory
-2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Add the widget to your per-post sidebars. It doesn't work outside of single post pages.
+1. Activate the plugin through the 'Plugins' menu in WordPress
+2. Add the widget to your per-post sidebars. It doesn't work outside of single post pages.
 
 == Frequently Asked Questions ==
 
