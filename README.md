@@ -1,23 +1,29 @@
-# Republication Tracker Tool
-
-A plugin that allows users to add a widget to allow readers to easily acquire Creative-Commons-licensed HTML of articles to facilitate embedding posts on external sites. Includes a tracking mechanism similar to ProPublica's PixelPing.
-
-**Requires at least:** 4.1  
-**Tested up to:** 5.2.2
-**Stable tag:** See https://github.com/Automattic/republication-tracker-tool/releases
+# Republication Tracker Tool #
+**Contributors:** innlabs  
+**Donate link:** https://inn.org/donate  
+**Tags:** publishers, news  
+**Requires at least:** 4.4  
+**Requires PHP:** 5.3  
+**Tested up to:** 5.2.2  
+**Stable tag:** 1.0.2  
 **License:** GPLv2 or later  
-**License URI:** https://www.gnu.org/licenses/gpl-2.0.html
+**License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
-## [Documentation](docs/README.md)
+Adds a widget to allow readers to easily acquire Creative-Commons-licensed HTML of articles to facilitate embedding posts on external sites. Includes a tracking mechanism similar to ProPublica's PixelPing.
 
-1. [Installing in WordPress](docs/installation.md)
-2. [Configuring plugin settings](docs/configuring-plugin-settings.md)
-3. [Adding Republish button to posts](docs/adding-republish-button-to-posts.md)
-4. [Styling the Republish button](docs/styling-the-republish-button.md)
-5. [Removing elements from shareable content](docs/removing-elements-from-shareable-content.md)
-6. [Programatically removing the Republish button from certain categories](docs/removing-republish-button-from-categories.md)
-7. [Tracking republished posts](docs/tracking-republished-posts.md)
+## Description ##
 
-## Development
+A plugin that allows users to add a widget to allow readers to easily acquire Creative-Commons-licensed HTML of articles to facilitate embedding posts on external sites. Includes a tracking mechanism similar to ProPublica's PixelPing. Built and maintained by [INN Labs](https://labs.inn.org/).
 
-If you'd like to contribute to the project, please see our [contributing guidelines](contributing.md).
+## Installation ##
+
+1. Activate the plugin through the 'Plugins' menu in WordPress
+1. Add the widget to your per-post sidebars. It doesn't work outside of single post pages.
+
+## Frequently Asked Questions ##
+
+### How does the tracking mechanism work? ###
+
+The tracking mechanism is similiar to ProPublica's [PixelPing](https://www.propublica.org/pixelping) tracking technology.
+
+In this plugin, the tracking is achieved through an image element included inside of the republishable content that collects data from the republishing site and sends that data to Google Analytics.
