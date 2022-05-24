@@ -19,7 +19,16 @@ workflows:
   version: 2
   all:
     jobs:
+      - newspack/build:
+          filters:
+            branches:
+              only:
+                - release
+                - alpha
+                - /^hotfix\/.*/
       - newspack/release:
+          requires:
+            - newspack/build
           filters:
             branches:
               only:
