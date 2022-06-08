@@ -3,6 +3,7 @@
  * Tracking mechanism for the tracking pixel.
  */
 
+
 /**
  * Given a URL, try to get the <title>.
  *
@@ -37,6 +38,9 @@ function wprtt_get_referring_page_title( $url ) {
 			// return our found title.
 			return $title;
 
+			// if there were no title matches found, don't continue
+		} else {
+
 		// if there were no title matches found, don't continue.
 		} else {
 			return;
@@ -48,14 +52,20 @@ if ( isset( $_GET['post'] ) ) {
 
 	// set up all of our post vars we want to track.
 	$shared_post_id = absint( $_GET['post'] );
-	$shared_post = get_post( $shared_post_id );
+	$shared_post    = get_post( $shared_post_id );
 
-	$shared_post_slug = rawurlencode( $shared_post->post_name );
+	$shared_post_slug      = rawurlencode( $shared_post->post_name );
 	$shared_post_permalink = get_permalink( $shared_post_id );
-
-	$url = '';
+  
+	$url       = '';
 	$url_title = '';
-	$url_host = '';
+	$url_host  = '';
+
+	if ( array_key_exists( 'HTTP_REFERER', $_SERVER ) ) {
+
+		if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
+			$url = esc_url_raw( $_SERVER['HTTP_REFERER'] );
+		}
 
 	if ( ! empty( $_SERVER['HTTP_REFERER'] ) ) {
 		$url = esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) );
@@ -65,10 +75,15 @@ if ( isset( $_GET['post'] ) ) {
 		$url_host = wp_parse_url( $url, PHP_URL_HOST );
 		$url_path = wp_parse_url( $url, PHP_URL_PATH );
 
-
 		// Try to get the page title.
 		$url_title = wprtt_get_referring_page_title( $url );
 		$url_title = str_replace( ' ', '%20', $url_title );
+
+	}
+
+	// If the request is coming from WP Admin, bail out (when the copied content is inserted into the WP editor, the pixel will be pinged).
+	if ( false !== stripos( $url, '/wp-admin/' ) ) {
+		exit;
 	}
 
 	// Avoid tracking hits that have no site to track.
@@ -116,10 +131,44 @@ if ( isset( $_GET['post'] ) ) {
 
 			$response = wp_remote_post( $analytics_ping_url . '&' . $analytics_ping_params );
 		}
+	} else {
+		$value = array(
+			$url => 1,
+		);
+  }
+	$update = update_post_meta( $shared_post_id, 'republication_tracker_tool_sharing', $value );
+
+	// if our google analytics tag is set, let's push data to it
+	if ( isset( $_GET['ga'] ) && ! empty( $_GET['ga'] ) ) {
+
+		// our base url to ping GA at
+		$analytics_ping_url = 'https://www.google-analytics.com/collect?v=1';
+
+		// create all of our necessary params to track
+		// the docs for these params can be found at: https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters
+		$analytics_ping_params = array(
+			'tid' => sanitize_text_field( $_GET['ga'] ), // Tracking ID/ Web Property ID.
+			'cid' => '555', // Client ID.
+			't'   => 'pageview', // Hit type.
+			'dl'  => $shared_post_permalink, // Document location URL.
+			'dh'  => $url_host, // Document Host Name.
+			'dp'  => $shared_post_slug, // Document Path.
+			'dr'  => $url, // Document Referrer.
+			'dt'  => $url_title, // Document Title.
+			'an'  => 'Republication', // Application Name.
+			'aid' => $url_host, // Application ID.
+			'av'  => 'Republication Tracker v1', // Application Version.
+		);
+
+		// create query based on our params array
+		$analytics_ping_params = http_build_query( $analytics_ping_params );
+
+		$response = wp_remote_post( $analytics_ping_url . '&' . $analytics_ping_params );
+
 	}
 }
 
-// grab our site icon and redirect to it once the script finishes.
-$site_icon_url = get_site_icon_url( 150 );
-wp_safe_redirect( $site_icon_url, 303 );
+header( 'Content-Type: image/png' );
+// A transparent 1x1 px .gif image.
+echo base64_decode( 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CYII=' );
 exit;
