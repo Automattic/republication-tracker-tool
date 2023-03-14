@@ -1,3 +1,11 @@
+## [1.3.2-alpha.1](https://github.com/Automattic/republication-tracker-tool/compare/v1.3.1...v1.3.2-alpha.1) (2023-03-14)
+
+
+### Bug Fixes
+
+* consistent visibility of "Hide Republish Button" checkbox ([#172](https://github.com/Automattic/republication-tracker-tool/issues/172)) ([9d1658a](https://github.com/Automattic/republication-tracker-tool/commit/9d1658a14c56aa0d72e58925c4df212350aa4bcf)), closes [#67](https://github.com/Automattic/republication-tracker-tool/issues/67) [#170](https://github.com/Automattic/republication-tracker-tool/issues/170)
+* force alpha build ([e55763c](https://github.com/Automattic/republication-tracker-tool/commit/e55763c4c77ebba840e200570da1e52354bdfad5))
+
 ## [1.3.1](https://github.com/Automattic/republication-tracker-tool/compare/v1.3.0...v1.3.1) (2022-05-24)
 
 
