@@ -113,7 +113,7 @@ class Republication_Tracker_Tool_Article_Settings {
 		}
 		echo wp_kses_post( wpautop( 'Total number of views: ' . $total_count ) );
 		if ( is_array( $shares ) && ! empty( $shares ) ) {
-			echo '<table class="wp-list-table widefat fixed striped posts">';
+			echo '<table class="wp-list-table widefat striped posts">';
 				echo '<thead>';
 					echo sprintf( '<th scope="col" id="url" class="manage-column column-primary"><span>%s</span><span class="sorting-indicator"></span></th>', esc_html__( 'Republished URL', 'republication-tracker-tool' ) );
 					echo sprintf( '<th scope="col" id="views" class="manage-column ">%s</th>', esc_html__( 'Views', 'republication-tracker-tool' ) );
@@ -157,9 +157,9 @@ class Republication_Tracker_Tool_Article_Settings {
 		}
 
 		$hide_republication_widget_by_filter = false;
-		$hide_republication_widget_by_filter = apply_filters( 'hide_republication_widget', $hide_republication_widget_by_filter, $post ); 
+		$hide_republication_widget_by_filter = apply_filters( 'hide_republication_widget', $hide_republication_widget_by_filter, $post );
 
-		if( true == $hide_republication_widget_by_filter ){
+		if ( true == $hide_republication_widget_by_filter ) {
 			echo '<p>The Republication sharing widget on this post is programatically disabled through the <code>hide_republication_widget</code> filter. <a href="https://github.com/Automattic/republication-tracker-tool/blob/master/docs/removing-republish-button-from-categories.md" target="_blank">Read more about this filter</a>.</p>';
 		} else {
 
