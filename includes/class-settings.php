@@ -53,8 +53,18 @@ class Republication_Tracker_Tool_Settings {
 			],
 			[
 				'key'      => 'republication_tracker_tool_analytics_id',
-				'label'    => esc_html__( 'Google Analytics ID', 'republication-tracker-tool' ),
+				'label'    => esc_html__( 'Google Analytics UA ID', 'republication-tracker-tool' ),
 				'callback' => array( $this, 'republication_tracker_tool_analytics_id_callback' ),
+			],
+			[
+				'key'      => 'republication_tracker_tool_analytics_ga4_id',
+				'label'    => esc_html__( 'Google Analytics 4 ID', 'republication-tracker-tool' ),
+				'callback' => array( $this, 'republication_tracker_tool_analytics_ga4_id_callback' ),
+			],
+			[
+				'key'      => 'republication_tracker_tool_analytics_ga4_secret',
+				'label'    => esc_html__( 'Google Analytics 4 API Secret', 'republication-tracker-tool' ),
+				'callback' => array( $this, 'republication_tracker_tool_analytics_ga4_secret_callback' ),
 			],
 			[
 				'key'      => 'republication_tracker_tool_display_attribution',
@@ -115,15 +125,36 @@ class Republication_Tracker_Tool_Settings {
 				'teeny'         => true,
 			)
 		);
-		echo sprintf( '<p><em>%s</em></p>', wp_kses_post( 'The Republication Tracker Tool Policy field is where you will be able to input your rules and policies for users to see before they copy and paste your content to republish.As an example of a republication policy hat uses a Creative Commons license, check out the list in this plugin\'s <a href="https://github.com/Automattic/republication-tracker-tool/blob/master/docs/configuring-plugin-settings.md#republication-tracker-tool-policy" target="_blank">documentation</a> on GitHub.' ) );
+		echo sprintf( '<p><em>%s</em></p>', wp_kses_post( __( 'The Republication Tracker Tool Policy field is where you will be able to input your rules and policies for users to see before they copy and paste your content to republish.As an example of a republication policy hat uses a Creative Commons license, check out the list in this plugin\'s <a href="https://github.com/Automattic/republication-tracker-tool/blob/master/docs/configuring-plugin-settings.md#republication-tracker-tool-policy" target="_blank">documentation</a> on GitHub.', 'republication-tracker-tool' ) ) );
 	}
 
 	public function republication_tracker_tool_analytics_id_callback() {
 		$content = get_option( 'republication_tracker_tool_analytics_id' );
 		echo sprintf(
-			'<input type="text" name="%1$s" value="%2$s">',
+			'<input type="text" name="%1$s" value="%2$s">%3$s',
 			'republication_tracker_tool_analytics_id',
-			esc_html( $content )
+			esc_html( $content ),
+			wp_kses_post( '<p><em>' . __( 'Your Google Analytics Universal Analytics ID. Note that <a href="https://support.google.com/analytics/answer/11583528">this will be deprecated on July 1, 2023</a>, so add a GA4 ID and API secret below to avoid interruptions in analytics tracking.', 'republication-tracker-tool' ) . '</em></p>' )
+		);
+	}
+
+	public function republication_tracker_tool_analytics_ga4_id_callback() {
+		$content = get_option( 'republication_tracker_tool_analytics_ga4_id' );
+		echo sprintf(
+			'<input type="text" name="%1$s" value="%2$s">%3$s',
+			'republication_tracker_tool_analytics_ga4_id',
+			esc_html( $content ),
+			wp_kses_post( '<p><em>' . __( 'Your Google Analytics 4 tag ID. <a href="https://support.google.com/analytics/answer/9539598">How to get this</a>.', 'republication-tracker-tool' ) . '</em></p>' )
+		);
+	}
+
+	public function republication_tracker_tool_analytics_ga4_secret_callback() {
+		$content = get_option( 'republication_tracker_tool_analytics_ga4_secret' );
+		echo sprintf(
+			'<input type="text" name="%1$s" value="%2$s">%3$s',
+			'republication_tracker_tool_analytics_ga4_secret',
+			esc_html( $content ),
+			wp_kses_post( '<p><em>' . __( 'Your Google Analytics 4 API secret. <a href="https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference?client_type=gtag">How to get this</a>.', 'republication-tracker-tool' ) . '</em></p>' )
 		);
 	}
 
