@@ -62,11 +62,7 @@ if ( isset( $_GET['post'] ) ) {
 	$shared_post_slug      = rawurlencode( $shared_post->post_name );
 	$shared_post_permalink = \get_permalink( $shared_post_id );
 
-	error_log( 'derrick test' );
-
 	if ( array_key_exists( 'HTTP_REFERER', $_SERVER ) ) {
-		error_log( $_SERVER['HTTP_REFERER'] );
-
 		if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
 			$url = \esc_url_raw( $_SERVER['HTTP_REFERER'] );
 		}
