@@ -101,7 +101,10 @@ if ( isset( $_GET['post'] ) ) {
 
 	// if our google analytics UA tag is set, let's push data to it.
 	// TODO: Deprecate this after UA goes away.
-	if ( isset( $_GET['ga3'] ) && ! empty( $_GET['ga3'] ) ) {
+	if ( ! empty( $_GET['ga'] ) || ! empty( $_GET['ga3'] ) ) {
+
+		// ID can be in a 'ga' (legacy) or 'ga3' (current) param.
+		$ga3_id = ! empty( $_GET['ga3'] ) ? $_GET['ga3'] : $_GET['ga'];
 
 		// our base url to ping GA at.
 		$analytics_ping_url = 'https://www.google-analytics.com/collect?v=1';
@@ -109,7 +112,7 @@ if ( isset( $_GET['post'] ) ) {
 		// create all of our necessary params to track.
 		// the docs for these params can be found at: https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters.
 		$analytics_ping_params = array(
-			'tid' => \sanitize_text_field( $_GET['ga3'] ), // Tracking ID/ Web Property ID.
+			'tid' => \sanitize_text_field( $ga3_id ), // Tracking ID/ Web Property ID.
 			'cid' => '555', // Client ID.
 			't'   => 'pageview', // Hit type.
 			'dl'  => $shared_post_permalink, // Document location URL.

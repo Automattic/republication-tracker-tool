@@ -133,7 +133,7 @@ final class Republication_Tracker_Tool {
 			'template_include',
 			function( $template ) {
 				// if the params are set, use our pixel functions
-				if ( isset( $_GET['republication-pixel'] ) && isset( $_GET['post'] ) && ( isset( $_GET['ga3'] ) || isset( $_GET['ga4'] ) ) ) {
+				if ( isset( $_GET['republication-pixel'] ) && isset( $_GET['post'] ) && ( isset( $_GET['ga'] ) || isset( $_GET['ga3'] ) || isset( $_GET['ga4'] ) ) ) {
 					return include_once plugin_dir_path( __FILE__ ) . 'includes/pixel.php';
 					// else, continue with whatever template was being loaded
 				} else {
