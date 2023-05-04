@@ -101,10 +101,10 @@ if ( isset( $_GET['post'] ) ) {
 
 	// if our google analytics UA tag is set, let's push data to it.
 	// TODO: Deprecate this after UA goes away.
-	if ( ( isset( $_GET['ga'] ) && ! empty( $_GET['ga'] ) ) || ( isset( $_GET['ga3'] ) && ! empty( $_GET['ga3'] ) ) ) {
+	if ( ! empty( $_GET['ga'] ) || ! empty( $_GET['ga3'] ) ) {
 
 		// ID can be in a 'ga' (legacy) or 'ga3' (current) param.
-		$ga3_id = isset( $_GET['ga3'] ) ? $_GET['ga3'] : $_GET['ga'];
+		$ga3_id = ! empty( $_GET['ga3'] ) ? $_GET['ga3'] : $_GET['ga'];
 
 		// our base url to ping GA at.
 		$analytics_ping_url = 'https://www.google-analytics.com/collect?v=1';
