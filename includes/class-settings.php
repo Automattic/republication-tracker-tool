@@ -154,7 +154,7 @@ class Republication_Tracker_Tool_Settings {
 			'<input type="text" name="%1$s" value="%2$s">%3$s',
 			'republication_tracker_tool_analytics_ga4_secret',
 			esc_html( $content ),
-			wp_kses_post( '<p><em>' . __( 'Your Google Analytics 4 API secret. <a href="https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference?client_type=gtag">How to get this</a>.', 'republication-tracker-tool' ) . '</em></p>' )
+			wp_kses_post( '<p><em>' . __( 'Your Google Analytics 4 API secret. <a href="https://developers.google.com/analytics/devguides/collection/protocol/ga4/sending-events?client_type=gtag#required_parameters">How to get this</a>.', 'republication-tracker-tool' ) . '</em></p>' )
 		);
 	}
 
