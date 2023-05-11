@@ -1,3 +1,15 @@
+# [1.4.0-alpha.1](https://github.com/Automattic/republication-tracker-tool/compare/v1.3.3...v1.4.0-alpha.1) (2023-05-11)
+
+
+### Bug Fixes
+
+* support old "ga" param for GA3 tracking ([#184](https://github.com/Automattic/republication-tracker-tool/issues/184)) ([055a0c7](https://github.com/Automattic/republication-tracker-tool/commit/055a0c740f05919bf6f9011d7b8c54e7d4d6f6ee))
+
+
+### Features
+
+* add support to tracking pixel for GA4 ([#183](https://github.com/Automattic/republication-tracker-tool/issues/183)) ([7c58137](https://github.com/Automattic/republication-tracker-tool/commit/7c581377a4206eaf049df4ce43c493a851a8ec22))
+
 ## [1.3.3](https://github.com/Automattic/republication-tracker-tool/compare/v1.3.2...v1.3.3) (2023-05-04)
 
 
