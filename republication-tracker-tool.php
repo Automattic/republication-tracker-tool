@@ -6,7 +6,7 @@
  * Author URI:      https://labs.inn.org
  * Text Domain:     republication-tracker-tool
  * Domain Path:     /languages
- * Version:         1.3.3
+ * Version:         1.4.0-alpha.1
  *
  * @package         Republication_Tracker_Tool
  */
@@ -133,7 +133,7 @@ final class Republication_Tracker_Tool {
 			'template_include',
 			function( $template ) {
 				// if the params are set, use our pixel functions
-				if ( isset( $_GET['republication-pixel'] ) && isset( $_GET['post'] ) && isset( $_GET['ga'] ) ) {
+				if ( isset( $_GET['republication-pixel'] ) && isset( $_GET['post'] ) && ( isset( $_GET['ga'] ) || isset( $_GET['ga3'] ) || isset( $_GET['ga4'] ) ) ) {
 					return include_once plugin_dir_path( __FILE__ ) . 'includes/pixel.php';
 					// else, continue with whatever template was being loaded
 				} else {
@@ -203,13 +203,15 @@ final class Republication_Tracker_Tool {
 	 * @param $post_id Id of the post to track.
 	 */
 	public static function create_tracking_pixel_markup( $post_id ) {
-		$analytics_id = get_option( 'republication_tracker_tool_analytics_id' );
+		$ga3_id = \get_option( 'republication_tracker_tool_analytics_id' );
+		$ga4_id = \get_option( 'republication_tracker_tool_analytics_ga4_id' );
 		return sprintf(
 			// %1$s is the javascript source, %2$s is the post ID, %3$s is the plugins URL
-			'<img id="republication-tracker-tool-source" src="%1$s/?republication-pixel=true&post=%2$s&ga=%3$s" style="width:1px;height:1px;">',
+			'<img id="republication-tracker-tool-source" src="%1$s/?republication-pixel=true&post=%2$s%3$s%4$s" style="width:1px;height:1px;">',
 			esc_attr( get_site_url() ),
 			esc_attr( $post_id ),
-			esc_attr( $analytics_id )
+			$ga3_id ? esc_attr( '&ga3=' . $ga3_id ) : '',
+			$ga4_id ? esc_attr( '&ga4=' . $ga4_id ) : ''
 		);
 	}
 
