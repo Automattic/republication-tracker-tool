@@ -191,6 +191,8 @@ final class Republication_Tracker_Tool {
 
 		$vars[] .= 'republication-pixel';
 		$vars[] .= 'GA';
+		$vars[] .= 'ga3';
+		$vars[] .= 'ga4';
 		$vars[] .= 'post';
 
 		return $vars;
