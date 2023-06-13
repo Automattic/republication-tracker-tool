@@ -6,7 +6,7 @@
  * Author URI:      https://labs.inn.org
  * Text Domain:     republication-tracker-tool
  * Domain Path:     /languages
- * Version:         1.4.0
+ * Version:         1.4.1
  *
  * @package         Republication_Tracker_Tool
  */
@@ -191,6 +191,8 @@ final class Republication_Tracker_Tool {
 
 		$vars[] .= 'republication-pixel';
 		$vars[] .= 'GA';
+		$vars[] .= 'ga3';
+		$vars[] .= 'ga4';
 		$vars[] .= 'post';
 
 		return $vars;

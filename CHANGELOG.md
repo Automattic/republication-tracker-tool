@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/Automattic/republication-tracker-tool/compare/v1.4.0...v1.4.1) (2023-06-13)
+
+
+### Bug Fixes
+
+* create fallback client id for GA if none exists ([#187](https://github.com/Automattic/republication-tracker-tool/issues/187)) ([2bce13e](https://github.com/Automattic/republication-tracker-tool/commit/2bce13e99a6d8fabe6b245ee1f178088f454addc))
+
 # [1.4.0](https://github.com/Automattic/republication-tracker-tool/compare/v1.3.3...v1.4.0) (2023-05-24)
 
 
