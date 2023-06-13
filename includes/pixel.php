@@ -42,7 +42,7 @@ function wprtt_get_referring_page_title( $url, $post_id ) {
  * @return string Randomly generated client ID.
  */
 function wprtt_create_cid_cookie_if_not_set() {
-	$cid = \wp_rand( 100000000, 999999999 );
+	$cid = (string) \wp_rand( 100000000, 999999999 );
 
 	// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.cookies_setcookie
 	setcookie( 'newspack-cid', $cid, time() + 30 * DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN, true );
