@@ -119,39 +119,7 @@ if ( isset( $_GET['post'] ) ) {
 	}
 	$update = \update_post_meta( $shared_post_id, 'republication_tracker_tool_sharing', $value );
 
-	// if our google analytics UA tag is set, let's push data to it.
-	// TODO: Deprecate this after UA goes away.
-	if ( ! empty( $_GET['ga'] ) || ! empty( $_GET['ga3'] ) ) {
-
-		// ID can be in a 'ga' (legacy) or 'ga3' (current) param.
-		$ga3_id = ! empty( $_GET['ga3'] ) ? $_GET['ga3'] : $_GET['ga'];
-
-		// our base url to ping GA at.
-		$analytics_ping_url = 'https://www.google-analytics.com/collect?v=1';
-
-		// create all of our necessary params to track.
-		// the docs for these params can be found at: https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters.
-		$analytics_ping_params = array(
-			'tid' => \sanitize_text_field( $ga3_id ), // Tracking ID/ Web Property ID.
-			'cid' => '555', // Client ID.
-			't'   => 'pageview', // Hit type.
-			'dl'  => $shared_post_permalink, // Document location URL.
-			'dh'  => $url_host, // Document Host Name.
-			'dp'  => $shared_post_slug, // Document Path.
-			'dr'  => $url, // Document Referrer.
-			'dt'  => $url_title, // Document Title.
-			'an'  => 'Republication', // Application Name.
-			'aid' => $url_host, // Application ID.
-			'av'  => 'Republication Tracker v1', // Application Version.
-		);
-
-		// create query based on our params array.
-		$analytics_ping_params = http_build_query( $analytics_ping_params );
-
-		$response = \wp_remote_post( $analytics_ping_url . '&' . $analytics_ping_params );
-	}
-
-	// If we have the proper GA4 info, let's push to that, too.
+	// If we have the necessary GA4 info, let's push data to it.
 	// We need both a Measurement ID and an API secret for GA4.
 	// https://developers.google.com/analytics/devguides/collection/protocol/ga4/sending-events?client_type=gtag#required_parameters.
 	$ga4_id     = \get_option( 'republication_tracker_tool_analytics_ga4_id' );

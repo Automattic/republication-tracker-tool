@@ -52,11 +52,6 @@ class Republication_Tracker_Tool_Settings {
 				'callback' => array( $this, 'republication_tracker_tool_policy_callback' ),
 			],
 			[
-				'key'      => 'republication_tracker_tool_analytics_id',
-				'label'    => esc_html__( 'Google Analytics UA ID', 'republication-tracker-tool' ),
-				'callback' => array( $this, 'republication_tracker_tool_analytics_id_callback' ),
-			],
-			[
 				'key'      => 'republication_tracker_tool_analytics_ga4_id',
 				'label'    => esc_html__( 'Google Analytics 4 ID', 'republication-tracker-tool' ),
 				'callback' => array( $this, 'republication_tracker_tool_analytics_ga4_id_callback' ),
