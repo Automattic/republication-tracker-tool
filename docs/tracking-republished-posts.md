@@ -1,49 +1,55 @@
 # Tracking Republished Posts
 
-In order to use Google Analytics to view tracking metrics for posts that have been republished, make sure you have your Google Analytics ID set in the [Republication Tracker Tool Google Analytics ID](configuring-plugin-settings.md) settings field.
+In order to use Google Analytics 4 to view tracking metrics for posts that have been republished, make sure you have your Google Analytics ID and API Secret set in the [Republication Tracker Tool Google Analytics ID](configuring-plugin-settings.md) settings field.
 
-## Parameters Passed into Each Pageview
+## Pageview events
 
-- Event: Pageview
-- Page: Path of the post that was republished (ex: republish-story-origin)
-- Document Location: URL of where the post was republished (ex: https://nytimes.com/story-1)
-- Document Host: Domain of where the post was republished (ex: https://nytimes.com)
-- Document Path: Path of where the post was republished (ex: story-1)
-- Document Referrer: URL of where the post was republished (ex: https://nytimes.com/story-1)
-- Document Title: Title of the page where the post was republished (ex: Story Title)
+Metrics for republished/shared posts are tracked as `page_view` events in Google Analytics 4. The `page_view` event includes the following parameters:
 
-## See How a Particular Story is Performing
+- `page_location`/`shared_post_url`: URL where the post was originally published (ex: https://yoursite.com/story-1)
+- `shared_post_id`: WP post ID on the site where it was originally published.
+- `shared_post_slug`: WP post slug on the site where it was originally published.
+- `page_referrer`: URL where the post was republished (ex: https://nytimes.com/story-1)
+- `page_title`: Title of the page where the post was republished (ex: Story Title)
 
-In order to see how a particular story is performing, you’ll need to log into your Google Analytics account. Once logged into your dashboard, select the “Behavior” tab on the left sidebar. Once the “Behavior” pane opens up, select “Site Content”. 
+## See How Stories are Performing
 
-![google analytics navigating to site content pane](img/google-analytics-navigating-to-site-content.png)
+In order to see how stories are performing, you’ll need to log into your Google Analytics account. Once logged into your dashboard, select the “Explore” tab on the left sidebar. Once the “Explore” pane opens up, select “Blank” to create a new Exploration report. 
 
-Once inside the “Site Content” tab, you can click on any page you’d like to see the performance for. 
+![google analytics new exploration](img/google-analytics-new-exploration.png)
 
-![google analytics viewing individual pages](img/google-analytics-viewing-individual-pages.png)
+Once inside the new Exploration, you'll need to add a Segment of users to analyze, and Dimensions and Metrics to display. To view a report of articles that were shared via this plugin, click the + button next to the Segments panel and create a new User segment. Add a new Condition with a `shared_post_url` containing part or all of the URL of the post you want to view metrics for.
 
-Once you have clicked into a specific page, select “Secondary Dimension”. If you’d like to view a list of all the different sites that have republished this certain page, select “Hostname” for your “Secondary Dimension”. If you’d like to see the full url of the page that the story has been republished on, select “Full Referrer” as your “Secondary Dimension”.
+Here you can enter a value that will return multiple articles (such as your root domain or a category slug to view all republished articles on the site or in a specific category) or a particular story (such as the post slug for the story). 
 
-![google analytics setting secondary dimension](img/google-analytics-setting-secondary-dimension.png)
+Give your Segment a memorable name such as “Republished article views.” Click “Save and apply” to save your new segment.
 
-![google analytics viewing secondary dimension](img/google-analytics-viewing-secondary-dimension.png)
+![google analytics viewing individual pages](img/google-analytics-segment-settings.png)
+
+Click the + button in the Dimensions panel to add the following dimensions to your Exploration:
+
+- Page location
+- Page referrer
+
+![google analytics setting secondary dimension](img/google-analytics-setting-dimensions.png)
+
+Click the + button in the Metrics panel to add a single metric for “Event count”.
+
+In the Settings column, you can choose Visualization options. For example, to view a table of articles that were republished with a breakdown of page views by shared URL, choose the following:
+
+- Technique: Free form
+- Visualization: Table
+- Segment Comparisons: Your user segment as created above
+- Rows: Page location
+- Columns: Page referrer (this will show each shared URL in its own column of the report)
+- Values: Event count
+
+This will give you a report that looks similar to the following, where the left-most column will show the original URL for each shared article, and each shared URL will be shown in its own column:
+
+[!google analytics page views by referrer report](img/google-analytics-page-views-by-referrer.png)
 
 ## See what a particular site has republished (what did the NYT republish from our site?)
 
-In order to see how a particular story is performing, you’ll need to log into your Google Analytics account. Once logged into your dashboard, select the “Behavior” tab on the left sidebar. Once the “Behavior” pane opens up, select “Site Content”. 
+You can also drill down in more detail by adding additional conditions to your Segment. For example, to view a report of only page views by a specific referrer domain or URL, add a condition targeting **Page referrer* containing the domain or URL you want to search for:
 
-![google analytics navigating to site content pane](img/google-analytics-navigating-to-site-content.png)
-
-Once inside of the “Site Content” tab, set your “Primary Dimension” to “Hostname”. This will set your “Page Content” to be searchable by republishers.
-
-![google analytics setting primary dimension](img/google-analytics-setting-primary-dimension.png)
-
-After you have your “Primary Dimension” set, go ahead and set your “Secondary Dimension” as “Page”. 
-
-![google analytics setting secondary dimension after primary dimension](img/google-analytics-setting-primary-secondary-dimension.png)
-
-Once you have “Hostname” and “Page” set as your dimensions, you’ll be able to use the Search input on the upper right side to be able to search for what domain you’re interested in seeing data for.
-
-![google analytics filtering by sitename](img/google-analytics-filtering-by-sitename.png)
-
-![google analytics viewing by sitename](img/google-analytics-viewing-by-sitename.png)
+[!google analytics page views by referrer conditions](img/google-analytics-segment-settings-with-referrer.png)
