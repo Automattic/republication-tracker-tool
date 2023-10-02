@@ -86,7 +86,7 @@ class Republication_Tracker_Tool_Settings {
 	public function republication_tracker_tool_section_callback() {
 		// if our republication_tracker_tool_analytics_id field has been set and is not empty, let's display
 		// a sample tracking code for users to manually input into articles
-		if ( get_option( 'republication_tracker_tool_analytics_id' ) && ! empty( get_option( 'republication_tracker_tool_analytics_id' ) ) ) {
+		if ( ! empty( get_option( 'republication_tracker_tool_analytics_ga4_id', false ) ) && ! empty( get_option( 'republication_tracker_tool_analytics_ga4_secret', false ) ) ) {
 			$pixel = Republication_Tracker_Tool::create_tracking_pixel_markup( 'YOUR-POST-ID' );
 			printf(
 				'
