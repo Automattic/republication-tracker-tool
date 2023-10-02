@@ -46,10 +46,10 @@ In the Settings column, you can choose Visualization options. For example, to vi
 
 This will give you a report that looks similar to the following, where the left-most column will show the original URL for each shared article, and each shared URL will be shown in its own column:
 
-[!google analytics page views by referrer report](img/google-analytics-page-views-by-referrer.png)
+![google analytics page views by referrer report](img/google-analytics-page-views-by-referrer.png)
 
 ## See what a particular site has republished (what did the NYT republish from our site?)
 
 You can also drill down in more detail by adding additional conditions to your Segment. For example, to view a report of only page views by a specific referrer domain or URL, add a condition targeting **Page referrer* containing the domain or URL you want to search for:
 
-[!google analytics page views by referrer conditions](img/google-analytics-segment-settings-with-referrer.png)
+![google analytics page views by referrer conditions](img/google-analytics-segment-settings-with-referrer.png)
