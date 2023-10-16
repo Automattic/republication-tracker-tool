@@ -6,7 +6,7 @@
  * Author URI:      https://labs.inn.org
  * Text Domain:     republication-tracker-tool
  * Domain Path:     /languages
- * Version:         1.4.1
+ * Version:         1.4.2-alpha.1
  *
  * @package         Republication_Tracker_Tool
  */
