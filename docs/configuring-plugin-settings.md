@@ -13,21 +13,22 @@ The `Republication Tracker Tool Policy` field is where you will be able to input
 
 ## Republication Tracker Tool Google Analytics ID
 
-In order to track your republished post pageviews in Google Analytics, you will need to insert your Google Analytics tracking ID into the field labeled `Republication Tracker Tool Google Analytics ID`.
+In order to track your republished post pageviews in Google Analytics, you will need to insert your Google Analytics 4 tracking ID and API Secret into into the relevant fields.
 
 ![republication tracker tool google analytics id field](img/republication-tracker-tool-analytics-id.png)
 
-To find your Google Analytics ID, first log into your Google Analytics account. Once logged in, click the `Admin` button on the bottom left corner.
+To find your Google Analytics ID, follow [these instructions](https://support.google.com/analytics/answer/9539598) to find the data stream associated with your site. To summarize:
 
-![google analytics admin button](img/google-analytics-admin-button.png)
+1. Log into your Google Analytics 4 account.
+2. Once logged in, click the `Admin`` button on the bottom left corner.
+3. Once inside the admin panel, click the `Data Streams` button under the `Property` column.
+4. Click the Data Stream associated with your site URL.
 
-Once inside the admin panel, click into `Property Settings` for the property you want the tracking ID for.
+![republication tracker tool google analytics data stream](img/google-analytics-property-settings.png)
 
-![google analytics property settings](img/google-analytics-property-settings.png)
+To find or create an API Secret, once you've located the Data Stream for your site, click the `Measurement Protocol API secrets` link to view existing secrets or create a new one.
 
-Inside of the `Property Settings` pane is where you will see your tracking ID.
-
-![google analytics tracking id](img/google-analytics-tracking-id.png)
+![republication tracker tool google analytics api secret](img/google-analytics-api-secret.png)
 
 ## Creative Commons Tracking Code
 
