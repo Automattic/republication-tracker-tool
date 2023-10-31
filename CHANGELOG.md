@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/Automattic/republication-tracker-tool/compare/v1.4.1...v1.4.2) (2023-10-31)
+
+
+### Bug Fixes
+
+* deprecate GA3 code and documentation ([#190](https://github.com/Automattic/republication-tracker-tool/issues/190)) ([c9168c2](https://github.com/Automattic/republication-tracker-tool/commit/c9168c237c9aee82f4f1612dbcb87cd6822360ef))
+
 ## [1.4.2-alpha.1](https://github.com/Automattic/republication-tracker-tool/compare/v1.4.1...v1.4.2-alpha.1) (2023-10-16)
 
 
