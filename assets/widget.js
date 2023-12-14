@@ -1,9 +1,10 @@
-function copyToClipboard( element ) {
+function copyToClipboard( element, button ) {
 	var $temp = jQuery( '<input>' );
 	jQuery( 'body' ).append( $temp );
 	$temp.val( jQuery( element ).text() ).select();
 	document.execCommand( 'copy' );
 	$temp.remove();
+	button.focus();
 }
 
 function modal_actions(){
@@ -22,7 +23,6 @@ function modal_actions(){
 	var $modal = $('#republication-tracker-tool-modal');
 	var $btn = $('.republication-tracker-tool-button');
 	var $close = $('.republication-tracker-tool-close');
-	var $copy = $( '#republication-copy-to-clipboard' );
 
 	// url hash of #show-republish: open the modal
 	if ( '#show-republish' === window.location.hash ) {

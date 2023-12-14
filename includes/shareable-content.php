@@ -137,7 +137,7 @@ echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 's
 			);
 			if ( ! $is_amp ) {
 				?>
-			<button id="republication-copy-to-clipboard" onclick="copyToClipboard('#republication-tracker-tool-shareable-content')"><?php echo esc_html__( 'Copy to Clipboard', 'republication-tracker-tool' ); ?></button>
+			<button onclick="copyToClipboard('#republication-tracker-tool-shareable-content', this)"><?php echo esc_html__( 'Copy to Clipboard', 'republication-tracker-tool' ); ?></button>
 				<?php
 			}
 
