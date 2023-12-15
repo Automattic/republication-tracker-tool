@@ -1,3 +1,10 @@
+# [1.5.0-alpha.1](https://github.com/Automattic/republication-tracker-tool/compare/v1.4.2...v1.5.0-alpha.1) (2023-12-15)
+
+
+### Features
+
+* force release for accessibility improvements to modal ([d3b3dd0](https://github.com/Automattic/republication-tracker-tool/commit/d3b3dd02e6fbb96974c1258d1eada936b755fdcf))
+
 ## [1.4.2](https://github.com/Automattic/republication-tracker-tool/compare/v1.4.1...v1.4.2) (2023-10-31)
 
 
