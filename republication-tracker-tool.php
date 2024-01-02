@@ -24,14 +24,6 @@ require plugin_dir_path( __FILE__ ) . 'includes/compatibility-co-authors-plus.ph
 final class Republication_Tracker_Tool {
 
 	/**
-	 * Current version.
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	const VERSION = '1.0.1';
-
-	/**
 	 * URL of plugin directory.
 	 *
 	 * @var    string
