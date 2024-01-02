@@ -53,9 +53,9 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 		$is_amp = self::is_amp();
 
 		if ( ! $is_amp ) {
-			wp_enqueue_script( 'republication-tracker-tool-js', plugins_url( 'assets/widget.js', dirname( __FILE__ ) ), array( 'jquery' ), Republication_Tracker_Tool::VERSION, false );
+			wp_enqueue_script( 'republication-tracker-tool-js', plugins_url( 'assets/widget.js', dirname( __FILE__ ) ), array( 'jquery' ), filemtime( plugin_dir_path( __FILE__ ) ), false );
 		}
-		wp_enqueue_style( 'republication-tracker-tool-css', plugins_url( 'assets/widget.css', dirname( __FILE__ ) ), array(), Republication_Tracker_Tool::VERSION );
+		wp_enqueue_style( 'republication-tracker-tool-css', plugins_url( 'assets/widget.css', dirname( __FILE__ ) ), array(), filemtime( plugin_dir_path(__FILE__) ) );
 
 		echo wp_kses_post( $args['before_widget'] );
 
