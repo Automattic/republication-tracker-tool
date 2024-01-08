@@ -1,3 +1,15 @@
+# [1.5.0](https://github.com/Automattic/republication-tracker-tool/compare/v1.4.2...v1.5.0) (2024-01-08)
+
+
+### Bug Fixes
+
+* update enqueued files to use filemtime to enable proper caching ([#196](https://github.com/Automattic/republication-tracker-tool/issues/196)) ([a8d59b4](https://github.com/Automattic/republication-tracker-tool/commit/a8d59b41ea05ad6f03b881408646c6792f25f8d7))
+
+
+### Features
+
+* force release for accessibility improvements to modal ([d3b3dd0](https://github.com/Automattic/republication-tracker-tool/commit/d3b3dd02e6fbb96974c1258d1eada936b755fdcf))
+
 # [1.5.0-alpha.2](https://github.com/Automattic/republication-tracker-tool/compare/v1.5.0-alpha.1...v1.5.0-alpha.2) (2024-01-04)
 
 
