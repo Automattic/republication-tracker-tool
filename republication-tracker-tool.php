@@ -6,7 +6,7 @@
  * Author URI:      https://labs.inn.org
  * Text Domain:     republication-tracker-tool
  * Domain Path:     /languages
- * Version:         1.4.2
+ * Version:         1.5.0-alpha.2
  *
  * @package         Republication_Tracker_Tool
  */
@@ -22,14 +22,6 @@ require plugin_dir_path( __FILE__ ) . 'includes/compatibility-co-authors-plus.ph
 * @since  1.0
 */
 final class Republication_Tracker_Tool {
-
-	/**
-	 * Current version.
-	 *
-	 * @var    string
-	 * @since  1.0
-	 */
-	const VERSION = '1.0.1';
 
 	/**
 	 * URL of plugin directory.

@@ -104,6 +104,10 @@
 }
 
 .republication-tracker-tool-close {
+  background: transparent !important;
+  border: 0 !important;
+  color: #000 !important;
+  padding: 0.5em !important;
   position: absolute;
   top: 0;
   right: 0.5em;
