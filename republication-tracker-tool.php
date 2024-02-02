@@ -168,7 +168,7 @@ final class Republication_Tracker_Tool {
 
 			$new_links = array(
 				'donate'        => '<a href="options-reading.php">Settings</a>',
-				'documentation' => '<a href="https://github.com/Automattic/republication-tracker-tool/tree/master/docs" target="_blank">Documentation</a>',
+				'documentation' => '<a href="https://github.com/Automattic/republication-tracker-tool/tree/trunk/docs" target="_blank">Documentation</a>',
 			);
 
 			$links = array_merge( $links, $new_links );
