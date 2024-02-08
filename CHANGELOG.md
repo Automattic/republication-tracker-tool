@@ -1,3 +1,10 @@
+# [1.6.0-alpha.1](https://github.com/Automattic/republication-tracker-tool/compare/v1.5.0...v1.6.0-alpha.1) (2024-02-08)
+
+
+### Features
+
+* **ci:** add epic/* release workflow and rename `master` to `trunk` ([#199](https://github.com/Automattic/republication-tracker-tool/issues/199)) ([60185ec](https://github.com/Automattic/republication-tracker-tool/commit/60185ec7f69fda783e6bfc9f4e88f59e5b6131ff))
+
 # [1.5.0](https://github.com/Automattic/republication-tracker-tool/compare/v1.4.2...v1.5.0) (2024-01-08)
 
 
