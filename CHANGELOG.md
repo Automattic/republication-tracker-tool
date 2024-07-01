@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/Automattic/republication-tracker-tool/compare/v1.6.0...v1.6.1) (2024-07-01)
+
+
+### Bug Fixes
+
+* update newspack-scripts to v5.5.1 ([#211](https://github.com/Automattic/republication-tracker-tool/issues/211)) ([5493afd](https://github.com/Automattic/republication-tracker-tool/commit/5493afd5eda0d2e54e31727dffa986bad4b3a034))
+
 # [1.6.0](https://github.com/Automattic/republication-tracker-tool/compare/v1.5.0...v1.6.0) (2024-04-08)
 
 
