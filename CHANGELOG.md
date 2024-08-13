@@ -1,3 +1,35 @@
+# [2.0.0](https://github.com/Automattic/republication-tracker-tool/compare/v1.6.1...v2.0.0) (2024-08-13)
+
+
+### Bug Fixes
+
+* update dependencies to support `@wordpress/scripts` ([#206](https://github.com/Automattic/republication-tracker-tool/issues/206)) ([7322c4b](https://github.com/Automattic/republication-tracker-tool/commit/7322c4ba1d26cb5e3b16e24eaec9d6299cbfe8af))
+
+
+### BREAKING CHANGES
+
+* Updates dependencies for compatibility with WordPress 6.6.*, but breaks JS in WordPress 6.5.* and below. If you need support for WP 6.5.*, please do not upgrade to this new major version.
+
+* chore: refactor for newspack-scripts dependency updates
+
+* fix: peer dependencies
+
+* chore: update newspack-scripts to v5.6.0-alpha.3
+
+* chore: udpate package-lock.json
+
+* chore: update newspack-scripts to v5.6.0-alpha.4
+
+* chore: update newspack-scripts to 5.6.0-alpha.5
+
+* chore: update newspack-scripts to v5.6.0-alpha.7
+
+* chore: update newspack-scripts to v5.6.0-alpha.8
+
+* chore: bump version number in package.json
+
+Co-authored-by: Miguel Peixe <miguel@peixe.co>
+
 ## [1.6.1](https://github.com/Automattic/republication-tracker-tool/compare/v1.6.0...v1.6.1) (2024-07-01)
 
 
