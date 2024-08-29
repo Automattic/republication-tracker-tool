@@ -127,14 +127,14 @@ echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 's
 			echo '</div>'; // .article-info
 
 			// the text area that is copyable
-			echo wp_kses_post(
-				sprintf(
-					'<textarea readonly id="republication-tracker-tool-shareable-content" rows="5">%1$s %2$s %3$s</textarea>',
-					esc_html( $article_info ),
-					$content . "\n\n",
-					$content_footer
-				)
-			);
+			?>
+				<textarea readonly id="republication-tracker-tool-shareable-content" rows="5">
+					<?php echo esc_html( $article_info ); ?>
+					<?php echo $content; ?>
+
+					<?php echo htmlspecialchars($content_footer, ENT_QUOTES, 'UTF-8'); ?>
+				</textarea>
+			<?php
 			if ( ! $is_amp ) {
 				?>
 			<button onclick="copyToClipboard('#republication-tracker-tool-shareable-content', this)"><?php echo esc_html__( 'Copy to Clipboard', 'republication-tracker-tool' ); ?></button>
