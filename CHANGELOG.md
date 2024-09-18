@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/Automattic/republication-tracker-tool/compare/v2.0.0...v2.1.0) (2024-09-18)
+
+
+### Features
+
+* add parse.ly tracking ([2ee25fd](https://github.com/Automattic/republication-tracker-tool/commit/2ee25fdd44e3e037d2d8de1683cbb066000f22aa))
+
 # [2.0.0](https://github.com/Automattic/republication-tracker-tool/compare/v1.6.1...v2.0.0) (2024-08-13)
 
 
