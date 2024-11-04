@@ -140,12 +140,12 @@ if ( isset( $_GET['post'] ) ) {
 					'name'   => 'page_view',
 					// Params for page_view events: https://developers.google.com/analytics/devguides/collection/ga4/views?client_type=gtag.
 					'params' => [
-						'page_title'       => $url_title,
-						'page_location'    => $shared_post_permalink,
-						'page_referrer'    => $url,
-						'shared_post_id'   => $shared_post->ID,
-						'shared_post_slug' => $shared_post_slug,
-						'shared_post_url'  => $shared_post_permalink,
+						'page_title'       => substr( $url_title, 0, 100 ),
+						'page_location'    => substr( $shared_post_permalink, 0, 100 ),
+						'page_referrer'    => substr( $url, 0, 100 ),
+						'shared_post_id'   => substr( $shared_post->ID, 0, 100 ),
+						'shared_post_slug' => substr( $shared_post_slug, 0, 100 ),
+						'shared_post_url'  => substr( $shared_post_permalink, 0, 100 ),
 					],
 				],
 			],
