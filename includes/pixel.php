@@ -14,7 +14,7 @@ function wprtt_get_referring_page_title( $url, $post_id ) {
 	if ( ! is_wp_error( $response ) ) {
 
 		// find the title element inside of the response body.
-		$response = preg_match( '/<title.[^>]*>(.*)<\/title>/siU', $response['body'], $title_matches );
+		$response = preg_match( '/<title.[^>]*>([^<]*)<\/title>/siU', $response['body'], $title_matches );
 
 		// if a title element was found, let's get the text from it.
 		if ( $title_matches ) {
