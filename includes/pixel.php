@@ -7,14 +7,14 @@
  * @param int    $post_id ID of the shared post.
  * @return string|void Title of the referring URL, or void if we can't find it.
  */
-function wprtt_get_referring_page_title( $url, $post_id ) {
+function wprtt_get_referring_page_title( $url ) {
 	$response = \wp_remote_get( $url );
 
-	// if there was no issue grabbing the url, continue.
+	// if there was no issue grabbing the url, grab the title.
 	if ( ! is_wp_error( $response ) ) {
 
 		// find the title element inside of the response body.
-		$response = preg_match( '/<title.[^>]*>([^<]*)<\/title>/siU', $response['body'], $title_matches );
+		$response = preg_match( '/<title[^>]*>(.*)<\/title>/iU', $response['body'], $title_matches );
 
 		// if a title element was found, let's get the text from it.
 		if ( $title_matches ) {
@@ -26,12 +26,6 @@ function wprtt_get_referring_page_title( $url, $post_id ) {
 
 			// return our found title.
 			return urldecode( $title );
-
-		} else {
-
-			// if there were no title matches found, use the original post title.
-			return \get_the_title( $post_id );
-
 		}
 	}
 }
