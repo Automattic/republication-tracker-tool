@@ -5,10 +5,12 @@
  *
  * @param string $url URL of the referrer.
  * @param int    $post_id ID of the shared post.
- * @return string|void Title of the referring URL, or void if we can't find it.
+ * @return string Title of the referring URL, or empty string if we can't find it.
  */
 function wprtt_get_referring_page_title( $url ) {
 	$response = \wp_remote_get( $url );
+
+	$title = '';
 
 	// if there was no issue grabbing the url, grab the title.
 	if ( ! is_wp_error( $response ) ) {
@@ -25,9 +27,11 @@ function wprtt_get_referring_page_title( $url ) {
 			$title = rawurlencode( $title );
 
 			// return our found title.
-			return urldecode( $title );
+			$title = urldecode( $title );
 		}
 	}
+
+	return $title;
 }
 
 /**
