@@ -5,16 +5,18 @@
  *
  * @param string $url URL of the referrer.
  * @param int    $post_id ID of the shared post.
- * @return string|void Title of the referring URL, or void if we can't find it.
+ * @return string Title of the referring URL, or empty string if we can't find it.
  */
-function wprtt_get_referring_page_title( $url, $post_id ) {
+function wprtt_get_referring_page_title( $url ) {
 	$response = \wp_remote_get( $url );
 
-	// if there was no issue grabbing the url, continue.
+	$title = '';
+
+	// if there was no issue grabbing the url, grab the title.
 	if ( ! is_wp_error( $response ) ) {
 
 		// find the title element inside of the response body.
-		$response = preg_match( '/<title.[^>]*>(.*)<\/title>/siU', $response['body'], $title_matches );
+		$response = preg_match( '/<title[^>]*>(.*)<\/title>/iU', $response['body'], $title_matches );
 
 		// if a title element was found, let's get the text from it.
 		if ( $title_matches ) {
@@ -25,15 +27,11 @@ function wprtt_get_referring_page_title( $url, $post_id ) {
 			$title = rawurlencode( $title );
 
 			// return our found title.
-			return urldecode( $title );
-
-		} else {
-
-			// if there were no title matches found, use the original post title.
-			return \get_the_title( $post_id );
-
+			$title = urldecode( $title );
 		}
 	}
+
+	return $title;
 }
 
 /**
@@ -140,12 +138,12 @@ if ( isset( $_GET['post'] ) ) {
 					'name'   => 'page_view',
 					// Params for page_view events: https://developers.google.com/analytics/devguides/collection/ga4/views?client_type=gtag.
 					'params' => [
-						'page_title'       => $url_title,
-						'page_location'    => $shared_post_permalink,
-						'page_referrer'    => $url,
-						'shared_post_id'   => $shared_post->ID,
-						'shared_post_slug' => $shared_post_slug,
-						'shared_post_url'  => $shared_post_permalink,
+						'page_title'       => substr( $url_title, 0, 100 ),
+						'page_location'    => substr( $shared_post_permalink, 0, 100 ),
+						'page_referrer'    => substr( $url, 0, 100 ),
+						'shared_post_id'   => substr( $shared_post->ID, 0, 100 ),
+						'shared_post_slug' => substr( $shared_post_slug, 0, 100 ),
+						'shared_post_url'  => substr( $shared_post_permalink, 0, 100 ),
 					],
 				],
 			],
