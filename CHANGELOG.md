@@ -1,3 +1,10 @@
+## [2.1.1](https://github.com/Automattic/republication-tracker-tool/compare/v2.1.0...v2.1.1) (2024-11-11)
+
+
+### Bug Fixes
+
+* get remote page title was too greedy ([#228](https://github.com/Automattic/republication-tracker-tool/issues/228)) ([ab936d1](https://github.com/Automattic/republication-tracker-tool/commit/ab936d125dc03e8e049552dc5d87f8f32cb82c79))
+
 # [2.1.0](https://github.com/Automattic/republication-tracker-tool/compare/v2.0.0...v2.1.0) (2024-09-18)
 
 
