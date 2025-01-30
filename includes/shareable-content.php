@@ -108,7 +108,7 @@ echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 's
 	// Explain Creative Commons
 	echo '<div class="cc-policy">';
 		echo '<div class="cc-license">';
-			echo sprintf( '<a rel="noreferrer license" target="_blank" href="https://licensebuttons.net/l/by-nc-nd/4.0/88x31.png" /></a>', esc_html__( 'Creative Commons License', 'republication-tracker-tool' ) );
+			echo sprintf( '<a rel="noreferrer license" target="_blank" href="%s" /></a>', REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['badge'], esc_html__( 'Creative Commons License', 'republication-tracker-tool' ) );
 			echo wp_kses_post(
 				wpautop(
 					sprintf(
