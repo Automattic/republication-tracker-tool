@@ -1,24 +1,24 @@
 <?php
 const REPUBLICATION_TRACKER_TOOL_LICENSES = [
-	'cc-by' => [
+	'cc-by-4.0' => [
 		'label' => 'CC BY 4.0',
 		'description' => 'Creative Commons Attribution 4.0 International License',
 		'url' => 'https://creativecommons.org/licenses/by/4.0/',
 		'badge' => 'https://licensebuttons.net/l/by/4.0/88x31.png'
 	],
-	'cc-by-sa' => [
+	'cc-by-sa-4.0' => [
 		'label' => 'CC BY-SA 4.0',
 		'description' => 'Creative Commons Attribution-ShareAlike 4.0 International License',
 		'url' => 'https://creativecommons.org/licenses/by-sa/4.0/',
 		'badge' => 'https://licensebuttons.net/l/by-sa/4.0/88x31.png'
 	],
-	'cc-by-nc' => [
+	'cc-by-nc-4.0' => [
 		'label' => 'CC BY-NC 4.0',
 		'description' => 'Creative Commons Attribution-NonCommercial 4.0 International License',
 		'url' => 'https://creativecommons.org/licenses/by-nc/4.0/',
 		'badge' => 'https://licensebuttons.net/l/by-nc/4.0/88x31.png'
 	],
-	'cc-by-nc-sa' => [
+	'cc-by-nc-sa-4.0' => [
 		'label' => 'CC BY-NC-SA 4.0',
 		'description' => 'Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License',
 		'url' => 'https://creativecommons.org/licenses/by-nc-sa/4.0/',
