@@ -112,8 +112,9 @@ $featured_image = get_the_post_thumbnail( $republish_post_id, 'full' );
 if ( class_exists( '\Newspack\Newspack_Image_Credits' ) ) {
 	$featured_media_id             = get_post_thumbnail_id( $republish_post_id );
 	$can_distribute_featured_image = get_post_meta( $featured_media_id, Newspack_Image_Credits::MEDIA_CREDIT_CAN_DISTRIBUTE_META, true );
+	$media_distribution            = get_option( 'republication_tracker_tool_media_distribution', 'on' );
 
-	if ( empty( $can_distribute_featured_image ) ) {
+	if ( empty( $media_distribution ) && empty( $can_distribute_featured_image ) ) {
 		$featured_image = '';
 	}
 }
