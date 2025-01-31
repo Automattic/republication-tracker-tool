@@ -98,7 +98,7 @@ $article_info = str_replace( '<p></p>', '', wpautop( $article_info ) );
  * @var HTML $license_statement
  */
 $license_statement = wp_kses_post( get_option( 'republication_tracker_tool_policy' ) );
-$license_key = get_option( 'republication_tracker_tool_license', 'cc-by-nd' );
+$license_key = get_option( 'republication_tracker_tool_license', 'cc-by-nd-4.0' );
 
 echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 'style="display:none;"' ) . '>';
 	echo '<button ' . ( $is_amp ? 'on="tap:republication-tracker-tool-modal.close"' : '' ) . ' class="republication-tracker-tool-close">';
