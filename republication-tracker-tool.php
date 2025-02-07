@@ -11,6 +11,7 @@
  * @package         Republication_Tracker_Tool
  */
 
+require plugin_dir_path( __FILE__ ) . 'includes/licenses.php';
 require plugin_dir_path( __FILE__ ) . 'includes/class-settings.php';
 require plugin_dir_path( __FILE__ ) . 'includes/class-article-settings.php';
 require plugin_dir_path( __FILE__ ) . 'includes/class-widget.php';
