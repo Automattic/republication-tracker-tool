@@ -70,7 +70,8 @@ class Republication_Tracker_Tool_Settings {
 				'key'      => 'republication_tracker_tool_media_distribution',
 				'label'    => esc_html__( 'Media Distribution', 'republication-tracker-tool' ),
 				'callback' => array( $this, 'republication_tracker_tool_media_distribution_callback' ),
-			]
+			],
+			[
 				'key'      => 'republication_tracker_tool_license',
 				'label'    => esc_html__( 'License', 'republication-tracker-tool' ),
 				'callback' => array( $this, 'republication_tracker_tool_license_callback' ),
