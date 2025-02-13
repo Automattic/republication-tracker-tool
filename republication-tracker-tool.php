@@ -6,7 +6,7 @@
  * Author URI:      https://labs.inn.org
  * Text Domain:     republication-tracker-tool
  * Domain Path:     /languages
- * Version:         1.6.0
+ * Version:         2.1.1
  *
  * @package         Republication_Tracker_Tool
  */
@@ -24,6 +24,7 @@ define( 'REPUBLICATION_TRACKER_TOOL_VERSION', $plugin_data['Version'] );
 define( 'REPUBLICATION_TRACKER_TOOL_URL', plugin_dir_url( __FILE__ ) );
 define( 'REPUBLICATION_TRACKER_TOOL_PATH', plugin_dir_path( __FILE__ ) );
 
+require plugin_dir_path( __FILE__ ) . 'includes/licenses.php';
 require plugin_dir_path( __FILE__ ) . 'includes/class-settings.php';
 require plugin_dir_path( __FILE__ ) . 'includes/class-article-settings.php';
 require plugin_dir_path( __FILE__ ) . 'includes/class-widget.php';
@@ -238,12 +239,34 @@ final class Republication_Tracker_Tool {
 	}
 
 	/**
+	 * Create Parse.ly tracking code.
+	 *
+	 * @param $post_id Id of the post to track.
+	 */
+	public static function create_parsely_tracking($post_id) {
+		$parsely_settings        = get_option( 'parsely', [] );
+		if (empty($parsely_settings) || !isset($parsely_settings['apikey'])) {
+			return '';
+		}
+		$site_id = $parsely_settings['apikey'];
+		$article_url = get_permalink( $post_id );
+		return sprintf(
+			// %1$s is the original article URL, %2$s is site ID.
+			'<script> PARSELY = { autotrack: false, onload: function() { PARSELY.beacon.trackPageView({ url: "%1$s", urlref: window.location.href }); } } </script> <script id="parsely-cfg" src="//cdn.parsely.com/keys/%2$s/p.js"></script>',
+			$article_url,
+			$site_id
+		);
+	}
+
+	/**
 	 * Get attribution text, which will be inserted at the end of the copyable content.
 	 *
 	 * @param $post The shared post.
 	 */
 	public static function create_content_footer( $post = null ) {
 		$pixel = self::create_tracking_pixel_markup( $post->ID );
+		$parsely_tracking = self::create_parsely_tracking( $post->ID );
+		$tracking_html = htmlentities( $pixel ) . htmlentities($parsely_tracking);
 
 		$display_attribution = get_option( 'republication_tracker_tool_display_attribution', 'on' );
 		if ( 'on' === $display_attribution && null !== $post ) {
@@ -263,10 +286,10 @@ final class Republication_Tracker_Tool {
 					get_permalink( $post ),
 					home_url(),
 					esc_html( get_bloginfo() )
-				) . htmlentities( $site_icon_markup ) . htmlentities( $pixel )
+				) . htmlentities( $site_icon_markup ) . $tracking_html
 			);
 		}
-		return htmlentities( $pixel );
+		return $tracking_html;
 	}
 }
 

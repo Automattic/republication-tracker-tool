@@ -98,6 +98,7 @@ $article_info = str_replace( '<p></p>', '', wpautop( $article_info ) );
  * @var HTML $license_statement
  */
 $license_statement = wp_kses_post( get_option( 'republication_tracker_tool_policy' ) );
+$license_key = get_option( 'republication_tracker_tool_license', 'cc-by-nd-4.0' );
 
 echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 'style="display:none;"' ) . '>';
 	echo '<button ' . ( $is_amp ? 'on="tap:republication-tracker-tool-modal.close"' : '' ) . ' class="republication-tracker-tool-close">';
@@ -107,13 +108,14 @@ echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 's
 	// Explain Creative Commons
 	echo '<div class="cc-policy">';
 		echo '<div class="cc-license">';
-			echo sprintf( '<a rel="noreferrer license" target="_blank" href="http://creativecommons.org/licenses/by-nd/4.0/"><img alt="%s" style="border-width:0" src="https://i.creativecommons.org/l/by-nd/4.0/88x31.png" /></a>', esc_html__( 'Creative Commons License', 'republication-tracker-tool' ) );
+			echo sprintf( '<a rel="noreferrer license" target="_blank" href="%s" /></a>', REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['badge'], esc_html__( 'Creative Commons License', 'republication-tracker-tool' ) );
 			echo wp_kses_post(
 				wpautop(
 					sprintf(
 						// translators: %1$s is the URL to the particular Creative Commons license.
-						__( 'This work is licensed under a <a rel="noreferrer license" target="_blank" href="%1$s">Creative Commons Attribution-NoDerivatives 4.0 International License</a>.', 'republication-tracker-tool' ),
-						'http://creativecommons.org/licenses/by-nd/4.0/'
+						__( 'This work is licensed under a <a rel="noreferrer license" target="_blank" href="%1$s">%2$s</a>.', 'republication-tracker-tool' ),
+						REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['url'],
+						REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['description'],
 					)
 				)
 			);
@@ -127,14 +129,14 @@ echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 's
 			echo '</div>'; // .article-info
 
 			// the text area that is copyable
-			echo wp_kses_post(
-				sprintf(
-					'<textarea readonly id="republication-tracker-tool-shareable-content" rows="5">%1$s %2$s %3$s</textarea>',
-					esc_html( $article_info ),
-					$content . "\n\n",
-					$content_footer
-				)
-			);
+			?>
+				<textarea readonly id="republication-tracker-tool-shareable-content" rows="5">
+					<?php echo esc_html( $article_info ); ?>
+					<?php echo $content; ?>
+
+					<?php echo htmlspecialchars($content_footer, ENT_QUOTES, 'UTF-8'); ?>
+				</textarea>
+			<?php
 			if ( ! $is_amp ) {
 				?>
 			<button onclick="copyToClipboard('#republication-tracker-tool-shareable-content', this)"><?php echo esc_html__( 'Copy to Clipboard', 'republication-tracker-tool' ); ?></button>

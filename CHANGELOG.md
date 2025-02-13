@@ -1,3 +1,56 @@
+## [2.1.1](https://github.com/Automattic/republication-tracker-tool/compare/v2.1.0...v2.1.1) (2024-11-11)
+
+
+### Bug Fixes
+
+* get remote page title was too greedy ([#228](https://github.com/Automattic/republication-tracker-tool/issues/228)) ([ab936d1](https://github.com/Automattic/republication-tracker-tool/commit/ab936d125dc03e8e049552dc5d87f8f32cb82c79))
+
+# [2.1.0](https://github.com/Automattic/republication-tracker-tool/compare/v2.0.0...v2.1.0) (2024-09-18)
+
+
+### Features
+
+* add parse.ly tracking ([2ee25fd](https://github.com/Automattic/republication-tracker-tool/commit/2ee25fdd44e3e037d2d8de1683cbb066000f22aa))
+
+# [2.0.0](https://github.com/Automattic/republication-tracker-tool/compare/v1.6.1...v2.0.0) (2024-08-13)
+
+
+### Bug Fixes
+
+* update dependencies to support `@wordpress/scripts` ([#206](https://github.com/Automattic/republication-tracker-tool/issues/206)) ([7322c4b](https://github.com/Automattic/republication-tracker-tool/commit/7322c4ba1d26cb5e3b16e24eaec9d6299cbfe8af))
+
+
+### BREAKING CHANGES
+
+* Updates dependencies for compatibility with WordPress 6.6.*, but breaks JS in WordPress 6.5.* and below. If you need support for WP 6.5.*, please do not upgrade to this new major version.
+
+* chore: refactor for newspack-scripts dependency updates
+
+* fix: peer dependencies
+
+* chore: update newspack-scripts to v5.6.0-alpha.3
+
+* chore: udpate package-lock.json
+
+* chore: update newspack-scripts to v5.6.0-alpha.4
+
+* chore: update newspack-scripts to 5.6.0-alpha.5
+
+* chore: update newspack-scripts to v5.6.0-alpha.7
+
+* chore: update newspack-scripts to v5.6.0-alpha.8
+
+* chore: bump version number in package.json
+
+Co-authored-by: Miguel Peixe <miguel@peixe.co>
+
+## [1.6.1](https://github.com/Automattic/republication-tracker-tool/compare/v1.6.0...v1.6.1) (2024-07-01)
+
+
+### Bug Fixes
+
+* update newspack-scripts to v5.5.1 ([#211](https://github.com/Automattic/republication-tracker-tool/issues/211)) ([5493afd](https://github.com/Automattic/republication-tracker-tool/commit/5493afd5eda0d2e54e31727dffa986bad4b3a034))
+
 # [1.6.0](https://github.com/Automattic/republication-tracker-tool/compare/v1.5.0...v1.6.0) (2024-04-08)
 
 
