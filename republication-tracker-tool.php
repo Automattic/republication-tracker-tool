@@ -24,6 +24,7 @@ define( 'REPUBLICATION_TRACKER_TOOL_VERSION', $plugin_data['Version'] );
 define( 'REPUBLICATION_TRACKER_TOOL_URL', plugin_dir_url( __FILE__ ) );
 define( 'REPUBLICATION_TRACKER_TOOL_PATH', plugin_dir_path( __FILE__ ) );
 
+require plugin_dir_path( __FILE__ ) . 'includes/licenses.php';
 require plugin_dir_path( __FILE__ ) . 'includes/class-settings.php';
 require plugin_dir_path( __FILE__ ) . 'includes/class-article-settings.php';
 require plugin_dir_path( __FILE__ ) . 'includes/class-widget.php';
