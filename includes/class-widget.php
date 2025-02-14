@@ -79,7 +79,7 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 					echo sprintf(
 						'<p><a href="%2$s"><button name="%1$s" id="cc-btn" class="republication-tracker-tool-button page">%1$s</button></a></p>',
 						esc_html__( 'Republish This Story', 'republication-tracker-tool' ),
-						esc_url( '/republish/' . $_SERVER['REQUEST_URI'] )
+						esc_url( '/republish' . $_SERVER['REQUEST_URI'] )
 					);
 				}
 			}
