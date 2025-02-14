@@ -67,21 +67,19 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 
 		echo '<div class="license">';
 
-			if ( ! empty( $instance['layout'] ) ) {
-				if ( 'modal' === $instance['layout'] ) {
-					echo sprintf(
-						'<p><button ' . ( $is_amp ? 'on="tap:republication-tracker-tool-modal"' : '' ) . ' name="%1$s" id="cc-btn" class="republication-tracker-tool-button modal">%1$s</button></p>',
-						esc_html__( 'Republish This Story', 'republication-tracker-tool' )
-					);
-				}
+			if ( empty( $instance['layout'] ) || 'modal' === $instance['layout'] ) {
+				echo sprintf(
+					'<p><button ' . ( $is_amp ? 'on="tap:republication-tracker-tool-modal"' : '' ) . ' name="%1$s" id="cc-btn" class="republication-tracker-tool-button modal">%1$s</button></p>',
+					esc_html__( 'Republish This Story', 'republication-tracker-tool' )
+				);
+			}
 
-				if ( 'page' === $instance['layout'] ) {
-					echo sprintf(
-						'<p><a href="%2$s"><button name="%1$s" id="cc-btn" class="republication-tracker-tool-button page">%1$s</button></a></p>',
-						esc_html__( 'Republish This Story', 'republication-tracker-tool' ),
-						esc_url( '/republish' . $_SERVER['REQUEST_URI'] )
-					);
-				}
+			if ( 'page' === $instance['layout'] ) {
+				echo sprintf(
+					'<p><a href="%2$s"><button name="%1$s" id="cc-btn" class="republication-tracker-tool-button page">%1$s</button></a></p>',
+					esc_html__( 'Republish This Story', 'republication-tracker-tool' ),
+					esc_url( '/republish' . $_SERVER['REQUEST_URI'] )
+				);
 			}
 
 			echo sprintf(
@@ -90,6 +88,7 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 				esc_html__( 'Creative Commons License', 'republication-tracker-tool' ),
 				esc_url( plugin_dir_url( dirname( __FILE__ ) ) ) . 'assets/img/' . $license_key . '.png'
 			);
+
 		echo '</div>';
 
 		echo sprintf(
