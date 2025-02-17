@@ -66,6 +66,11 @@ class Republication_Tracker_Tool_Settings {
 				'label'    => esc_html__( 'Display attribution', 'republication-tracker-tool' ),
 				'callback' => array( $this, 'republication_tracker_tool_display_attribution_callback' ),
 			],
+			[
+				'key'      => 'republication_tracker_tool_license',
+				'label'    => esc_html__( 'License', 'republication-tracker-tool' ),
+				'callback' => array( $this, 'republication_tracker_tool_license_callback' ),
+			],
 		];
 		foreach ( $settings as $setting ) {
 			add_settings_field(
@@ -165,6 +170,34 @@ class Republication_Tracker_Tool_Settings {
 				<?php endif; ?>
 			/>
 			<p><em><?php echo esc_html__( 'If checked, an attribution statement will be appended to the copied content.', 'republication-tracker-tool' ); ?></em></p>
+		<?php
+	}
+
+	public function republication_tracker_tool_license_callback() {
+		$selected = get_option( 'republication_tracker_tool_license' );
+
+		$licenses = REPUBLICATION_TRACKER_TOOL_LICENSES;
+
+		?>
+		<fieldset>
+			<p>
+			<?php foreach( $licenses as $license_key => $license_values ) : ?>
+				<label>
+					<input
+						type="radio"
+						id="<?php echo esc_attr( 'republication_tracker_tool_license' ) . '_' . $license_key; ?>"
+						name="<?php echo esc_attr( 'republication_tracker_tool_license' ); ?>"
+						<?php if ( $license_key === $selected ) : ?>
+							checked
+						<?php endif; ?>
+						value="<?php esc_attr_e( $license_key ); ?>"
+					/>
+					<?php esc_html_e( $license_values['label'] . ' - ' . $license_values['description'] ); ?>
+				</label>
+				</br/>
+			<?php endforeach; ?>
+			</p>
+		</fieldset>
 		<?php
 	}
 }
