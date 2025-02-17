@@ -1,3 +1,21 @@
+# [2.2.0](https://github.com/Automattic/republication-tracker-tool/compare/v2.1.1...v2.2.0) (2025-02-17)
+
+
+### Bug Fixes
+
+* license slugs that are preventing badges to render ([af5344b](https://github.com/Automattic/republication-tracker-tool/commit/af5344b8786e67c2ac91e5108e6b2f6cb92c7ec2))
+* missing default value for new plugin option ([c3d84f6](https://github.com/Automattic/republication-tracker-tool/commit/c3d84f65dcfd9fbafab1884bcd21555e966417fc))
+* set the correct default license value with the right existing index ([cd20cf8](https://github.com/Automattic/republication-tracker-tool/commit/cd20cf881eeab274f22c84e49ebbd4c50eeb04de))
+* smaller images for new license badges ([7ef70b0](https://github.com/Automattic/republication-tracker-tool/commit/7ef70b09e677ec491f60dac25cb9c15c6bc3cb32))
+* update cc sharing image and links to by-nc-nd ([4449952](https://github.com/Automattic/republication-tracker-tool/commit/44499524cf23eee8a5c43f374485815ae0123522))
+
+
+### Features
+
+* add badge url's to licenses array ([31cefb2](https://github.com/Automattic/republication-tracker-tool/commit/31cefb2ac275e8f3c85758385b2e27d5bd6ffe92))
+* add option to select wich CC license is in use by the site ([d153d10](https://github.com/Automattic/republication-tracker-tool/commit/d153d105a714eb00b01076c06d2e9d70255a8106))
+* add other cc licenses to the options ([03bc4d4](https://github.com/Automattic/republication-tracker-tool/commit/03bc4d47e7991b2da9e47db31f14df828ff1b27a))
+
 ## [2.1.1](https://github.com/Automattic/republication-tracker-tool/compare/v2.1.0...v2.1.1) (2024-11-11)
 
 
