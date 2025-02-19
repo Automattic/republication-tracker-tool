@@ -67,27 +67,27 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 
 		echo '<div class="license">';
 
-			if ( empty( $instance['layout'] ) || 'modal' === $instance['layout'] ) {
-				echo sprintf(
-					'<p><button ' . ( $is_amp ? 'on="tap:republication-tracker-tool-modal"' : '' ) . ' name="%1$s" id="cc-btn" class="republication-tracker-tool-button modal">%1$s</button></p>',
-					esc_html__( 'Republish This Story', 'republication-tracker-tool' )
-				);
-			}
-
-			if ( 'page' === $instance['layout'] ) {
-				echo sprintf(
-					'<p><a href="%2$s"><button name="%1$s" id="cc-btn" class="republication-tracker-tool-button page">%1$s</button></a></p>',
-					esc_html__( 'Republish This Story', 'republication-tracker-tool' ),
-					esc_url( '/republish' . $_SERVER['REQUEST_URI'] )
-				);
-			}
-
+		if ( empty( $instance['layout'] ) || 'modal' === $instance['layout'] ) {
 			echo sprintf(
-				'<p><a class="license" rel="noreferrer license" target="_blank" href="%s"><img alt="%s" style="border-width:0" src="%s" /></a></p>',
-				REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['url'],
-				esc_html__( 'Creative Commons License', 'republication-tracker-tool' ),
-				esc_url( plugin_dir_url( dirname( __FILE__ ) ) ) . 'assets/img/' . $license_key . '.png'
+				'<p><button ' . ( $is_amp ? 'on="tap:republication-tracker-tool-modal"' : '' ) . ' name="%1$s" id="cc-btn" class="republication-tracker-tool-button modal">%1$s</button></p>',
+				esc_html__( 'Republish This Story', 'republication-tracker-tool' )
 			);
+		}
+
+		if ( 'page' === $instance['layout'] ) {
+			echo sprintf(
+				'<p><button name="%1$s" id="cc-btn" class="republication-tracker-tool-button page"><a href="%2$s">%1$s</a></button></p>',
+				esc_html__( 'Republish This Story', 'republication-tracker-tool' ),
+				esc_url( '/republish' . $_SERVER['REQUEST_URI'] )
+			);
+		}
+
+		echo sprintf(
+			'<p><a class="license" rel="noreferrer license" target="_blank" href="%s"><img alt="%s" style="border-width:0" src="%s" /></a></p>',
+			REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['url'],
+			esc_html__( 'Creative Commons License', 'republication-tracker-tool' ),
+			esc_url( plugin_dir_url( dirname( __FILE__ ) ) ) . 'assets/img/' . $license_key . '.png'
+		);
 
 		echo '</div>';
 
