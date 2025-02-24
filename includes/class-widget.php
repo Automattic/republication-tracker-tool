@@ -66,16 +66,29 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 		}
 
 		echo '<div class="license">';
+
+		if ( empty( $instance['layout'] ) || 'modal' === $instance['layout'] ) {
 			echo sprintf(
-				'<p><button ' . ( $is_amp ? 'on="tap:republication-tracker-tool-modal"' : '' ) . ' name="%1$s" id="cc-btn" class="republication-tracker-tool-button">%1$s</button></p>',
+				'<p><button ' . ( $is_amp ? 'on="tap:republication-tracker-tool-modal"' : '' ) . ' name="%1$s" id="cc-btn" class="republication-tracker-tool-button modal">%1$s</button></p>',
 				esc_html__( 'Republish This Story', 'republication-tracker-tool' )
 			);
+		}
+
+		if ( 'page' === $instance['layout'] ) {
 			echo sprintf(
-				'<p><a class="license" rel="noreferrer license" target="_blank" href="%s"><img alt="%s" style="border-width:0" src="%s" /></a></p>',
-				REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['url'],
-				esc_html__( 'Creative Commons License', 'republication-tracker-tool' ),
-				esc_url( plugin_dir_url( dirname( __FILE__ ) ) ) . 'assets/img/' . $license_key . '.png'
+				'<p><button name="%1$s" id="cc-btn" class="republication-tracker-tool-button page" onclick="window.location.href=\'%2$s\'" role="link">%1$s</button></p>',
+				esc_html__( 'Republish This Story', 'republication-tracker-tool' ),
+				esc_url( '/republish' . $_SERVER['REQUEST_URI'] )
 			);
+		}
+
+		echo sprintf(
+			'<p><a class="license" rel="noreferrer license" target="_blank" href="%s"><img alt="%s" style="border-width:0" src="%s" /></a></p>',
+			REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['url'],
+			esc_html__( 'Creative Commons License', 'republication-tracker-tool' ),
+			esc_url( plugin_dir_url( dirname( __FILE__ ) ) ) . 'assets/img/' . $license_key . '.png'
+		);
+
 		echo '</div>';
 
 		echo sprintf(
@@ -117,8 +130,9 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 	 */
 	public function form( $instance ) {
 		echo sprintf( '<p><em>%s</em></p>', esc_html__( 'This widget will only display on single articles.', 'republication-tracker-tool' ) );
-		$title = ! empty( $instance['title'] ) ? $instance['title'] : '';
-		$text  = ! empty( $instance['text'] ) ? $instance['text'] : esc_html__( 'Republish our articles for free, online or in print, under a Creative Commons license.', 'republication-tracker-tool' );
+		$title  = ! empty( $instance['title'] )  ? $instance['title'] : '';
+		$text   = ! empty( $instance['text'] )   ? $instance['text'] : esc_html__( 'Republish our articles for free, online or in print, under a Creative Commons license.', 'republication-tracker-tool' );
+		$layout = ! empty( $instance['layout'] ) ? $instance['layout'] : 'modal'
 		?>
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'republication-tracker-tool' ); ?></label>
@@ -126,6 +140,16 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 		</p>
 		<p>
 			<textarea class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'text' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'text' ) ); ?>" type="text" cols="30" rows="10"><?php echo esc_attr( $text ); ?></textarea>
+		</p>
+		<p>
+			<label>
+				<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'layout' ) ); ?>-modal" name="<?php echo esc_attr( $this->get_field_name( 'layout' ) );?>" type="radio" value="modal" <?php echo 'modal' === $layout ? 'checked' : ''; ?> />
+				<?php _e( 'Modal', 'republication-tracker-tool' ); ?>
+			</label>
+			<label>
+				<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'layout' ) ); ?>-page" name="<?php echo esc_attr( $this->get_field_name( 'layout' ) );?>" type="radio" value="page" <?php echo 'page' === $layout ? 'checked' : ''; ?> />
+				<?php _e( 'Page', 'republication-tracker-tool' ); ?>
+			</label>
 		</p>
 		<?php
 	}
@@ -141,8 +165,9 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 	public function update( $new_instance, $old_instance ) {
 		$instance = array();
 
-		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? wp_strip_all_tags( $new_instance['title'] ) : '';
-		$instance['text']  = ( ! empty( $new_instance['text'] ) ) ? $new_instance['text'] : '';
+		$instance['title']  = ( ! empty( $new_instance['title'] ) ) ? wp_strip_all_tags( $new_instance['title'] ) : '';
+		$instance['text']   = ( ! empty( $new_instance['text'] ) ) ? $new_instance['text'] : '';
+		$instance['layout'] = ( ! empty( $new_instance['layout'] ) ) ? $new_instance['layout'] : '';
 
 		return $instance;
 	}
