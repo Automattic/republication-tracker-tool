@@ -6,16 +6,30 @@
  * Author URI:      https://labs.inn.org
  * Text Domain:     republication-tracker-tool
  * Domain Path:     /languages
- * Version:         2.2.0
+ * Version:         2.3.0-alpha.1
  *
  * @package         Republication_Tracker_Tool
  */
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+// Define plugin constants.
+function_exists( 'get_plugin_data' ) || require_once ABSPATH . 'wp-admin/includes/plugin.php';
+$plugin_data = get_plugin_data( __FILE__, false, false );
+
+define( 'REPUBLICATION_TRACKER_TOOL_VERSION', $plugin_data['Version'] );
+define( 'REPUBLICATION_TRACKER_TOOL_URL', plugin_dir_url( __FILE__ ) );
+define( 'REPUBLICATION_TRACKER_TOOL_PATH', plugin_dir_path( __FILE__ ) );
 
 require plugin_dir_path( __FILE__ ) . 'includes/licenses.php';
 require plugin_dir_path( __FILE__ ) . 'includes/class-settings.php';
 require plugin_dir_path( __FILE__ ) . 'includes/class-article-settings.php';
 require plugin_dir_path( __FILE__ ) . 'includes/class-widget.php';
 require plugin_dir_path( __FILE__ ) . 'includes/compatibility-co-authors-plus.php';
+require plugin_dir_path( __FILE__ ) . 'includes/class-republication-rewrite.php';
 
 /**
 * Main initiation class.
@@ -63,6 +77,22 @@ final class Republication_Tracker_Tool {
 	 * @var Republication_Tracker_Tool_Settings
 	 */
 	protected $settings;
+
+	/**
+	 * Instance of Republication_Tracker_Tool_Article_Settings
+	 *
+	 * @since 1.0
+	 * @var Republication_Tracker_Tool_Article_Settings
+	 */
+	protected $article_settings;
+
+	/**
+	 * Instance of Republication_Tracker_Tool_Rewrite_Endpoint
+	 *
+	 * @since 1.6.0
+	 * @var Republication_Tracker_Tool_Rewrite_Endpoint
+	 */
+	protected $rewrite_endpoint;
 
 	/**
 	 * Creates or returns an instance of this class.
@@ -114,6 +144,7 @@ final class Republication_Tracker_Tool {
 
 		$this->settings         = new Republication_Tracker_Tool_Settings( $this );
 		$this->article_settings = new Republication_Tracker_Tool_Article_Settings( $this );
+		$this->rewrite_endpoint = new Republication_Tracker_Tool_Rewrite_Endpoint();
 
 		add_action( 'widgets_init', array( $this, 'register_widgets' ) );
 

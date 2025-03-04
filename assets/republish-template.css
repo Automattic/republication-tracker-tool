@@ -1,0 +1,34 @@
+.republish-article__content {
+	grid-gap: 2rem;
+	display: flex;
+	gap: 2rem;
+	margin-top: 2rem;
+}
+
+.republish-article__license,
+.republish-article__info {
+	flex: 1;
+}
+
+@media (max-width: 768px) {
+	.republish-article__content {
+		flex-direction: column;
+	}
+}
+
+.republish-article__info textarea {
+	border: 2px solid #c7c7c7;
+	height: 50vh;
+	line-height: 1.6em;
+	overflow: scroll;
+	padding: 16px;
+}
+
+.republish-article__info textarea:focus {
+	border-color: #a7a7a7;
+	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.republish-article__copy-button {
+	margin-top: 20px;
+}
