@@ -1,3 +1,23 @@
+# [2.3.0](https://github.com/Automattic/republication-tracker-tool/compare/v2.2.0...v2.3.0) (2025-03-04)
+
+
+### Bug Fixes
+
+* resolve merge conflicts ([a0cee2e](https://github.com/Automattic/republication-tracker-tool/commit/a0cee2eb407e92bd1195ee55df647da8fbb10c75))
+* whitespaces in the textarea ([27e1a39](https://github.com/Automattic/republication-tracker-tool/commit/27e1a39073930624698a573a31768fc546f2b20b))
+
+
+### Features
+
+* add republication rewrite class ([7a704fc](https://github.com/Automattic/republication-tracker-tool/commit/7a704fc621911d0269f49dff9bdef2944e1a093e))
+* add republication template file ([1c970e4](https://github.com/Automattic/republication-tracker-tool/commit/1c970e49a6e12960ed19a8f35694af46187510c0))
+* add republish template script ([e1a8a80](https://github.com/Automattic/republication-tracker-tool/commit/e1a8a80b5eabb0e69196d41098c5f27edb010725))
+* add republish template styles ([b35b67b](https://github.com/Automattic/republication-tracker-tool/commit/b35b67b6d0090fd5656c85a266eb9f86f6c8b040))
+* define plugin contact for version, url and path ([3faacb6](https://github.com/Automattic/republication-tracker-tool/commit/3faacb6bb4006597140969e7209d0a2b26feb15c))
+* die if the post object is invalid ([038c67f](https://github.com/Automattic/republication-tracker-tool/commit/038c67f54cc07fd0379e19d8802424d448a1f6f6))
+* do action before and after the republish content ([800303b](https://github.com/Automattic/republication-tracker-tool/commit/800303b3c44dc4d398a37b470f49d286f3fd8634))
+* initiate rewrite endpoint class in the plugin file ([e84f1c7](https://github.com/Automattic/republication-tracker-tool/commit/e84f1c7cbafc5db47ee13ce4561ac3c50187bcac))
+
 # [2.2.0](https://github.com/Automattic/republication-tracker-tool/compare/v2.1.1...v2.2.0) (2025-02-17)
 
 
