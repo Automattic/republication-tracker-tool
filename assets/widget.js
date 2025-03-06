@@ -21,7 +21,7 @@ function modal_actions(){
 
 	// Responsive modal
 	var $modal = $('#republication-tracker-tool-modal');
-	var $btn = $('.republication-tracker-tool-button');
+	var $btn = $('.republication-tracker-tool-button.modal');
 	var $close = $('.republication-tracker-tool-close');
 
 	// url hash of #show-republish: open the modal

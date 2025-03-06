@@ -67,6 +67,11 @@ class Republication_Tracker_Tool_Settings {
 				'callback' => array( $this, 'republication_tracker_tool_display_attribution_callback' ),
 			],
 			[
+				'key'      => 'republication_tracker_tool_media_distribution',
+				'label'    => esc_html__( 'Media Distribution', 'republication-tracker-tool' ),
+				'callback' => array( $this, 'republication_tracker_tool_media_distribution_callback' ),
+			],
+			[
 				'key'      => 'republication_tracker_tool_license',
 				'label'    => esc_html__( 'License', 'republication-tracker-tool' ),
 				'callback' => array( $this, 'republication_tracker_tool_license_callback' ),
@@ -170,6 +175,21 @@ class Republication_Tracker_Tool_Settings {
 				<?php endif; ?>
 			/>
 			<p><em><?php echo esc_html__( 'If checked, an attribution statement will be appended to the copied content.', 'republication-tracker-tool' ); ?></em></p>
+		<?php
+	}
+
+	public function republication_tracker_tool_media_distribution_callback() {
+		$media_distribution = get_option( 'republication_tracker_tool_media_distribution', 'on' );
+		?>
+			<input
+				type="checkbox"
+				id="<?php echo esc_attr( 'republication_tracker_tool_media_distribution' ); ?>"
+				name="<?php echo esc_attr( 'republication_tracker_tool_media_distribution' ); ?>"
+				<?php if ( 'on' === $media_distribution ) : ?>
+					checked
+				<?php endif; ?>
+			/>
+			<p><em><?php echo esc_html__( 'If checked, all media will be included in republication. Unchecked only media specifically tagged as distributable will be included..', 'republication-tracker-tool' ); ?></em></p>
 		<?php
 	}
 
