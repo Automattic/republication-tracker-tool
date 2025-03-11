@@ -130,7 +130,7 @@ class Republication_Tracker_Tool_Settings {
 		$content = html_entity_decode( get_option( 'republication_tracker_additional_tracking_code' ) );
 		echo sprintf( '<p><em>%s</em></p>', wp_kses_post( __( 'Use placeholders: <strong>{{post-id}}</strong> will be replaced with the post ID, and <strong>{{post-url}}</strong> will be replaced with the post URL.', 'republication-tracker-tool' ) ) );
 		echo sprintf(
-			'<textarea name="%1$s" rows="5" cols="50">%2$s</textarea>',
+			'<textarea name="%1$s" rows="5" cols="150">%2$s</textarea>',
 			'republication_tracker_additional_tracking_code',
 			esc_textarea( $content )
 		);
