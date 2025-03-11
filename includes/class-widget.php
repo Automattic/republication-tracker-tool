@@ -52,11 +52,7 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 			return;
 		}
 
-		$is_amp = self::is_amp();
-
-		if ( ! $is_amp ) {
-			wp_enqueue_script( 'republication-tracker-tool-js', plugins_url( 'assets/widget.js', dirname( __FILE__ ) ), array( 'jquery' ), filemtime( plugin_dir_path( __FILE__ ) ), false );
-		}
+		wp_enqueue_script( 'republication-tracker-tool-js', plugins_url( 'assets/widget.js', dirname( __FILE__ ) ), array( 'jquery' ), filemtime( plugin_dir_path( __FILE__ ) ), false );
 		wp_enqueue_style( 'republication-tracker-tool-css', plugins_url( 'assets/widget.css', dirname( __FILE__ ) ), array(), filemtime( plugin_dir_path(__FILE__) ) );
 
 		echo wp_kses_post( $args['before_widget'] );
@@ -69,7 +65,7 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 
 		if ( empty( $instance['layout'] ) || 'modal' === $instance['layout'] ) {
 			echo sprintf(
-				'<p><button ' . ( $is_amp ? 'on="tap:republication-tracker-tool-modal"' : '' ) . ' name="%1$s" id="cc-btn" class="republication-tracker-tool-button modal">%1$s</button></p>',
+				'<p><button name="%1$s" id="cc-btn" class="republication-tracker-tool-button modal">%1$s</button></p>',
 				esc_html__( 'Republish This Story', 'republication-tracker-tool' )
 			);
 		}
@@ -107,19 +103,11 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 			// define our path to grab file content from
 			$modal_content_path = plugin_dir_path( __FILE__ ) . 'shareable-content.php';
 
-			if ( $is_amp ) {
-				?>
-					<amp-lightbox id="republication-tracker-tool-modal" layout="nodisplay" role="dialog" aria-modal="true" aria-labelledby="republish-modal-label">
-						<?php echo esc_html( include_once $modal_content_path ); ?>
-					</amp-lightbox>
-				<?php
-			} else {
-				?>
-					<div id="republication-tracker-tool-modal" style="display:none;" data-postid="<?php echo esc_attr( $post->ID ); ?>" data-pluginsdir="<?php echo esc_attr( plugins_url() ); ?>" role="dialog" aria-modal="true" aria-labelledby="republish-modal-label">
-						<?php echo esc_html( include_once $modal_content_path ); ?>
-					</div>
-				<?php
-			}
+			?>
+				<div id="republication-tracker-tool-modal" style="display:none;" data-postid="<?php echo esc_attr( $post->ID ); ?>" data-pluginsdir="<?php echo esc_attr( plugins_url() ); ?>" role="dialog" aria-modal="true" aria-labelledby="republish-modal-label">
+					<?php echo esc_html( include_once $modal_content_path ); ?>
+				</div>
+			<?php
 		}
 	}
 
@@ -172,7 +160,4 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 		return $instance;
 	}
 
-	public static function is_amp() {
-		return function_exists( 'is_amp_endpoint' ) && is_amp_endpoint();
-	}
 }

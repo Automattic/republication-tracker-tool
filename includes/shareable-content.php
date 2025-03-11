@@ -100,9 +100,9 @@ $article_info = str_replace( '<p></p>', '', wpautop( $article_info ) );
 $license_statement = wp_kses_post( get_option( 'republication_tracker_tool_policy' ) );
 $license_key = get_option( 'republication_tracker_tool_license', 'cc-by-nd-4.0' );
 
-echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 'style="display:none;"' ) . '>';
-	echo '<button ' . ( $is_amp ? 'on="tap:republication-tracker-tool-modal.close"' : '' ) . ' class="republication-tracker-tool-close">';
-	echo '<span class="screen-reader-text">' . esc_html( 'Close window', 'republication-tracker-tool' ) . '</span> <span aria-hidden="true">X</span></button>';
+echo '<div id="republication-tracker-tool-modal-content" style="display:none;">';
+	echo '<button class="republication-tracker-tool-close">';
+	echo '<span class="screen-reader-text">' . esc_html__( 'Close window', 'republication-tracker-tool' ) . '</span> <span aria-hidden="true">X</span></button>';
 	echo sprintf( '<h2 id="republish-modal-label">%s</h2>', esc_html__( 'Republish this article', 'republication-tracker-tool' ) );
 
 	// Explain Creative Commons
@@ -136,11 +136,7 @@ echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 's
 
 					<?php echo htmlspecialchars($content_footer, ENT_QUOTES, 'UTF-8'); ?>
 				</textarea>
-			<?php
-			if ( ! $is_amp ) {
-				?>
-			<button onclick="copyToClipboard('#republication-tracker-tool-shareable-content', this)"><?php echo esc_html__( 'Copy to Clipboard', 'republication-tracker-tool' ); ?></button>
-				<?php
-			}
+				<button onclick="copyToClipboard('#republication-tracker-tool-shareable-content', this)"><?php echo esc_html__( 'Copy to Clipboard', 'republication-tracker-tool' ); ?></button>
 
+			<?php
 			echo '</div>'; // #republication-tracker-tool-modal-content
