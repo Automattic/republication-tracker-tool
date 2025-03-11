@@ -194,7 +194,7 @@ class Republication_Tracker_Tool_Settings {
 	}
 
 	public function republication_tracker_tool_license_callback() {
-		$selected = get_option( 'republication_tracker_tool_license' );
+		$selected = get_option( 'republication_tracker_tool_license', 'cc-by-nd-4.0' );
 
 		$licenses = REPUBLICATION_TRACKER_TOOL_LICENSES;
 
@@ -214,7 +214,7 @@ class Republication_Tracker_Tool_Settings {
 					/>
 					<?php esc_html_e( $license_values['label'] . ' - ' . $license_values['description'] ); ?>
 				</label>
-				</br/>
+				<br>
 			<?php endforeach; ?>
 			</p>
 		</fieldset>
