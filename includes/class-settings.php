@@ -76,6 +76,12 @@ class Republication_Tracker_Tool_Settings {
 				'label'    => esc_html__( 'License', 'republication-tracker-tool' ),
 				'callback' => array( $this, 'republication_tracker_tool_license_callback' ),
 			],
+			[
+				'key'               => 'republication_tracker_additional_tracking_code',
+				'label'             => esc_html__( 'Additional Tracking Code', 'republication-tracker-tool' ),
+				'callback'          => array( $this, 'republication_tracker_additional_tracking_code_callback' ),
+				'sanitize_callback' => 'htmlentities',
+			],
 		];
 		foreach ( $settings as $setting ) {
 			add_settings_field(
@@ -88,7 +94,7 @@ class Republication_Tracker_Tool_Settings {
 			register_setting(
 				'reading',
 				$setting['key'],
-				'wp_kses_post'
+				$setting['sanitize_callback'] ?? 'wp_kses_post'
 			);
 		}
 	}
@@ -115,6 +121,20 @@ class Republication_Tracker_Tool_Settings {
 			);
 		}
 
+	}
+
+	/**
+	 * Additional tracking code render callback.
+	 */
+	public function republication_tracker_additional_tracking_code_callback() {
+		$content = html_entity_decode( get_option( 'republication_tracker_additional_tracking_code' ) );
+		echo sprintf( '<p><em>%s</em></p>', wp_kses_post( __( 'Use placeholders: <strong>{{post-id}}</strong> will be replaced with the post ID, and <strong>{{post-url}}</strong> will be replaced with the post URL.', 'republication-tracker-tool' ) ) );
+		echo sprintf(
+			'<textarea name="%1$s" rows="5" cols="150">%2$s</textarea>',
+			'republication_tracker_additional_tracking_code',
+			esc_textarea( $content )
+		);
+		echo sprintf( '<p><em>%s</em></p>', wp_kses_post( __( 'The additional Tracking Code field is where you will be able to input your additional tracking code that will be appended to your copied content.', 'republication-tracker-tool' ) ) );
 	}
 
 	public function republication_tracker_tool_policy_callback() {
