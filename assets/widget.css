@@ -71,10 +71,11 @@
   background-color: #fff;
   padding: 2em;
   text-align: left;
-  width: ;
 }
 
 #republication-tracker-tool-modal-content textarea {
+  font-family: monospace;
+  font-size: smaller;
   box-sizing: border-box;
   width: 100%;
   margin: 0.5em 0 2em 0;
