@@ -47,12 +47,6 @@ class Republication_Tracker_Tool_Settings {
 
 		$settings = [
 			[
-				'key'               => 'republication_tracker_additional_tracking_code',
-				'label'             => esc_html__( 'Additional Tracking Code', 'republication-tracker-tool' ),
-				'callback'          => array( $this, 'republication_tracker_additional_tracking_code_callback' ),
-				'sanitize_callback' => 'htmlentities',
-			],
-			[
 				'key'      => 'republication_tracker_tool_policy',
 				'label'    => esc_html__( 'Policy', 'republication-tracker-tool' ),
 				'callback' => array( $this, 'republication_tracker_tool_policy_callback' ),
@@ -81,6 +75,12 @@ class Republication_Tracker_Tool_Settings {
 				'key'      => 'republication_tracker_tool_license',
 				'label'    => esc_html__( 'License', 'republication-tracker-tool' ),
 				'callback' => array( $this, 'republication_tracker_tool_license_callback' ),
+			],
+			[
+				'key'               => 'republication_tracker_additional_tracking_code',
+				'label'             => esc_html__( 'Additional Tracking Code', 'republication-tracker-tool' ),
+				'callback'          => array( $this, 'republication_tracker_additional_tracking_code_callback' ),
+				'sanitize_callback' => 'htmlentities',
 			],
 		];
 		foreach ( $settings as $setting ) {
