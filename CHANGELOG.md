@@ -1,3 +1,10 @@
+## [2.3.1](https://github.com/Automattic/republication-tracker-tool/compare/v2.3.0...v2.3.1) (2025-03-18)
+
+
+### Bug Fixes
+
+* trigger release ([0725544](https://github.com/Automattic/republication-tracker-tool/commit/07255446ee9a2f1d6f62a845eb25f5267cf37d32))
+
 # [2.3.0](https://github.com/Automattic/republication-tracker-tool/compare/v2.2.0...v2.3.0) (2025-03-04)
 
 
