@@ -1,6 +1,6 @@
 {
 	"name": "republication-tracker-tool",
-	"version": "2.3.0",
+	"version": "2.3.1",
 	"main": "Gruntfile.js",
 	"author": "Automattic",
 	"scripts": {
