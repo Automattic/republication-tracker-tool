@@ -259,14 +259,28 @@ final class Republication_Tracker_Tool {
 	}
 
 	/**
+	 * Create additional tracking code HTML markup.
+	 *
+	 * @param $post_id Id of the post to track.
+	 * @return string additional tracking code HTML markup.
+	 */
+	public static function create_additional_tracking_code_markup( $post_id ) {
+		$additional_tracking_code = get_option( 'republication_tracker_additional_tracking_code' );
+		$additional_tracking_code = str_replace( '{{post-id}}', $post_id, $additional_tracking_code );
+		$additional_tracking_code = str_replace( '{{post-url}}', get_permalink( $post_id ), $additional_tracking_code );
+		return $additional_tracking_code;
+	}
+
+	/**
 	 * Get attribution text, which will be inserted at the end of the copyable content.
 	 *
 	 * @param $post The shared post.
 	 */
 	public static function create_content_footer( $post = null ) {
-		$pixel = self::create_tracking_pixel_markup( $post->ID );
-		$parsely_tracking = self::create_parsely_tracking( $post->ID );
-		$tracking_html = htmlentities( $pixel ) . htmlentities($parsely_tracking);
+		$pixel                    = self::create_tracking_pixel_markup( $post->ID );
+		$parsely_tracking         = self::create_parsely_tracking( $post->ID );
+		$additional_tracking_code = self::create_additional_tracking_code_markup( $post->ID );
+		$tracking_html            = htmlentities( $pixel ) . htmlentities($parsely_tracking) . $additional_tracking_code;
 
 		$display_attribution = get_option( 'republication_tracker_tool_display_attribution', 'on' );
 		if ( 'on' === $display_attribution && null !== $post ) {
