@@ -7,8 +7,6 @@
  * @package Republication_Tracker_Tool
  */
 
-use Newspack\Newspack_Image_Credits;
-
 get_header();
 
 global $allowedposttags;
@@ -60,9 +58,7 @@ if ( class_exists( '\Newspack\Newspack_Image_Credits' ) ) {
 	$found_images = array();
 
 	foreach ( $matches[1] as $key => $attachment_id ) {
-		$can_distribute = get_post_meta( $attachment_id, Newspack_Image_Credits::MEDIA_CREDIT_CAN_DISTRIBUTE_META, true );
-
-		if ( empty( $can_distribute ) ) {
+		if ( ! Republication_Tracker_Tool_Media::can_distribute( $attachment_id ) ) {
 			$found_images[ $attachment_id ] = $matches[0][ $key ];
 		}
 	}
@@ -107,16 +103,10 @@ $article_date->setTimezone( $current_timezone );
 $article_date = $article_date->format( 'M j g:ia T' );
 
 // Featured image.
-$featured_image = get_the_post_thumbnail( $republish_post_id, 'full' );
-
-if ( class_exists( '\Newspack\Newspack_Image_Credits' ) ) {
-	$featured_media_id             = get_post_thumbnail_id( $republish_post_id );
-	$can_distribute_featured_image = get_post_meta( $featured_media_id, Newspack_Image_Credits::MEDIA_CREDIT_CAN_DISTRIBUTE_META, true );
-	$media_distribution            = get_option( 'republication_tracker_tool_media_distribution', 'on' );
-
-	if ( empty( $media_distribution ) && empty( $can_distribute_featured_image ) ) {
-		$featured_image = '';
-	}
+if ( Republication_Tracker_Tool_Media::can_distribute( get_post_thumbnail_id( $republish_post_id ) ) ) {
+	$featured_image = get_the_post_thumbnail( $republish_post_id, 'full' );
+} else {
+	$featured_image = '';
 }
 
 // Canonical URL.
