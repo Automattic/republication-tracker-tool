@@ -74,7 +74,7 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 			);
 		}
 
-		if ( 'page' === $instance['layout'] ) {
+		if ( ! empty($instance['layout']) && 'page' === $instance['layout'] ) {
 			echo sprintf(
 				'<p><button name="%1$s" id="cc-btn" class="republication-tracker-tool-button page" onclick="window.location.href=\'%2$s\'" role="link">%1$s</button></p>',
 				esc_html__( 'Republish This Story', 'republication-tracker-tool' ),
