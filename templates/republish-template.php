@@ -36,43 +36,7 @@ if ( ! $post_object instanceof WP_Post ) {
 	wp_die( esc_html__( 'Invalid post ID.', 'republication-tracker-tool' ) );
 }
 
-$content = $post_object->post_content;
-
-// Remove shortcodes.
-$content = strip_shortcodes( $content );
-
-// Remove comments from content.
-$content = preg_replace( '/<!--(.|\s)*?-->/i', '', $content );
-
-// Remove some tags.
-$content = wp_kses( $content, $allowed_tags_excerpt );
-
-// Remove empty paragraphs.
-$content = str_replace( '<p></p>', '', wpautop( $content ) );
-
-// Remove the image if "can distribute" is not set.
-if ( class_exists( '\Newspack\Newspack_Image_Credits' ) ) {
-
-	// Find all the attachments id in the content.
-	preg_match_all( '/<img[^>]+class="wp-image-(\d+)"[^>]*>/', $content, $matches );
-	$found_images = array();
-
-	foreach ( $matches[1] as $key => $attachment_id ) {
-		if ( ! Republication_Tracker_Tool_Media::can_distribute( $attachment_id ) ) {
-			$found_images[ $attachment_id ] = $matches[0][ $key ];
-		}
-	}
-
-	// Suppress the found images if "can distribute" is not set.
-	foreach ( $found_images as $attachment_id => $found_image ) {
-		// Remove the figure and figcaption of $found_image using regex.
-		$pattern = '/<figure[^>]*>' . preg_quote( $found_image, '/' ) . '.*?<\/figure>/s';
-		$content = preg_replace( $pattern, '', $content );
-	}
-}
-
-// Apply filters to the content.
-$content = apply_filters( 'republication_tracker_tool_republish_content', $content, $post_object );
+$content = Republication_Tracker_Tool_Content::get_republishable_content( $post_object->post_content, $republish_post_id );
 
 // Get the license statement.
 $license_statement = get_option( 'republication_tracker_tool_policy' );

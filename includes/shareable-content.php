@@ -47,22 +47,7 @@ $allowed_tags_excerpt = apply_filters( 'republication_tracker_tool_allowed_tags_
  *
  * @var HTML $content
  */
-$content = $post->post_content;
-
-// Remove shortcodes from the content.
-$content = strip_shortcodes( $content );
-
-// Remove comments from the content. (Lookin' at you, Gutenberg.)
-$content = preg_replace( '/<!--(.|\s)*?-->/i', ' ', $content );
-
-// And finally, remove some tags.
-$content = wp_kses( $content, $allowed_tags_excerpt );
-
-// remove spare p tags and clean up these paragraphs
-$content = str_replace( '<p></p>', '', wpautop( $content ) );
-
-// Force the content to be UTF-8 escaped HTML.
-$content = htmlspecialchars( $content, ENT_HTML5, 'UTF-8', true );
+$content = Republication_Tracker_Tool_Content::get_republishable_content( $post->post_content );
 
 $content_footer = Republication_Tracker_Tool::create_content_footer( $post );
 
@@ -103,12 +88,12 @@ $license_key = get_option( 'republication_tracker_tool_license', 'cc-by-nd-4.0' 
 echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 'style="display:none;"' ) . '>';
 	echo '<button ' . ( $is_amp ? 'on="tap:republication-tracker-tool-modal.close"' : '' ) . ' class="republication-tracker-tool-close">';
 	echo '<span class="screen-reader-text">' . esc_html( 'Close window', 'republication-tracker-tool' ) . '</span> <span aria-hidden="true">X</span></button>';
-	echo sprintf( '<h2 id="republish-modal-label">%s</h2>', esc_html__( 'Republish this article', 'republication-tracker-tool' ) );
+	printf( '<h2 id="republish-modal-label">%s</h2>', esc_html__( 'Republish this article', 'republication-tracker-tool' ) );
 
 	// Explain Creative Commons
 	echo '<div class="cc-policy">';
 		echo '<div class="cc-license">';
-			echo sprintf( '<a rel="noreferrer license" target="_blank" href="%s" /></a>', REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['badge'], esc_html__( 'Creative Commons License', 'republication-tracker-tool' ) );
+			printf( '<a rel="noreferrer license" target="_blank" href="%s" /></a>', REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['badge'], esc_html__( 'Creative Commons License', 'republication-tracker-tool' ) );
 			echo wp_kses_post(
 				wpautop(
 					sprintf(
@@ -134,7 +119,7 @@ echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 's
 					<?php echo esc_html( $article_info ); ?>
 					<?php echo $content; ?>
 
-					<?php echo htmlspecialchars($content_footer, ENT_QUOTES, 'UTF-8'); ?>
+					<?php echo htmlspecialchars( $content_footer, ENT_QUOTES, 'UTF-8' ); ?>
 				</textarea>
 			<?php
 			if ( ! $is_amp ) {
