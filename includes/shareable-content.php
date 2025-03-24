@@ -16,33 +16,6 @@
 global $post;
 
 /**
- * What tags do we want to keep in the embed?
- * Not things from our server.
- *
- * Generall: wp_kses_post, but not allowing the terms listed below because
- * - they're referencing assets on our server: audio, figure, img, track, video
- * - they're referencing the referenced asset: figure, figcaption
- * - they're not likely to work: form, button
- *
- * @var array $allowed_tags_excerpt
- * @link https://codex.wordpress.org/Function_Reference/wp_kses
- */
-global $allowedposttags;
-$allowed_tags_excerpt = $allowedposttags;
-unset( $allowed_tags_excerpt['form'] );
-
-/**
- * Allow sites to configure which tags are allowed to be output in the republication content
- *
- * Default value is the standard global $allowedposttags, except form elements.
- *
- * @link https://github.com/Automattic/republication-tracker-tool/issues/49
- * @link https://developer.wordpress.org/reference/functions/wp_kses_allowed_html/
- * @param Array $allowed_tags_excerpt an associative array of element tags that are allowed
- */
-$allowed_tags_excerpt = apply_filters( 'republication_tracker_tool_allowed_tags_excerpt', $allowed_tags_excerpt, $post );
-
-/**
  * The content of the aforementioned post
  *
  * @var HTML $content

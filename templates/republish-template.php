@@ -9,22 +9,6 @@
 
 get_header();
 
-global $allowedposttags;
-$allowed_tags_excerpt = $allowedposttags;
-unset( $allowed_tags_excerpt['form'] );
-
-/**
- * Allow sites to configure which tags are allowed to be output in the republication content
- *
- * Default value is the standard global $allowedposttags, except form elements.
- *
- * @link https://github.com/Automattic/republication-tracker-tool/issues/49
- * @link https://developer.wordpress.org/reference/functions/wp_kses_allowed_html/
- *
- * @param Array $allowed_tags_excerpt an associative array of element tags that are allowed
- */
-$allowed_tags_excerpt = apply_filters( 'republication_tracker_tool_allowed_tags_excerpt', $allowed_tags_excerpt, $post );
-
 // Get post ID from query var.
 $republish_post_id = get_query_var( 'republish_post_id' );
 
