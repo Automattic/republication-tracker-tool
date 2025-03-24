@@ -245,12 +245,12 @@ final class Republication_Tracker_Tool {
 	 *
 	 * @param $post_id Id of the post to track.
 	 */
-	public static function create_parsely_tracking($post_id) {
-		$parsely_settings        = get_option( 'parsely', [] );
-		if (empty($parsely_settings) || !isset($parsely_settings['apikey'])) {
+	public static function create_parsely_tracking( $post_id ) {
+		$parsely_settings = get_option( 'parsely', [] );
+		if ( empty( $parsely_settings ) || ! isset( $parsely_settings['apikey'] ) ) {
 			return '';
 		}
-		$site_id = $parsely_settings['apikey'];
+		$site_id     = $parsely_settings['apikey'];
 		$article_url = get_permalink( $post_id );
 		return sprintf(
 			// %1$s is the original article URL, %2$s is site ID.
