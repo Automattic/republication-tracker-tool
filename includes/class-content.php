@@ -16,7 +16,7 @@ class Republication_Tracker_Tool_Content {
 	 * Filter the content for the republication.
 	 *
 	 * @param string $content The post content.
-	 * @param int    $post_id The post ID – should be supplied if different than the current post ID.
+	 * @param int    $post_id Optional. Current post ID by default.
 	 */
 	public static function get_republishable_content( $content, $post_id = false ) {
 		if ( ! $post_id ) {
