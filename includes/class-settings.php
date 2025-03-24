@@ -188,7 +188,7 @@ class Republication_Tracker_Tool_Settings {
 					checked
 				<?php endif; ?>
 			/>
-			<p><em><?php echo esc_html__( 'If checked, all media will be included in republication. Otherwise, only media specifically marked as distributable will be included. A media element can be marked as distributable in the media library.', 'republication-tracker-tool' ); ?></em></p>
+			<p><em><?php echo esc_html__( 'When you check the box, all the media from the original article will be included in the republished article. If you don’t want this to happen, mark media elements with “Can distribute?” toggle in your media library and leave this box unchecked. This way, republished articles will only show the elements you’ve marked as distributable.', 'republication-tracker-tool' ); ?></em></p>
 		<?php
 	}
 
