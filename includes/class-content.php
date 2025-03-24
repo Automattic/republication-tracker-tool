@@ -46,6 +46,13 @@ class Republication_Tracker_Tool_Content {
 		unset( $allowed_tags_excerpt['form'] );
 
 		/**
+		 * The article WP_Post object
+		 *
+		 * @var WP_Post $post the post object
+		 */
+		global $post;
+
+		/**
 		 * Allow sites to configure which tags are allowed to be output in the republication content
 		 *
 		 * Default value is the standard global $allowedposttags, except form elements.
