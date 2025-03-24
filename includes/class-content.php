@@ -61,7 +61,7 @@ class Republication_Tracker_Tool_Content {
 		 * Filters the content of the republished post.
 		 *
 		 * @param string $content The content of the post.
-		 * @param string $post_object The post object.
+		 * @param WP_Post $post_object The post object.
 		 * @return string The filtered content.
 		 */
 		$content = apply_filters( 'republication_tracker_tool_republish_content', $content, $post_object );
