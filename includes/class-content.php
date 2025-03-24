@@ -69,25 +69,25 @@ class Republication_Tracker_Tool_Content {
 		// remove spare p tags and clean up these paragraphs
 		$content = str_replace( '<p></p>', '', wpautop( $content ) );
 
-		// Force the content to be UTF-8 escaped HTML.
-		$content = htmlspecialchars( $content, ENT_HTML5, 'UTF-8', true );
-
 		// Handle media.
 		preg_match_all( '/<img[^>]+class="wp-image-(\d+)"[^>]*>/', $content, $matches );
 		$found_images = [];
 
 		foreach ( $matches[1] as $key => $attachment_id ) {
 			if ( ! Republication_Tracker_Tool_Media::can_distribute( $attachment_id ) ) {
-				$found_images[ $attachment_id ] = $matches[0][ $key ];
+				$found_images[] = [ $attachment_id, $matches[0][ $key ] ];
 			}
 		}
 
-		// Suppress the found images conditionally.
-		foreach ( $found_images as $attachment_id => $found_image ) {
+		// Remove the found images.
+		foreach ( $found_images as [ $attachment_id, $found_image ] ) {
 			// Remove the figure and figcaption of $found_image using regex.
 			$pattern = '/<figure[^>]*>' . preg_quote( $found_image, '/' ) . '.*?<\/figure>/s';
-			$content = preg_replace( $pattern, '', $content );
+			$content = preg_replace( $pattern, "<!-- RTT removed image ({$attachment_id}) -->", $content );
 		}
+
+		// Force the content to be UTF-8 escaped HTML.
+		$content = htmlspecialchars( $content, ENT_HTML5, 'UTF-8', true );
 
 		$post_object = get_post( $post_id );
 
