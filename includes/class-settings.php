@@ -213,7 +213,7 @@ class Republication_Tracker_Tool_Settings {
 	}
 
 	public function republication_tracker_tool_license_callback() {
-		$selected = get_option( 'republication_tracker_tool_license', 'cc-by-nd-4.0' );
+		$selected = get_option( 'republication_tracker_tool_license', REPUBLICATION_TRACKER_TOOL_DEFAULT_LICENSE );
 
 		$licenses = REPUBLICATION_TRACKER_TOOL_LICENSES;
 
