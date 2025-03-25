@@ -22,6 +22,7 @@ if ( ! $post_object instanceof WP_Post ) {
 
 $content = Republication_Tracker_Tool_Content::get_republishable_content( $post_object->post_content, $republish_post_id );
 
+$license_statement = get_option( 'republication_tracker_tool_policy' );
 $license_key = get_option( 'republication_tracker_tool_license', REPUBLICATION_TRACKER_TOOL_DEFAULT_LICENSE );
 $license_badge = sprintf(
 	'<a rel="noreferrer license" target="_blank" href="%s"><img alt="%s" style="border-width:0" src="%s" /></a>',
@@ -177,6 +178,11 @@ $republish_content = apply_filters( 'republication_tracker_tool_republish_articl
 						?>
 					</div>
 				</div>
+				<?php if ( ! empty( $license_statement ) ) : ?>
+					<section class="republish-article__license">
+						<?php echo wp_kses_post( $license_statement ); ?>
+					</section>
+				<?php endif; ?>
 				<div class="republish-article__content">
 					<section class="republish-article__info">
 						<textarea rows="19" readonly aria-readonly="true" aria-label="<?php esc_attr_e( 'Republish this article', 'republication-tracker-tool' ); ?>"><?php echo esc_html( $republish_content ); ?></textarea>
