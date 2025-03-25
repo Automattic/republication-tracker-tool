@@ -41,11 +41,6 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-republication-rewrite.php'
 final class Republication_Tracker_Tool {
 
 	/**
-	 * The default license key to use if none is chosen in the backend UI.
-	 */
-	const DEFAULT_LICENSE = 'cc-by-nd-4.0';
-
-	/**
 	 * URL of plugin directory.
 	 *
 	 * @var    string

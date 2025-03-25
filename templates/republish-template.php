@@ -22,7 +22,7 @@ if ( ! $post_object instanceof WP_Post ) {
 
 $content = Republication_Tracker_Tool_Content::get_republishable_content( $post_object->post_content, $republish_post_id );
 
-$license_key = get_option( 'republication_tracker_tool_license', Republication_Tracker_Tool::DEFAULT_LICENSE );
+$license_key = get_option( 'republication_tracker_tool_license', REPUBLICATION_TRACKER_TOOL_DEFAULT_LICENSE );
 $license_badge = sprintf(
 	'<a rel="noreferrer license" target="_blank" href="%s"><img alt="%s" style="border-width:0" src="%s" /></a>',
 	REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['url'],
