@@ -17,6 +17,9 @@
 }
 
 .republish-article__info textarea {
+	font-family: monospace;
+	font-size: smaller;
+	text-align: left;
 	border: 2px solid #c7c7c7;
 	height: 50vh;
 	line-height: 1.6em;

@@ -120,7 +120,6 @@ class Republication_Tracker_Tool_Settings {
 			'
 			);
 		}
-
 	}
 
 	/**
@@ -150,12 +149,12 @@ class Republication_Tracker_Tool_Settings {
 				'teeny'         => true,
 			)
 		);
-		echo sprintf( '<p><em>%s</em></p>', wp_kses_post( __( 'The Republication Tracker Tool Policy field is where you will be able to input your rules and policies for users to see before they copy and paste your content to republish.As an example of a republication policy hat uses a Creative Commons license, check out the list in this plugin\'s <a href="https://github.com/Automattic/republication-tracker-tool/blob/trunk/docs/configuring-plugin-settings.md#republication-tracker-tool-policy" target="_blank">documentation</a> on GitHub.', 'republication-tracker-tool' ) ) );
+		printf( '<p><em>%s</em></p>', wp_kses_post( __( 'The Republication Tracker Tool Policy field is where you will be able to input your rules and policies for users to see before they copy and paste your content to republish.As an example of a republication policy hat uses a Creative Commons license, check out the list in this plugin\'s <a href="https://github.com/Automattic/republication-tracker-tool/blob/trunk/docs/configuring-plugin-settings.md#republication-tracker-tool-policy" target="_blank">documentation</a> on GitHub.', 'republication-tracker-tool' ) ) );
 	}
 
 	public function republication_tracker_tool_analytics_id_callback() {
 		$content = get_option( 'republication_tracker_tool_analytics_id' );
-		echo sprintf(
+		printf(
 			'<input type="text" name="%1$s" value="%2$s">%3$s',
 			'republication_tracker_tool_analytics_id',
 			esc_html( $content ),
@@ -165,7 +164,7 @@ class Republication_Tracker_Tool_Settings {
 
 	public function republication_tracker_tool_analytics_ga4_id_callback() {
 		$content = get_option( 'republication_tracker_tool_analytics_ga4_id' );
-		echo sprintf(
+		printf(
 			'<input type="text" name="%1$s" value="%2$s">%3$s',
 			'republication_tracker_tool_analytics_ga4_id',
 			esc_html( $content ),
@@ -175,7 +174,7 @@ class Republication_Tracker_Tool_Settings {
 
 	public function republication_tracker_tool_analytics_ga4_secret_callback() {
 		$content = get_option( 'republication_tracker_tool_analytics_ga4_secret' );
-		echo sprintf(
+		printf(
 			'<input type="text" name="%1$s" value="%2$s">%3$s',
 			'republication_tracker_tool_analytics_ga4_secret',
 			esc_html( $content ),
@@ -209,19 +208,19 @@ class Republication_Tracker_Tool_Settings {
 					checked
 				<?php endif; ?>
 			/>
-			<p><em><?php echo esc_html__( 'If checked, all media will be included in republication. Unchecked only media specifically tagged as distributable will be included..', 'republication-tracker-tool' ); ?></em></p>
+			<p><em><?php echo esc_html__( 'When you check the box, all the media from the original article will be included in the republished article. If you don’t want this to happen, mark media elements with “Can distribute?” toggle in your media library and leave this box unchecked. This way, republished articles will only show the elements you’ve marked as distributable.', 'republication-tracker-tool' ); ?></em></p>
 		<?php
 	}
 
 	public function republication_tracker_tool_license_callback() {
-		$selected = get_option( 'republication_tracker_tool_license', 'cc-by-nd-4.0' );
+		$selected = get_option( 'republication_tracker_tool_license', REPUBLICATION_TRACKER_TOOL_DEFAULT_LICENSE );
 
 		$licenses = REPUBLICATION_TRACKER_TOOL_LICENSES;
 
 		?>
 		<fieldset>
 			<p>
-			<?php foreach( $licenses as $license_key => $license_values ) : ?>
+			<?php foreach ( $licenses as $license_key => $license_values ) : ?>
 				<label>
 					<input
 						type="radio"

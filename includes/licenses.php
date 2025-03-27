@@ -1,4 +1,6 @@
 <?php
+
+const REPUBLICATION_TRACKER_TOOL_DEFAULT_LICENSE = 'cc-by-nd-4.0';
 const REPUBLICATION_TRACKER_TOOL_LICENSES = [
 	'cc-by-4.0' => [
 		'label' => 'CC BY 4.0',
@@ -24,7 +26,7 @@ const REPUBLICATION_TRACKER_TOOL_LICENSES = [
 		'url' => 'https://creativecommons.org/licenses/by-nc-sa/4.0/',
 		'badge' => 'https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png'
 	],
-	'cc-by-nd-4.0' => [
+	REPUBLICATION_TRACKER_TOOL_DEFAULT_LICENSE => [
 		'label' => 'CC BY-ND 4.0',
 		'description' => 'Creative Commons Attribution-NoDerivatives 4.0 International License',
 		'url' => 'https://creativecommons.org/licenses/by-nd/4.0/',

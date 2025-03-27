@@ -26,6 +26,8 @@ define( 'REPUBLICATION_TRACKER_TOOL_PATH', plugin_dir_path( __FILE__ ) );
 
 require plugin_dir_path( __FILE__ ) . 'includes/licenses.php';
 require plugin_dir_path( __FILE__ ) . 'includes/class-settings.php';
+require plugin_dir_path( __FILE__ ) . 'includes/class-media.php';
+require plugin_dir_path( __FILE__ ) . 'includes/class-content.php';
 require plugin_dir_path( __FILE__ ) . 'includes/class-article-settings.php';
 require plugin_dir_path( __FILE__ ) . 'includes/class-widget.php';
 require plugin_dir_path( __FILE__ ) . 'includes/compatibility-co-authors-plus.php';
@@ -243,12 +245,12 @@ final class Republication_Tracker_Tool {
 	 *
 	 * @param $post_id Id of the post to track.
 	 */
-	public static function create_parsely_tracking($post_id) {
-		$parsely_settings        = get_option( 'parsely', [] );
-		if (empty($parsely_settings) || !isset($parsely_settings['apikey'])) {
+	public static function create_parsely_tracking( $post_id ) {
+		$parsely_settings = get_option( 'parsely', [] );
+		if ( empty( $parsely_settings ) || ! isset( $parsely_settings['apikey'] ) ) {
 			return '';
 		}
-		$site_id = $parsely_settings['apikey'];
+		$site_id     = $parsely_settings['apikey'];
 		$article_url = get_permalink( $post_id );
 		return sprintf(
 			// %1$s is the original article URL, %2$s is site ID.
@@ -280,7 +282,11 @@ final class Republication_Tracker_Tool {
 		$pixel                    = self::create_tracking_pixel_markup( $post->ID );
 		$parsely_tracking         = self::create_parsely_tracking( $post->ID );
 		$additional_tracking_code = self::create_additional_tracking_code_markup( $post->ID );
-		$tracking_html            = htmlentities( $pixel ) . htmlentities($parsely_tracking) . $additional_tracking_code;
+		$tracking_html            = htmlentities( $pixel ) . htmlentities( $parsely_tracking ) . $additional_tracking_code;
+
+		$license_key         = get_option( 'republication_tracker_tool_license', 'cc-by-nd-4.0' );
+		$license_url         = REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['url'];
+		$license_description = REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['description'];
 
 		$display_attribution = get_option( 'republication_tracker_tool_display_attribution', 'on' );
 		if ( 'on' === $display_attribution && null !== $post ) {
@@ -295,11 +301,13 @@ final class Republication_Tracker_Tool {
 
 			return wpautop(
 				sprintf(
-				// translators: %1$s is a URL, %2$s is the site home URL, and %3$s is the site title.
-					esc_html__( 'This <a target="_blank" href="%1$s">article</a> first appeared on <a target="_blank" href="%2$s">%3$s</a> and is republished here under a Creative Commons license.', 'republication-tracker-tool' ),
+				// translators: %1$s is a URL, %2$s is the site home URL, %3$s is the site title. %4$s is the license URL, %5$s is the license description.
+					esc_html__( 'This <a target="_blank" href="%1$s">article</a> first appeared on <a target="_blank" href="%2$s">%3$s</a> and is republished here under a <a target="_blank" href="%4$s">%5$s</a>.', 'republication-tracker-tool' ),
 					get_permalink( $post ),
 					home_url(),
-					esc_html( get_bloginfo() )
+					esc_html( get_bloginfo() ),
+					$license_url,
+					$license_description
 				) . htmlentities( $site_icon_markup ) . $tracking_html
 			);
 		}
