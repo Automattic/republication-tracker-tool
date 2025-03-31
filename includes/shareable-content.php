@@ -16,53 +16,11 @@
 global $post;
 
 /**
- * What tags do we want to keep in the embed?
- * Not things from our server.
- *
- * Generall: wp_kses_post, but not allowing the terms listed below because
- * - they're referencing assets on our server: audio, figure, img, track, video
- * - they're referencing the referenced asset: figure, figcaption
- * - they're not likely to work: form, button
- *
- * @var array $allowed_tags_excerpt
- * @link https://codex.wordpress.org/Function_Reference/wp_kses
- */
-global $allowedposttags;
-$allowed_tags_excerpt = $allowedposttags;
-unset( $allowed_tags_excerpt['form'] );
-
-/**
- * Allow sites to configure which tags are allowed to be output in the republication content
- *
- * Default value is the standard global $allowedposttags, except form elements.
- *
- * @link https://github.com/Automattic/republication-tracker-tool/issues/49
- * @link https://developer.wordpress.org/reference/functions/wp_kses_allowed_html/
- * @param Array $allowed_tags_excerpt an associative array of element tags that are allowed
- */
-$allowed_tags_excerpt = apply_filters( 'republication_tracker_tool_allowed_tags_excerpt', $allowed_tags_excerpt, $post );
-
-/**
  * The content of the aforementioned post
  *
  * @var HTML $content
  */
-$content = $post->post_content;
-
-// Remove shortcodes from the content.
-$content = strip_shortcodes( $content );
-
-// Remove comments from the content. (Lookin' at you, Gutenberg.)
-$content = preg_replace( '/<!--(.|\s)*?-->/i', ' ', $content );
-
-// And finally, remove some tags.
-$content = wp_kses( $content, $allowed_tags_excerpt );
-
-// remove spare p tags and clean up these paragraphs
-$content = str_replace( '<p></p>', '', wpautop( $content ) );
-
-// Force the content to be UTF-8 escaped HTML.
-$content = htmlspecialchars( $content, ENT_HTML5, 'UTF-8', true );
+$content = Republication_Tracker_Tool_Content::get_republishable_content( $post->post_content );
 
 $content_footer = Republication_Tracker_Tool::create_content_footer( $post );
 
@@ -98,17 +56,17 @@ $article_info = str_replace( '<p></p>', '', wpautop( $article_info ) );
  * @var HTML $license_statement
  */
 $license_statement = wp_kses_post( get_option( 'republication_tracker_tool_policy' ) );
-$license_key = get_option( 'republication_tracker_tool_license', 'cc-by-nd-4.0' );
+$license_key = get_option( 'republication_tracker_tool_license', REPUBLICATION_TRACKER_TOOL_DEFAULT_LICENSE );
 
 echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 'style="display:none;"' ) . '>';
 	echo '<button ' . ( $is_amp ? 'on="tap:republication-tracker-tool-modal.close"' : '' ) . ' class="republication-tracker-tool-close">';
 	echo '<span class="screen-reader-text">' . esc_html( 'Close window', 'republication-tracker-tool' ) . '</span> <span aria-hidden="true">X</span></button>';
-	echo sprintf( '<h2 id="republish-modal-label">%s</h2>', esc_html__( 'Republish this article', 'republication-tracker-tool' ) );
+	printf( '<h2 id="republish-modal-label">%s</h2>', esc_html__( 'Republish this article', 'republication-tracker-tool' ) );
 
 	// Explain Creative Commons
 	echo '<div class="cc-policy">';
 		echo '<div class="cc-license">';
-			echo sprintf( '<a rel="noreferrer license" target="_blank" href="%s" /></a>', REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['badge'], esc_html__( 'Creative Commons License', 'republication-tracker-tool' ) );
+			printf( '<a rel="noreferrer license" target="_blank" href="%s"><img alt="%s" style="border-width:0" src="%s" /></a>', REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['url'], REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['description'], REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['badge'] );
 			echo wp_kses_post(
 				wpautop(
 					sprintf(
@@ -134,7 +92,7 @@ echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 's
 					<?php echo esc_html( $article_info ); ?>
 					<?php echo $content; ?>
 
-					<?php echo htmlspecialchars($content_footer, ENT_QUOTES, 'UTF-8'); ?>
+					<?php echo htmlspecialchars( $content_footer, ENT_QUOTES, 'UTF-8' ); ?>
 				</textarea>
 			<?php
 			if ( ! $is_amp ) {

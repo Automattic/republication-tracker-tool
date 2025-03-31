@@ -41,7 +41,7 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 
 		global $post;
 
-		$license_key = get_option( 'republication_tracker_tool_license', 'cc-by-nd-4.0' );
+		$license_key = get_option( 'republication_tracker_tool_license', REPUBLICATION_TRACKER_TOOL_DEFAULT_LICENSE );
 
 		// our post `republication-tracker-tool-hide-widget` meta is our default filter value
 		$hide_republication_widget_on_post = apply_filters( 'hide_republication_widget', get_post_meta( $post->ID, 'republication-tracker-tool-hide-widget', true ), $post );
@@ -74,7 +74,7 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 			);
 		}
 
-		if ( 'page' === $instance['layout'] ) {
+		if ( ! empty($instance['layout']) && 'page' === $instance['layout'] ) {
 			echo sprintf(
 				'<p><button name="%1$s" id="cc-btn" class="republication-tracker-tool-button page" onclick="window.location.href=\'%2$s\'" role="link">%1$s</button></p>',
 				esc_html__( 'Republish This Story', 'republication-tracker-tool' ),
