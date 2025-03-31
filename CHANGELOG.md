@@ -1,3 +1,16 @@
+# [2.4.0](https://github.com/Automattic/republication-tracker-tool/compare/v2.3.1...v2.4.0) (2025-03-31)
+
+
+### Bug Fixes
+
+* license details ([#248](https://github.com/Automattic/republication-tracker-tool/issues/248)) ([05518df](https://github.com/Automattic/republication-tracker-tool/commit/05518dff78b43675096ebfe635a1c7af81784f53))
+* linting ([30a505b](https://github.com/Automattic/republication-tracker-tool/commit/30a505b0d946588d1b2a87536892c0a2c50ac4a9))
+
+
+### Features
+
+* **republication-tracker:** Add additional tracking code snippet feature ([#243](https://github.com/Automattic/republication-tracker-tool/issues/243)) ([66e6b5c](https://github.com/Automattic/republication-tracker-tool/commit/66e6b5c42c16752f9967326728919dc9d2096a5b))
+
 ## [2.3.1](https://github.com/Automattic/republication-tracker-tool/compare/v2.3.0...v2.3.1) (2025-03-18)
 
 
