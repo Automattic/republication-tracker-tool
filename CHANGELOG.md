@@ -1,3 +1,10 @@
+## [2.4.1](https://github.com/Automattic/republication-tracker-tool/compare/v2.4.0...v2.4.1) (2025-06-17)
+
+
+### Bug Fixes
+
+* only save post meta on intentional saves ([#254](https://github.com/Automattic/republication-tracker-tool/issues/254)) ([eb90687](https://github.com/Automattic/republication-tracker-tool/commit/eb90687e2d62b70ea68ee028e60924ba6626b006))
+
 # [2.4.0](https://github.com/Automattic/republication-tracker-tool/compare/v2.3.1...v2.4.0) (2025-03-31)
 
 
