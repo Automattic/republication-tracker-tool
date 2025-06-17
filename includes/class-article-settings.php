@@ -84,6 +84,14 @@ class Republication_Tracker_Tool_Article_Settings {
 	 */
 	public function save_hide_widget_metabox( $post_id ) {
 
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			return;
+		}
+
+		if ( ! isset( $_POST['republication-tracker-tool-hide-widget-submit'] ) ) {
+			return;
+		}
+
 		if ( isset( $_POST['republication-tracker-tool-hide-widget'] ) ) {
 
 			update_post_meta( $post_id, 'republication-tracker-tool-hide-widget', true );
@@ -164,6 +172,7 @@ class Republication_Tracker_Tool_Article_Settings {
 		} else {
 
 			echo '<label>';
+				echo '<input type="hidden" name="republication-tracker-tool-hide-widget-submit" value="yes">';
 				echo '<input type="checkbox" name="republication-tracker-tool-hide-widget" id="republication-tracker-tool-hide-widget" ' . $checked . '>';
 				echo __( 'Hide the Republication sharing widget on this post?', 'republication-tracker-tool' );
 			echo '</label>';
