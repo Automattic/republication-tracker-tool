@@ -43,6 +43,7 @@ class Republication_Tracker_Tool_Article_Settings {
 		add_action( 'manage_edit-post_sortable_columns', array( $this, 'add_sortable_columns' ) );
 		add_action( 'manage_posts_custom_column', array( $this, 'custom_column_content' ), 10, 2 );
 		add_action( 'save_post', array( $this, 'save_hide_widget_metabox' ), 10 );
+		add_action( 'wp_insert_post', array( $this, 'apply_default_post_distribution' ), 10, 3 );
 	}
 
 
@@ -203,6 +204,24 @@ class Republication_Tracker_Tool_Article_Settings {
 				}
 				echo sprintf( '%s', number_format( $total_count ) );
 				break;
+		}
+	}
+
+	/**
+	 * Apply default post distribution settings to new posts.
+	 *
+	 * @param int     $post_id Post ID.
+	 * @param WP_Post $post    Post object.
+	 * @param bool    $update  Whether this is an existing post being updated.
+	 */
+	public function apply_default_post_distribution( $post_id, $post, $update ) {
+		// Only apply to new posts
+		if ( ! $update && 'post' === $post->post_type ) {
+			$default_post_distribution = get_option( 'republication_tracker_tool_default_post_distribution', 'off' );
+
+			if ( 'on' === $default_post_distribution ) {
+				update_post_meta( $post_id, 'republication-tracker-tool-hide-widget', true );
+			}
 		}
 	}
 

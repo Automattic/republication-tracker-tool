@@ -82,6 +82,11 @@ class Republication_Tracker_Tool_Settings {
 				'callback'          => array( $this, 'republication_tracker_additional_tracking_code_callback' ),
 				'sanitize_callback' => 'htmlentities',
 			],
+			[
+				'key'      => 'republication_tracker_tool_default_post_distribution',
+				'label'    => esc_html__( 'Default Post Distribution', 'republication-tracker-tool' ),
+				'callback' => array( $this, 'republication_tracker_tool_default_post_distribution_callback' ),
+			],
 		];
 		foreach ( $settings as $setting ) {
 			add_settings_field(
@@ -239,4 +244,20 @@ class Republication_Tracker_Tool_Settings {
 		</fieldset>
 		<?php
 	}
+
+	public function republication_tracker_tool_default_post_distribution_callback() {
+		$default_post_distribution = get_option( 'republication_tracker_tool_default_post_distribution', 'off' );
+		?>
+			<input
+				type="checkbox"
+				id="<?php echo esc_attr( 'republication_tracker_tool_default_post_distribution' ); ?>"
+				name="<?php echo esc_attr( 'republication_tracker_tool_default_post_distribution' ); ?>"
+				<?php if ( 'on' === $default_post_distribution ) : ?>
+					checked
+				<?php endif; ?>
+			/>
+			<p><em><?php echo esc_html__( 'If checked, "Hide Republication Widget" will be enabled by default for new posts.', 'republication-tracker-tool' ); ?></em></p>
+		<?php
+	}
+
 }
