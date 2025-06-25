@@ -87,6 +87,11 @@ class Republication_Tracker_Tool_Settings {
 				'label'    => esc_html__( 'Default Post Distribution', 'republication-tracker-tool' ),
 				'callback' => array( $this, 'republication_tracker_tool_default_post_distribution_callback' ),
 			],
+			[
+				'key'      => 'republication_tracker_tool_default_attachment_distribution',
+				'label'    => esc_html__( 'Default Attachment Distribution', 'republication-tracker-tool' ),
+				'callback' => array( $this, 'republication_tracker_tool_default_attachment_distribution_callback' ),
+			],
 		];
 		foreach ( $settings as $setting ) {
 			add_settings_field(
@@ -260,4 +265,18 @@ class Republication_Tracker_Tool_Settings {
 		<?php
 	}
 
+	public function republication_tracker_tool_default_attachment_distribution_callback() {
+		$default_attachment_distribution = get_option( 'republication_tracker_tool_default_attachment_distribution', 'off' );
+		?>
+			<input
+				type="checkbox"
+				id="<?php echo esc_attr( 'republication_tracker_tool_default_attachment_distribution' ); ?>"
+				name="<?php echo esc_attr( 'republication_tracker_tool_default_attachment_distribution' ); ?>"
+				<?php if ( 'on' === $default_attachment_distribution ) : ?>
+					checked
+				<?php endif; ?>
+			/>
+			<p><em><?php echo esc_html__( 'If checked, "Can distribute" will be enabled by default for new attachments.', 'republication-tracker-tool' ); ?></em></p>
+		<?php
+	}
 }
