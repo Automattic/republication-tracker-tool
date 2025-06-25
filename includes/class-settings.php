@@ -84,12 +84,12 @@ class Republication_Tracker_Tool_Settings {
 			],
 			[
 				'key'      => 'republication_tracker_tool_default_post_distribution',
-				'label'    => esc_html__( 'Default Post Distribution', 'republication-tracker-tool' ),
+				'label'    => esc_html__( 'Enable default Post Distribution', 'republication-tracker-tool' ),
 				'callback' => array( $this, 'republication_tracker_tool_default_post_distribution_callback' ),
 			],
 			[
 				'key'      => 'republication_tracker_tool_default_attachment_distribution',
-				'label'    => esc_html__( 'Default Attachment Distribution', 'republication-tracker-tool' ),
+				'label'    => esc_html__( 'Enable default Attachment Distribution', 'republication-tracker-tool' ),
 				'callback' => array( $this, 'republication_tracker_tool_default_attachment_distribution_callback' ),
 			],
 		];
