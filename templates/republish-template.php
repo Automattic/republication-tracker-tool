@@ -57,10 +57,7 @@ $article_date->setTimezone( $current_timezone );
 $article_date = $article_date->format( 'M j g:ia T' );
 
 // Featured image.
-if (
-	Republication_Tracker_Tool_Media::is_global_distribution_enabled() ||
-	Republication_Tracker_Tool_Media::can_distribute( get_post_thumbnail_id( $republish_post_id ) )
-) {
+if ( Republication_Tracker_Tool_Media::can_distribute( get_post_thumbnail_id( $republish_post_id ) ) ) {
 	$featured_image = get_the_post_thumbnail( $republish_post_id, 'full' );
 } else {
 	$featured_image = '';

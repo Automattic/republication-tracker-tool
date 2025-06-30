@@ -19,20 +19,26 @@ class Republication_Tracker_Tool_Media {
 	 * @return bool True if the media can be distributed, false otherwise.
 	 */
 	public static function can_distribute( $media_id ) {
-		if ( class_exists( '\Newspack\Newspack_Image_Credits' ) ) {
-			return (bool) get_post_meta( $media_id, \Newspack\Newspack_Image_Credits::MEDIA_CREDIT_CAN_DISTRIBUTE_META, true );
+		$media_distribution = get_option( 'republication_tracker_tool_media_distribution', 'on' );
+		if ( $media_distribution === 'on' ) {
+			// All media should be distributed, regardless of the individual setting.
+			return true;
 		}
-
-		return false;
+		// Otherwise, check the individual setting.
+		return self::get_can_distribute_meta( $media_id );
 	}
 
 	/**
-	 * Check if global media distribution is enabled.
+	 * Get the meta value that indicates if the media can be distributed.
 	 *
-	 * @return bool True if global distribution is enabled, false otherwise.
+	 * @param int $media_id ID of the media element.
+	 * @return bool True if the media can be distributed, false otherwise.
 	 */
-	public static function is_global_distribution_enabled() {
-		$media_distribution = get_option( 'republication_tracker_tool_media_distribution', 'on' );
-		return 'on' === $media_distribution;
+	public static function get_can_distribute_meta( $media_id ) {
+		if ( class_exists( '\Newspack\Newspack_Image_Credits' ) ) {
+			return get_post_meta( $media_id, \Newspack\Newspack_Image_Credits::MEDIA_CREDIT_CAN_DISTRIBUTE_META, true );
+		}
+
+		return false;
 	}
 }

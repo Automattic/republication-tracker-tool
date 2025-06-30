@@ -106,10 +106,9 @@ class Republication_Tracker_Tool_Content {
 		$found_images = [];
 
 		foreach ( $matches[1] as $key => $attachment_id ) {
-			if ( ! $bypass_global_distribution_check && Republication_Tracker_Tool_Media::is_global_distribution_enabled() ) {
-				break; // If global distribution is enabled, we don't need to check individual images.
-			}
-			if ( ! Republication_Tracker_Tool_Media::can_distribute( $attachment_id ) ) {
+			if ( ! $bypass_global_distribution_check && ! Republication_Tracker_Tool_Media::can_distribute( $attachment_id ) ) {
+				$found_images[] = [ $attachment_id, $matches[0][ $key ] ];
+			} elseif ( $bypass_global_distribution_check && ! Republication_Tracker_Tool_Media::get_can_distribute_meta( $attachment_id ) ) {
 				$found_images[] = [ $attachment_id, $matches[0][ $key ] ];
 			}
 		}
