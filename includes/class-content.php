@@ -70,7 +70,7 @@ class Republication_Tracker_Tool_Content {
 		$content = str_replace( '<p></p>', '', wpautop( $content ) );
 
 		// Remove non-distributable images.
-		$content = self::remove_non_distributable_images( $content );
+		$content = self::remove_non_distributable_images( $content, 'RTT removed image' );
 
 		// Force the content to be UTF-8 escaped HTML.
 		$content = htmlspecialchars( $content, ENT_HTML5, 'UTF-8', true );
@@ -93,10 +93,9 @@ class Republication_Tracker_Tool_Content {
 	 * Remove non-distributable images from the content.
 	 *
 	 * @param string $content The post content.
-	 * @param bool   $bypass_global_distribution_check Optional. If true, will bypass the distribution check and remove all images.
 	 * @return string The content with non-distributable images removed.
 	 */
-	public static function remove_non_distributable_images( $content, $bypass_global_distribution_check = false ) {
+	public static function remove_non_distributable_images( $content ) {
 		if ( ! class_exists( 'Republication_Tracker_Tool_Media' ) ) {
 			return $content;
 		}
@@ -106,9 +105,7 @@ class Republication_Tracker_Tool_Content {
 		$found_images = [];
 
 		foreach ( $matches[1] as $key => $attachment_id ) {
-			if ( ! $bypass_global_distribution_check && ! Republication_Tracker_Tool_Media::can_distribute( $attachment_id ) ) {
-				$found_images[] = [ $attachment_id, $matches[0][ $key ] ];
-			} elseif ( $bypass_global_distribution_check && ! Republication_Tracker_Tool_Media::get_can_distribute_meta( $attachment_id ) ) {
+			if ( ! Republication_Tracker_Tool_Media::can_distribute( $attachment_id ) ) {
 				$found_images[] = [ $attachment_id, $matches[0][ $key ] ];
 			}
 		}
