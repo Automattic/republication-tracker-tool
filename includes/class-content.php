@@ -69,6 +69,37 @@ class Republication_Tracker_Tool_Content {
 		// remove spare p tags and clean up these paragraphs
 		$content = str_replace( '<p></p>', '', wpautop( $content ) );
 
+		// Remove non-distributable images.
+		$content = self::remove_non_distributable_images( $content, 'RTT removed image' );
+
+		// Force the content to be UTF-8 escaped HTML.
+		$content = htmlspecialchars( $content, ENT_HTML5, 'UTF-8', true );
+
+		$post_object = get_post( $post_id );
+
+		/**
+		 * Filters the content of the republished post.
+		 *
+		 * @param string $content The content of the post.
+		 * @param WP_Post $post_object The post object.
+		 * @return string The filtered content.
+		 */
+		$content = apply_filters( 'republication_tracker_tool_republish_content', $content, $post_object );
+
+		return $content;
+	}
+
+	/**
+	 * Remove non-distributable images from the content.
+	 *
+	 * @param string $content The post content.
+	 * @return string The content with non-distributable images removed.
+	 */
+	public static function remove_non_distributable_images( $content ) {
+		if ( ! class_exists( 'Republication_Tracker_Tool_Media' ) ) {
+			return $content;
+		}
+
 		// Handle media.
 		preg_match_all( '/<img[^>]+class="wp-image-(\d+)"[^>]*>/', $content, $matches );
 		$found_images = [];
@@ -85,20 +116,6 @@ class Republication_Tracker_Tool_Content {
 			$pattern = '/<figure[^>]*>' . preg_quote( $found_image, '/' ) . '.*?<\/figure>/s';
 			$content = preg_replace( $pattern, "<!-- RTT removed image ({$attachment_id}) -->", $content );
 		}
-
-		// Force the content to be UTF-8 escaped HTML.
-		$content = htmlspecialchars( $content, ENT_HTML5, 'UTF-8', true );
-
-		$post_object = get_post( $post_id );
-
-		/**
-		 * Filters the content of the republished post.
-		 *
-		 * @param string $content The content of the post.
-		 * @param WP_Post $post_object The post object.
-		 * @return string The filtered content.
-		 */
-		$content = apply_filters( 'republication_tracker_tool_republish_content', $content, $post_object );
 
 		return $content;
 	}
