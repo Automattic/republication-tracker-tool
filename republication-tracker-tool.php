@@ -148,6 +148,8 @@ final class Republication_Tracker_Tool {
 		$this->article_settings = new Republication_Tracker_Tool_Article_Settings( $this );
 		$this->rewrite_endpoint = new Republication_Tracker_Tool_Rewrite_Endpoint();
 
+		Republication_Tracker_Tool_Media::init();
+
 		add_action( 'widgets_init', array( $this, 'register_widgets' ) );
 
 		add_filter( 'plugin_row_meta', array( $this, '_plugin_row_meta' ), 10, 2 );
