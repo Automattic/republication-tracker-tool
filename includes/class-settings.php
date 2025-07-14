@@ -72,6 +72,11 @@ class Republication_Tracker_Tool_Settings {
 				'callback' => array( $this, 'republication_tracker_tool_media_distribution_callback' ),
 			],
 			[
+				'key'      => 'republication_tracker_tool_default_attachment_distribution',
+				'label'    => '', // This is intentionally left blank to club it visually with Media Distribution.
+				'callback' => array( $this, 'republication_tracker_tool_default_attachment_distribution_callback' ),
+			],
+			[
 				'key'      => 'republication_tracker_tool_license',
 				'label'    => esc_html__( 'License', 'republication-tracker-tool' ),
 				'callback' => array( $this, 'republication_tracker_tool_license_callback' ),
@@ -81,6 +86,11 @@ class Republication_Tracker_Tool_Settings {
 				'label'             => esc_html__( 'Additional Tracking Code', 'republication-tracker-tool' ),
 				'callback'          => array( $this, 'republication_tracker_additional_tracking_code_callback' ),
 				'sanitize_callback' => 'htmlentities',
+			],
+			[
+				'key'      => 'republication_tracker_tool_default_post_distribution',
+				'label'    => esc_html__( 'Hide republication widgets on posts by default', 'republication-tracker-tool' ),
+				'callback' => array( $this, 'republication_tracker_tool_default_post_distribution_callback' ),
 			],
 		];
 		foreach ( $settings as $setting ) {
@@ -208,7 +218,28 @@ class Republication_Tracker_Tool_Settings {
 					checked
 				<?php endif; ?>
 			/>
+			<label for="<?php echo esc_attr( 'republication_tracker_tool_media_distribution' ); ?>">
+				<?php echo esc_html__( 'Distribute all media', 'republication-tracker-tool' ); ?>
+			</label>
 			<p><em><?php echo esc_html__( 'When you check the box, all the media from the original article will be included in the republished article. If you don’t want this to happen, mark media elements with “Can distribute?” toggle in your media library and leave this box unchecked. This way, republished articles will only show the elements you’ve marked as distributable.', 'republication-tracker-tool' ); ?></em></p>
+		<?php
+	}
+
+	public function republication_tracker_tool_default_attachment_distribution_callback() {
+		$default_attachment_distribution = get_option( 'republication_tracker_tool_default_attachment_distribution', 'off' );
+		?>
+			<input
+				type="checkbox"
+				id="<?php echo esc_attr( 'republication_tracker_tool_default_attachment_distribution' ); ?>"
+				name="<?php echo esc_attr( 'republication_tracker_tool_default_attachment_distribution' ); ?>"
+				<?php if ( 'on' === $default_attachment_distribution ) : ?>
+					checked
+				<?php endif; ?>
+			/>
+			<label for="<?php echo esc_attr( 'republication_tracker_tool_default_attachment_distribution' ); ?>">
+				<?php echo esc_html__( 'Mark media as distributable by default', 'republication-tracker-tool' ); ?>
+			</label>
+			<p><em><?php echo esc_html__( 'If checked, all new uploaded images will have their “Can distribute?” option enabled by default.', 'republication-tracker-tool' ); ?></em></p>
 		<?php
 	}
 
@@ -237,6 +268,21 @@ class Republication_Tracker_Tool_Settings {
 			<?php endforeach; ?>
 			</p>
 		</fieldset>
+		<?php
+	}
+
+	public function republication_tracker_tool_default_post_distribution_callback() {
+		$default_post_distribution = get_option( 'republication_tracker_tool_default_post_distribution', 'off' );
+		?>
+			<input
+				type="checkbox"
+				id="<?php echo esc_attr( 'republication_tracker_tool_default_post_distribution' ); ?>"
+				name="<?php echo esc_attr( 'republication_tracker_tool_default_post_distribution' ); ?>"
+				<?php if ( 'on' === $default_post_distribution ) : ?>
+					checked
+				<?php endif; ?>
+			/>
+			<p><em><?php echo esc_html__( 'If checked, "Hide Republication Widget" will be enabled by default for new posts.', 'republication-tracker-tool' ); ?></em></p>
 		<?php
 	}
 }
