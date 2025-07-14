@@ -1,3 +1,16 @@
+# [2.5.0](https://github.com/Automattic/republication-tracker-tool/compare/v2.4.1...v2.5.0) (2025-07-14)
+
+
+### Features
+
+* add default attachment distribution setting ([5f3e6f7](https://github.com/Automattic/republication-tracker-tool/commit/5f3e6f7387c6ff95993884e5c7b4a1f28f8a54ca))
+* add default post distribution setting ([7d7712f](https://github.com/Automattic/republication-tracker-tool/commit/7d7712fe2c05aa4ed1670811dd7b76e4acc15093))
+
+
+### Reverts
+
+* Revert "feat: add bypass logic for global distribution check" ([1685ade](https://github.com/Automattic/republication-tracker-tool/commit/1685ade6df2f3a1956ecf4f1ba0bcd4966d27f05))
+
 ## [2.4.1](https://github.com/Automattic/republication-tracker-tool/compare/v2.4.0...v2.4.1) (2025-06-17)
 
 
