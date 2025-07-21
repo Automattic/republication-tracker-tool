@@ -85,7 +85,7 @@ class Republication_Tracker_Tool_Settings {
 				'key'               => 'republication_tracker_additional_tracking_code',
 				'label'             => esc_html__( 'Additional Tracking Code', 'republication-tracker-tool' ),
 				'callback'          => array( $this, 'republication_tracker_additional_tracking_code_callback' ),
-				'sanitize_callback' => 'htmlentities',
+				'sanitize_callback' => 'wp_unslash',
 			],
 			[
 				'key'      => 'republication_tracker_tool_default_post_distribution',
