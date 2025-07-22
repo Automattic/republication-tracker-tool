@@ -85,7 +85,7 @@ class Republication_Tracker_Tool_Settings {
 				'key'               => 'republication_tracker_additional_tracking_code',
 				'label'             => esc_html__( 'Additional Tracking Code', 'republication-tracker-tool' ),
 				'callback'          => array( $this, 'republication_tracker_additional_tracking_code_callback' ),
-				'sanitize_callback' => 'htmlentities',
+				'sanitize_callback' => array( $this, 'sanitize_tracking_code' ),
 			],
 			[
 				'key'      => 'republication_tracker_tool_default_post_distribution',
@@ -144,6 +144,7 @@ class Republication_Tracker_Tool_Settings {
 			esc_textarea( $content )
 		);
 		echo sprintf( '<p><em>%s</em></p>', wp_kses_post( __( 'The additional Tracking Code field is where you will be able to input your additional tracking code that will be appended to your copied content.', 'republication-tracker-tool' ) ) );
+		echo sprintf( '<p><em>%s</em></p>', wp_kses_post( __( 'Allowed HTML: script, img, iframe, noscript, div, span, p with safe attributes only.', 'republication-tracker-tool' ) ) );
 	}
 
 	public function republication_tracker_tool_policy_callback() {
@@ -284,5 +285,46 @@ class Republication_Tracker_Tool_Settings {
 			/>
 			<p><em><?php echo esc_html__( 'If checked, "Hide Republication Widget" will be enabled by default for new posts.', 'republication-tracker-tool' ); ?></em></p>
 		<?php
+	}
+
+	/**
+	 * Sanitize tracking code to allow only safe HTML elements for tracking.
+	 *
+	 * @param string $content The tracking code content to sanitize.
+	 * @return string Sanitized content.
+	 */
+	public function sanitize_tracking_code( $content ) {
+		$allowed_html = [
+			'script'   => [
+				'id'    => true,
+				'src'   => true,
+				'type'  => true,
+				'async' => true,
+				'defer' => true,
+				'class' => true,
+			],
+			'img'      => [
+				'id'     => true,
+				'style'  => true,
+				'src'    => true,
+				'alt'    => true,
+				'class'  => true,
+				'width'  => true,
+				'height' => true,
+			],
+			'iframe'   => [
+				'id'     => true,
+				'style'  => true,
+				'src'    => true,
+				'class'  => true,
+				'width'  => true,
+				'height' => true,
+			],
+			'noscript' => true,
+			'div'      => true,
+			'span'     => true,
+		];
+
+		return wp_kses( $content, $allowed_html );
 	}
 }
