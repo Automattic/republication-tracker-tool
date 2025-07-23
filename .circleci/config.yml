@@ -51,6 +51,6 @@ workflows:
             branches:
               only:
                 - release
-    php:
-      jobs:
-        - newspack/test-php
+  php:
+    jobs:
+      - newspack/test-php
