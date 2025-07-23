@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  newspack: newspack/newspack@1.4.3
+  newspack: newspack/newspack@1.5.6
 
 jobs:
   release_wporg:
@@ -51,3 +51,6 @@ workflows:
             branches:
               only:
                 - release
+  php:
+    jobs:
+      - newspack/test-php
