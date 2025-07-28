@@ -6,7 +6,7 @@
  * Author URI:      https://labs.inn.org
  * Text Domain:     republication-tracker-tool
  * Domain Path:     /languages
- * Version:         2.5.0
+ * Version:         2.5.1-alpha.1
  *
  * @package         Republication_Tracker_Tool
  */
@@ -284,7 +284,7 @@ final class Republication_Tracker_Tool {
 		$pixel                    = self::create_tracking_pixel_markup( $post->ID );
 		$parsely_tracking         = self::create_parsely_tracking( $post->ID );
 		$additional_tracking_code = self::create_additional_tracking_code_markup( $post->ID );
-		$tracking_html            = htmlentities( $pixel ) . htmlentities( $parsely_tracking ) . $additional_tracking_code;
+		$tracking_html            = htmlentities( $pixel ) . htmlentities( $parsely_tracking ) . htmlentities( $additional_tracking_code );
 
 		$license_key         = get_option( 'republication_tracker_tool_license', 'cc-by-nd-4.0' );
 		$license_url         = REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['url'];
