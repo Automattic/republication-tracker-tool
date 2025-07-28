@@ -1,3 +1,10 @@
+## [2.5.1](https://github.com/Automattic/republication-tracker-tool/compare/v2.5.0...v2.5.1) (2025-07-28)
+
+
+### Bug Fixes
+
+* lax filter for script allowing script tags ([5691cfc](https://github.com/Automattic/republication-tracker-tool/commit/5691cfcb9ca30f97101e411348062bab08ae3605))
+
 # [2.5.0](https://github.com/Automattic/republication-tracker-tool/compare/v2.4.1...v2.5.0) (2025-07-14)
 
 
