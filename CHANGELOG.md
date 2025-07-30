@@ -1,3 +1,10 @@
+## [2.5.2](https://github.com/Automattic/republication-tracker-tool/compare/v2.5.1...v2.5.2) (2025-07-30)
+
+
+### Bug Fixes
+
+* improve attribute filtering ([#267](https://github.com/Automattic/republication-tracker-tool/issues/267)) ([5e1140a](https://github.com/Automattic/republication-tracker-tool/commit/5e1140a2b85598319ebadb761e43bbbbbbafdfdc))
+
 ## [2.5.1](https://github.com/Automattic/republication-tracker-tool/compare/v2.5.0...v2.5.1) (2025-07-28)
 
 
