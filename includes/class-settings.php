@@ -358,4 +358,14 @@ class Republication_Tracker_Tool_Settings {
 
 		return wp_kses( $content, $allowed_html );
 	}
+
+	/**
+	 * Check if plain text content feature is enabled.
+	 *
+	 * @return bool True if plain text content is enabled, false otherwise.
+	 */
+	public static function is_plain_text_enabled() {
+		$enable_plain_text = get_option( 'republication_tracker_tool_enable_plain_text', 'off' );
+		return 'on' === $enable_plain_text;
+	}
 }

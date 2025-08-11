@@ -51,7 +51,11 @@ $article_info = sprintf(
 $article_info = str_replace( '<p></p>', '', wpautop( $article_info ) );
 
 // Check if plain text feature is enabled
+$plain_text_enabled = Republication_Tracker_Tool_Settings::is_plain_text_enabled();
 $plain_text_content = '';
+if ( $plain_text_enabled ) {
+	$plain_text_content = Republication_Tracker_Tool_Content::get_republishable_plain_text_content( $post );
+}
 
 /**
  * The licensing statement from this plugin
