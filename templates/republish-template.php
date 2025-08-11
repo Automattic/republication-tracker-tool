@@ -151,6 +151,13 @@ $republish_content = preg_replace( '/ sizes=".*?"/', '', $republish_content );
 
 // Filter the republish content.
 $republish_content = apply_filters( 'republication_tracker_tool_republish_article_markup', $republish_content, $post_object );
+
+// Generate plain text content if the feature is enabled.
+$plain_text_enabled = Republication_Tracker_Tool_Settings::is_plain_text_enabled();
+$republish_plain_text_content = '';
+if ( $plain_text_enabled ) {
+	$republish_plain_text_content = Republication_Tracker_Tool_Content::get_republishable_plain_text_content( $post_object );
+}
 ?>
 
 <section id="primary" class="content-area">
@@ -185,7 +192,41 @@ $republish_content = apply_filters( 'republication_tracker_tool_republish_articl
 				<?php endif; ?>
 				<div class="republish-article__content">
 					<section class="republish-article__info">
-						<textarea rows="19" readonly aria-readonly="true" aria-label="<?php esc_attr_e( 'Republish this article', 'republication-tracker-tool' ); ?>"><?php echo esc_html( $republish_content ); ?></textarea>
+						<?php if ( $plain_text_enabled ) : ?>
+							<div class="republish-format-tabs">
+								<button class="republish-tab-button active" data-tab="html" aria-label="<?php esc_attr_e( 'HTML format', 'republication-tracker-tool' ); ?>">
+									<?php esc_html_e( 'HTML', 'republication-tracker-tool' ); ?>
+								</button>
+								<button class="republish-tab-button" data-tab="plain-text" aria-label="<?php esc_attr_e( 'Plain text format', 'republication-tracker-tool' ); ?>">
+									<?php esc_html_e( 'Plain Text', 'republication-tracker-tool' ); ?>
+								</button>
+							</div>
+						<?php endif; ?>
+
+						<div class="republish-content-container">
+							<textarea
+								id="republish-html-content"
+								class="republish-content-textarea <?php echo $plain_text_enabled ? 'republish-tab-content active' : ''; ?>"
+								data-tab-content="html"
+								rows="19"
+								readonly
+								aria-readonly="true"
+								aria-label="<?php esc_attr_e( 'Republish this article (HTML format)', 'republication-tracker-tool' ); ?>"
+							><?php echo esc_html( $republish_content ); ?></textarea>
+
+							<?php if ( $plain_text_enabled ) : ?>
+								<textarea
+									id="republish-plain-text-content"
+									class="republish-content-textarea republish-tab-content"
+									data-tab-content="plain-text"
+									rows="19"
+									readonly
+									aria-readonly="true"
+									aria-label="<?php esc_attr_e( 'Republish this article (Plain text format)', 'republication-tracker-tool' ); ?>"
+								><?php echo esc_html( $republish_plain_text_content ); ?></textarea>
+							<?php endif; ?>
+						</div>
+
 						<button class="republish-article__copy-button" aria-label="<?php esc_attr_e( 'Copy to clipboard', 'republication-tracker-tool' ); ?>">
 							<?php esc_html_e( 'Copy to clipboard', 'republication-tracker-tool' ); ?>
 						</button>

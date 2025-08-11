@@ -35,3 +35,44 @@
 .republish-article__copy-button {
 	margin-top: 20px;
 }
+
+.republish-format-tabs {
+	display: flex;
+	border: 0;
+	margin-bottom: 1rem;
+}
+
+.republish-tab-button {
+	background: none;
+	border: none;
+	padding: 0.75rem 1.5rem;
+	cursor: pointer;
+	font-weight: 600;
+	color: #666;
+
+	&:hover {
+		color: #333;
+		background-color: #f5f5f5;
+	}
+
+	&.active {
+		color: #333;
+		border: 1px solid #333;
+	}
+}
+
+.republish-tab-content {
+	display: none;
+
+	&.active {
+		display: block;
+	}
+}
+
+.republish-content-container {
+	position: relative;
+}
+
+.republish-content-textarea {
+	width: 100%;
+}

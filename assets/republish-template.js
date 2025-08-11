@@ -7,33 +7,61 @@
  */
 document.addEventListener("DOMContentLoaded", () => {
 	/**
-	 * Selects the text in the textarea when it is focused.
+	 * Handle tab switching for format selection.
 	 */
-	document
-		.querySelector(".republish-article .republish-article__info textarea")
-		?.addEventListener("focus", (event) => {
-			event.target.select();
+	const tabButtons = document.querySelectorAll(".republish-tab-button");
+	const tabContents = document.querySelectorAll(".republish-tab-content");
+
+	tabButtons.forEach((button) => {
+		button.addEventListener("click", (event) => {
+			event.preventDefault();
+			const targetTab = button.getAttribute("data-tab");
+
+			tabButtons.forEach((btn) => btn.classList.remove("active"));
+			tabContents.forEach((content) => content.classList.remove("active"));
+
+			button.classList.add("active");
+			const targetContent = document.querySelector(`[data-tab-content="${targetTab}"]`);
+			if (targetContent) {
+				targetContent.classList.add("active");
+			}
 		});
+	});
 
 	/**
-	 * Copies the text in the textarea to the clipboard when the copy button is clicked.
+	 * Selects the text in the active textarea when it is focused.
+	 */
+	const textareas = document.querySelectorAll(".republish-article .republish-content-textarea");
+	textareas.forEach((textarea) => {
+		textarea.addEventListener("focus", (event) => {
+			event.target.select();
+		});
+	});
+
+	/**
+	 * Copies the text in the active textarea to the clipboard when the copy button is clicked.
 	 */
 	document
 		.querySelector(".republish-article .republish-article__copy-button")
 		?.addEventListener("click", (event) => {
 			event.preventDefault();
-			const textarea = document.querySelector(
-				".republish-article .republish-article__info textarea"
-			);
-			const success = copyTextToClipboard(textarea.value);
+
+			// Find the currently active textarea
+			const activeTextarea = document.querySelector(".republish-article .republish-tab-content.active") || document.querySelector(".republish-article .republish-content-textarea");
+
+			if (!activeTextarea) {
+				return;
+			}
+
+			const success = copyTextToClipboard(activeTextarea.value);
 
 			if (success) {
-				event.target.innerText = __("Copied!", "the-city-features");
+				event.target.innerText = __("Copied!", "republication-tracker-tool");
 
 				setTimeout(() => {
 					event.target.innerText = __(
 						"Copy to clipboard",
-						"the-city-features"
+						"republication-tracker-tool"
 					);
 				}, 2000);
 			}
