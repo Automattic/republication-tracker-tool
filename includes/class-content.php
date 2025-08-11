@@ -172,7 +172,7 @@ class Republication_Tracker_Tool_Content {
 			// Convert HTML to plain text
 			$plain_content = self::convert_html_to_plain_text( $html_content );
 
-			$plain_text_content .= 'Content : ' .  $plain_content . "\n\n";
+			$plain_text_content .= "Content : \n\n" .  $plain_content . "\n\n";
 		}
 
 		// Add attribution and licensing information
@@ -212,7 +212,7 @@ class Republication_Tracker_Tool_Content {
 	private static function convert_html_to_plain_text( $html_content ) {
 		$html_content = html_entity_decode( $html_content, ENT_QUOTES | ENT_HTML5, 'UTF-8' );
 
-		// Remove unnecessary HTML tags
+		// Filter tags and clean up the content.
 		$html_content = preg_replace( '/<figure[^>]*>.*?<\/figure>/is', '', $html_content );
 		$html_content = preg_replace( '/<img[^>]*>/i', '', $html_content );
 		$html_content = preg_replace( '/<h[1-6][^>]*>(.*?)<\/h[1-6]>/is', "\n$1\n\n", $html_content );
@@ -260,7 +260,6 @@ class Republication_Tracker_Tool_Content {
 		$plain_text = wp_strip_all_tags( $html_content );
 		$plain_text = preg_replace( '/\n\s*\n\s*\n/', "\n\n", $plain_text );
 		$plain_text = preg_replace( '/[ \t]+/', ' ', $plain_text );
-		$plain_text = preg_replace( '/^\s+|\s+$/m', '', $plain_text );
 
 		return trim( $plain_text );
 	}
