@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	/**
 	 * Selects the text in the active textarea when it is focused.
 	 */
-	const textareas = document.querySelectorAll(".republish-article .republish-content-textarea");
+	const textareas = document.querySelectorAll(".republish-content-textarea");
 	textareas.forEach((textarea) => {
 		textarea.addEventListener("focus", (event) => {
 			event.target.select();
@@ -42,12 +42,11 @@ document.addEventListener("DOMContentLoaded", () => {
 	 * Copies the text in the active textarea to the clipboard when the copy button is clicked.
 	 */
 	document
-		.querySelector(".republish-article .republish-article__copy-button")
+		.querySelector(".republish-article__copy-button")
 		?.addEventListener("click", (event) => {
 			event.preventDefault();
 
-			// Find the currently active textarea
-			const activeTextarea = document.querySelector(".republish-article .republish-tab-content.active") || document.querySelector(".republish-article .republish-content-textarea");
+			const activeTextarea = document.querySelector(".republish-tab-content.active");
 
 			if (!activeTextarea) {
 				return;
@@ -56,13 +55,10 @@ document.addEventListener("DOMContentLoaded", () => {
 			const success = copyTextToClipboard(activeTextarea.value);
 
 			if (success) {
-				event.target.innerText = __("Copied!", "republication-tracker-tool");
+				event.target.innerText = "Copied!";
 
 				setTimeout(() => {
-					event.target.innerText = __(
-						"Copy to clipboard",
-						"republication-tracker-tool"
-					);
+					event.target.innerText = "Copy to clipboard";
 				}, 2000);
 			}
 		});
