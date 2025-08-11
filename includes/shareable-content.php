@@ -50,6 +50,9 @@ $article_info = sprintf(
 // strip empty tags after automatically applying p tags.
 $article_info = str_replace( '<p></p>', '', wpautop( $article_info ) );
 
+// Check if plain text feature is enabled
+$plain_text_content = '';
+
 /**
  * The licensing statement from this plugin
  *
@@ -88,16 +91,44 @@ echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 's
 
 			// the text area that is copyable
 			?>
-				<textarea readonly id="republication-tracker-tool-shareable-content" rows="5">
-					<?php echo esc_html( $article_info ); ?>
-					<?php echo $content; ?>
+			<div class="republication-content-section">
+				<?php if ( $plain_text_enabled ) : ?>
+					<div class="republish-format-tabs">
+						<button class="republish-tab-button active" data-tab="html" aria-label="<?php esc_attr_e( 'HTML format', 'republication-tracker-tool' ); ?>">
+							<?php esc_html_e( 'HTML', 'republication-tracker-tool' ); ?>
+						</button>
+						<button class="republish-tab-button" data-tab="plain-text" aria-label="<?php esc_attr_e( 'Plain text format', 'republication-tracker-tool' ); ?>">
+							<?php esc_html_e( 'Plain Text', 'republication-tracker-tool' ); ?>
+						</button>
+					</div>
+				<?php endif; ?>
 
-					<?php echo htmlspecialchars( $content_footer, ENT_QUOTES, 'UTF-8' ); ?>
-				</textarea>
+				<div class="republish-content-container">
+					<textarea
+						id="republication-tracker-tool-shareable-content"
+						class="republish-content-textarea <?php echo $plain_text_enabled ? 'republish-tab-content active' : ''; ?>"
+						data-tab-content="html"
+						readonly
+						rows="5"
+						aria-label="<?php esc_attr_e( 'Republish this article (HTML format)', 'republication-tracker-tool' ); ?>"
+					><?php echo esc_html( $article_info ); ?><?php echo $content; ?><?php echo htmlspecialchars( $content_footer, ENT_QUOTES, 'UTF-8' ); ?></textarea>
+
+					<?php if ( $plain_text_enabled ) : ?>
+						<textarea
+							id="republication-tracker-tool-shareable-content-plain-text"
+							class="republish-content-textarea republish-tab-content"
+							data-tab-content="plain-text"
+							readonly
+							rows="5"
+							aria-label="<?php esc_attr_e( 'Republish this article (Plain text format)', 'republication-tracker-tool' ); ?>"
+						><?php echo esc_html( $plain_text_content ); ?></textarea>
+					<?php endif; ?>
+				</div>
+			</div>
 			<?php
 			if ( ! $is_amp ) {
 				?>
-			<button onclick="copyToClipboard('#republication-tracker-tool-shareable-content', this)"><?php echo esc_html__( 'Copy to Clipboard', 'republication-tracker-tool' ); ?></button>
+			<button onclick="copyToClipboard( getActiveTextarea(), this )"><?php echo esc_html__( 'Copy to Clipboard', 'republication-tracker-tool' ); ?></button>
 				<?php
 			}
 

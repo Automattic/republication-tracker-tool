@@ -7,6 +7,30 @@ function copyToClipboard( element, button ) {
 	button.focus();
 }
 
+function getActiveTextarea() {
+	const $ = jQuery;
+	const $activeTextarea = $( '.republish-tab-content.active' );
+	if ( $activeTextarea.length > 0 ) {
+		return $activeTextarea;
+	}
+	// Fallback to the original textarea if no tabs are present
+	return '#republication-tracker-tool-shareable-content';
+}
+
+function initTabSwitching() {
+	const $ = jQuery;
+	$( '.republish-tab-button' ).on( 'click', function(e) {
+		e.preventDefault();
+		const targetTab = $(this).attr('data-tab');
+
+		$( '.republish-tab-button' ).removeClass( 'active' );
+		$( '.republish-tab-content' ).removeClass( 'active' );
+
+		$( this ).addClass( 'active' );
+		$('[data-tab-content="' + targetTab + '"]').addClass( 'active' );
+	} );
+}
+
 function modal_actions(){
 	// Remove captions from shareable text
 	var $ = jQuery;
@@ -59,9 +83,12 @@ function show_modal( $modal, $close ) {
 	$modal.show();
 	$modal_content.show();
 	$('body').addClass('modal-open-disallow-scrolling');
-	$('#republication-tracker-tool-modal-content').unbind().click(function(e) {
+	$modal_content.unbind().click(function(e) {
 		e.stopPropagation();
 	});
+
+	initTabSwitching();
+
 	trapFocus( $modal );
 	$close.focus();
 }
