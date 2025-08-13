@@ -1,47 +1,10 @@
-function copyToClipboard( element, button ) {
-	var $temp = jQuery( '<input>' );
-	jQuery( 'body' ).append( $temp );
-	$temp.val( jQuery( element ).text() ).select();
-	document.execCommand( 'copy' );
-	$temp.remove();
-	button.focus();
-}
-
-function copyFieldToClipboard( fieldSelector, button ) {
-	const $ = jQuery;
-	const $field = $( fieldSelector );
-
-	if ( $field.length === 0 ) {
-		return false;
-	}
-
-	const $temp = $( '<textarea>' );
-	$( 'body' ).append( $temp );
-	const value = $field.is( 'input' ) ? $field.val() : $field.text();
-	$temp.val( value ).select();
-
-	const success = document.execCommand( 'copy' );
-	$temp.remove();
-
-	if ( success && button ) {
-		const originalText = $( button ).text();
-		$( button ).text( 'Copied!' );
-		setTimeout( function() {
-			$( button ).text( originalText );
-		}, 2000 );
-	}
-
-	return success;
-}
-
 function getActiveTextarea() {
-	const $ = jQuery;
-	const $activeTextarea = $( '.republish-content.republish-content--active textarea' );
-	if ( $activeTextarea.length > 0 ) {
-		return $activeTextarea;
+	const activeTextarea = document.querySelector('.republish-content.republish-content--active textarea');
+	if (activeTextarea) {
+		return activeTextarea;
 	}
 	// Fallback to the original textarea if no tabs are present
-	return '#republication-tracker-tool-shareable-content';
+	return document.querySelector('#republication-tracker-tool-shareable-content');
 }
 
 function initTabSwitching() {
@@ -71,7 +34,7 @@ function initTabSwitching() {
 	$( '.plain-text-field__button' ).on( 'click', function(e) {
 		e.preventDefault();
 		const target = $( this ).attr( 'data-target' );
-		copyFieldToClipboard( target, this );
+		ClipboardUtils.copyFromElement( target, this );
 	} );
 }
 

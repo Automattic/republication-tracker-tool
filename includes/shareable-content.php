@@ -175,7 +175,7 @@ echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 's
 			<?php
 			if ( ! $is_amp ) {
 				?>
-			<button onclick="copyToClipboard( getActiveTextarea(), this )" class="republication-tracker-tool__copy-button republication-tracker-tool__copy-button--main show-for-html"><?php echo esc_html__( 'Copy to Clipboard', 'republication-tracker-tool' ); ?></button>
+			<button onclick="ClipboardUtils.copyFromElement( getActiveTextarea(), this )" class="republication-tracker-tool__copy-button republication-tracker-tool__copy-button--main show-for-html"><?php echo esc_html__( 'Copy to Clipboard', 'republication-tracker-tool' ); ?></button>
 				<?php
 			}
 

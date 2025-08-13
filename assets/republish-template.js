@@ -62,15 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				return;
 			}
 
-			const success = copyTextToClipboard(activeTextarea.value);
-
-			if (success) {
-				event.target.innerText = "Copied!";
-
-				setTimeout(() => {
-					event.target.innerText = "Copy to clipboard";
-				}, 2000);
-			}
+			ClipboardUtils.copyFromElement(activeTextarea, event.target);
 		});
 
 	/**
@@ -82,48 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			event.preventDefault();
 
 			const targetSelector = button.getAttribute("data-target");
-			const targetElement = document.querySelector(targetSelector);
-
-			if (!targetElement) {
-				return;
-			}
-
-			// Get value from input or textarea
-			const value = targetElement.tagName.toLowerCase() === 'input' 
-				? targetElement.value 
-				: targetElement.textContent || targetElement.value;
-
-			const success = copyTextToClipboard(value);
-
-			if (success) {
-				const originalText = button.innerText;
-				button.innerText = "Copied!";
-
-				setTimeout(() => {
-					button.innerText = originalText;
-				}, 2000);
-			}
+			ClipboardUtils.copyFromElement(targetSelector, button);
 		});
 	});
-
-	/**
-	 * Copies the given text to the clipboard.
-	 *
-	 * @param {string} text The text to copy to the clipboard.
-	 *
-	 * @return {boolean} True if the text was copied to the clipboard, false otherwise.
-	 */
-	const copyTextToClipboard = (text) => {
-		// Check if the clipboard API is available.
-		if (!navigator.clipboard) {
-			return false;
-		}
-		// Copy the text to the clipboard.
-		navigator.clipboard
-			.writeText(text)
-			.then(() => true)
-			.catch(() => false);
-
-		return true;
-	};
 });
