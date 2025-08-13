@@ -7,9 +7,36 @@ function copyToClipboard( element, button ) {
 	button.focus();
 }
 
+function copyFieldToClipboard( fieldSelector, button ) {
+	const $ = jQuery;
+	const $field = $( fieldSelector );
+
+	if ( $field.length === 0 ) {
+		return false;
+	}
+
+	const $temp = $( '<textarea>' );
+	$( 'body' ).append( $temp );
+	const value = $field.is( 'input' ) ? $field.val() : $field.text();
+	$temp.val( value ).select();
+
+	const success = document.execCommand( 'copy' );
+	$temp.remove();
+
+	if ( success && button ) {
+		const originalText = $( button ).text();
+		$( button ).text( 'Copied!' );
+		setTimeout( function() {
+			$( button ).text( originalText );
+		}, 2000 );
+	}
+
+	return success;
+}
+
 function getActiveTextarea() {
 	const $ = jQuery;
-	const $activeTextarea = $( '.republish-tab-content.active' );
+	const $activeTextarea = $( '.republish-content.republish-content--active textarea' );
 	if ( $activeTextarea.length > 0 ) {
 		return $activeTextarea;
 	}
@@ -19,15 +46,32 @@ function getActiveTextarea() {
 
 function initTabSwitching() {
 	const $ = jQuery;
-	$( '.republish-tab-button' ).on( 'click', function(e) {
+	$( '.republish-format-tabs__button' ).on( 'click', function(e) {
 		e.preventDefault();
 		const targetTab = $(this).attr('data-tab');
 
-		$( '.republish-tab-button' ).removeClass( 'active' );
-		$( '.republish-tab-content' ).removeClass( 'active' );
+		$( '.republish-format-tabs__button' ).removeClass( 'republish-format-tabs__button--active' );
+		$( '.republish-content' ).removeClass( 'republish-content--active' );
 
-		$( this ).addClass( 'active' );
-		$('[data-tab-content="' + targetTab + '"]').addClass( 'active' );
+		$( this ).addClass( 'republish-format-tabs__button--active' );
+		$('[data-tab-content="' + targetTab + '"]').addClass( 'republish-content--active' );
+
+		// Show/hide main copy button based on active tab
+		const $mainCopyButton = $( '.republication-tracker-tool__copy-button--main' );
+		if ( $mainCopyButton.length ) {
+			if ( targetTab === 'html' ) {
+				$mainCopyButton.addClass( 'show-for-html' );
+			} else {
+				$mainCopyButton.removeClass( 'show-for-html' );
+			}
+		}
+	} );
+
+	// Initialize copy buttons for individual fields
+	$( '.plain-text-field__button' ).on( 'click', function(e) {
+		e.preventDefault();
+		const target = $( this ).attr( 'data-target' );
+		copyFieldToClipboard( target, this );
 	} );
 }
 

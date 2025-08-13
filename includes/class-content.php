@@ -142,7 +142,6 @@ class Republication_Tracker_Tool_Content {
 		$article_subtitle = get_post_meta( $post_object->ID, 'newspack_post_subtitle', true );
 		$author_byline    = apply_filters( 'republication_tracker_tool_byline', get_the_author_meta( 'display_name', $post_object->post_author ) );
 		$article_date     = date( 'F j, Y', strtotime( $post_object->post_date ) );
-		$canonical_url    = get_permalink( $post_object );
 
 		// Add the article title
 		if ( ! empty( $article_title ) ) {
@@ -174,22 +173,6 @@ class Republication_Tracker_Tool_Content {
 
 			$plain_text_content .= "Content : \n\n" .  $plain_content . "\n\n";
 		}
-
-		// Add attribution and licensing information
-		$site_name    = get_bloginfo( 'name' );
-		$license_key  = get_option( 'republication_tracker_tool_license', REPUBLICATION_TRACKER_TOOL_DEFAULT_LICENSE );
-		$license_info = REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ];
-
-		$plain_text_content .= "---\n\n";
-		$plain_text_content .= sprintf(
-			apply_filters( 'republication_tracker_tool_republish_plain_text_attribution',
-			// translators: %1$s is the site name, %2$s is the canonical URL, %3$s is the license description.
-			__( "This article originally appeared on %s (%s) and is republished here under a %s license.\n\n", 'republication-tracker-tool' ),
-			),
-			$site_name,
-			$canonical_url,
-			$license_info['description']
-		);
 
 		/**
 		 * Filters the plain text content of the republished post.
