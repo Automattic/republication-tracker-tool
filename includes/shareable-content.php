@@ -54,8 +54,9 @@ $article_info = str_replace( '<p></p>', '', wpautop( $article_info ) );
 $plain_text_enabled = Republication_Tracker_Tool_Settings::is_plain_text_enabled();
 $plain_text_content = '';
 if ( $plain_text_enabled ) {
-	$canonical_tag      = sprintf( '<link rel="canonical" href="%s" />', esc_url( get_permalink( $post->ID ) ) );
-	$plain_text_content = Republication_Tracker_Tool_Content::get_republishable_plain_text_content( $post );
+	$canonical_tag            = sprintf( '<link rel="canonical" href="%s" />', esc_url( get_permalink( $post->ID ) ) );
+	$plain_text_content       = Republication_Tracker_Tool_Content::get_republishable_plain_text_content( $post );
+	$additional_tracking_html = Republication_Tracker_Tool::create_additional_tracking_code_markup( $post->ID );
 }
 
 /**
@@ -157,13 +158,14 @@ echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 's
 								<label class="plain-text-field__label" for="republication-tracker-tool-tracking-snippet">
 									<strong><?php esc_html_e( 'Attribution & Tracking:', 'republication-tracker-tool' ); ?></strong>
 								</label>
-								<textarea
+								<input
+									type="text"
 									id="republication-tracker-tool-tracking-snippet"
-									class="republish-content__textarea"
+									class="plain-text-field__input"
 									readonly
-									rows="3"
 									aria-label="<?php esc_attr_e( 'Attribution and tracking snippet', 'republication-tracker-tool' ); ?>"
-								><?php echo $content_footer ?></textarea>
+									value="<?php echo esc_html( $additional_tracking_html ); ?>"
+								/>
 								<button class="plain-text-field__button" data-target="#republication-tracker-tool-tracking-snippet" aria-label="<?php esc_attr_e( 'Copy tracking snippet', 'republication-tracker-tool' ); ?>">
 									<?php esc_html_e( 'Copy Snippet', 'republication-tracker-tool' ); ?>
 								</button>

@@ -157,6 +157,7 @@ $plain_text_enabled = Republication_Tracker_Tool_Settings::is_plain_text_enabled
 $republish_plain_text_content = '';
 if ( $plain_text_enabled ) {
 	$republish_plain_text_content = Republication_Tracker_Tool_Content::get_republishable_plain_text_content( $post_object );
+	$additional_tracking_html     = Republication_Tracker_Tool::create_additional_tracking_code_markup( $post_object->ID );
 }
 ?>
 
@@ -251,15 +252,16 @@ if ( $plain_text_enabled ) {
 
 									<div class="plain-text-field">
 										<label class="plain-text-field__label" for="republish-tracking-snippet">
-											<strong><?php esc_html_e( 'Attribution & Tracking:', 'republication-tracker-tool' ); ?></strong>
+											<strong><?php esc_html_e( 'Tracking Snippet:', 'republication-tracker-tool' ); ?></strong>
 										</label>
-										<textarea
+										<input
+											type="text"
 											id="republish-tracking-snippet"
 											class="republish-content__textarea"
 											readonly
-											rows="4"
-											aria-label="<?php esc_attr_e( 'Attribution and tracking snippet', 'republication-tracker-tool' ); ?>"
-										><?php echo $content_footer ?></textarea>
+											aria-label="<?php esc_attr_e( 'Tracking snippet', 'republication-tracker-tool' ); ?>"
+											value="<?php echo esc_html( $additional_tracking_html ); ?>"
+										/>
 										<button class="plain-text-field__button" data-target="#republish-tracking-snippet" aria-label="<?php esc_attr_e( 'Copy tracking snippet', 'republication-tracker-tool' ); ?>">
 											<?php esc_html_e( 'Copy Snippet', 'republication-tracker-tool' ); ?>
 										</button>
