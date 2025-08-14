@@ -38,7 +38,14 @@ $article_title = get_the_title( $republish_post_id );
 $article_subtitle = get_post_meta( $republish_post_id, 'newspack_post_subtitle', true );
 
 // Get article author byline.
-$author_byline = apply_filters( 'republication_tracker_tool_author_byline', '', $republish_post_id );
+$author_byline = apply_filters(
+	'republication_tracker_tool_author_byline',
+	sprintf(
+		'%1$s, %2$s',
+		__( 'By ', 'republication-tracker-tool' ) . get_the_author_meta( 'display_name', $post_object->post_author ),
+		get_bloginfo( 'name' )
+	)
+);
 
 // Get article date and time in current timezone.
 $article_date_gmt = get_post_time( 'U', true, $republish_post_id ); // Get post date in GMT.
@@ -95,7 +102,7 @@ if ( ! empty( $article_subtitle ) ) {
 // Add the article author to the republish content.
 if ( ! empty( $author_byline ) ) {
 	$republish_content .= sprintf(
-		"\n\n<div>%s</div>",
+		"\n\n<p class='byline'>%s</p>",
 		$author_byline
 	);
 }
