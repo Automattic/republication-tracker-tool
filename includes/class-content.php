@@ -138,29 +138,23 @@ class Republication_Tracker_Tool_Content {
 		$plain_text_content = '';
 
 		// Get article metadata
-		$article_title    = get_the_title( $post_object );
-		$article_subtitle = get_post_meta( $post_object->ID, 'newspack_post_subtitle', true );
-		$author_byline    = apply_filters( 'republication_tracker_tool_byline', get_the_author_meta( 'display_name', $post_object->post_author ) );
-		$article_date     = date( 'F j, Y', strtotime( $post_object->post_date ) );
+		$article_title = get_the_title( $post_object );
+		$author_byline = sprintf( '%1$s, %2$s', apply_filters( 'republication_tracker_tool_byline', __( 'By ', 'republication-tracker-tool' ) . get_the_author_meta( 'display_name', $post_object->post_author ) ), get_bloginfo( 'name' ) );
+		$article_date  = date( 'F j, Y', strtotime( $post_object->post_date ) );
 
 		// Add the article title
 		if ( ! empty( $article_title ) ) {
-			$plain_text_content .= 'Title : ' . $article_title . "\n\n";
-		}
-
-		// Add the article subtitle
-		if ( ! empty( $article_subtitle ) ) {
-			$plain_text_content .= 'Subtitle : ' . $article_subtitle . "\n\n";
+			$plain_text_content .= $article_title . "\n\n";
 		}
 
 		// Add the author byline (strip HTML tags)
 		if ( ! empty( $author_byline ) ) {
-			$plain_text_content .= 'Byline : ' . wp_strip_all_tags( $author_byline ) . "\n\n";
+			$plain_text_content .= wp_strip_all_tags( $author_byline ) . "\n";
 		}
 
 		// Add the article date
 		if ( ! empty( $article_date ) ) {
-			$plain_text_content .= 'Date : ' . $article_date . "\n\n";
+			$plain_text_content .= $article_date . "\n\n";
 		}
 
 		// Process the main content
@@ -171,7 +165,7 @@ class Republication_Tracker_Tool_Content {
 			// Convert HTML to plain text
 			$plain_content = self::convert_html_to_plain_text( $html_content );
 
-			$plain_text_content .= "Content : \n\n" .  $plain_content . "\n\n";
+			$plain_text_content .= $plain_content . "\n\n";
 		}
 
 		/**
