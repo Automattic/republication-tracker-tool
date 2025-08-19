@@ -69,7 +69,7 @@ $license_key = get_option( 'republication_tracker_tool_license', REPUBLICATION_T
 
 echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 'style="display:none;"' ) . '>';
 	echo '<button ' . ( $is_amp ? 'on="tap:republication-tracker-tool-modal.close"' : '' ) . ' class="republication-tracker-tool-close">';
-	echo '<span class="screen-reader-text">' . esc_html( 'Close window', 'republication-tracker-tool' ) . '</span> <span aria-hidden="true">X</span></button>';
+	echo '<span class="screen-reader-text">' . esc_html( 'Close window', 'republication-tracker-tool' ) . '</span><span class="republication-tracker-tool-close-icon"></span></button>';
 	printf( '<h2 id="republish-modal-label">%s</h2>', esc_html__( 'Republish this article', 'republication-tracker-tool' ) );
 
 	// Explain Creative Commons
