@@ -231,7 +231,7 @@ if ( $plain_text_enabled ) {
 										<input
 											type="text"
 											id="republish-canonical-url"
-											class="republish-content__textarea"
+											class="republish-content__input"
 											readonly
 											value="<?php echo esc_html( $canonical_tag ); ?>"
 											aria-label="<?php esc_attr_e( 'Canonical Tag for this article', 'republication-tracker-tool' ); ?>"
@@ -264,7 +264,7 @@ if ( $plain_text_enabled ) {
 										<input
 											type="text"
 											id="republish-tracking-snippet"
-											class="republish-content__textarea"
+											class="republish-content__input"
 											readonly
 											aria-label="<?php esc_attr_e( 'Tracking snippet', 'republication-tracker-tool' ); ?>"
 											value="<?php echo esc_html( $additional_tracking_html ); ?>"

@@ -83,9 +83,14 @@
 	position: relative;
 }
 
+.republish-content__input,
 .republish-content__textarea {
-	margin: 1.5em 0;
+	margin: 1em 0 1em 0;
 	width: 100%;
+}
+
+.republish-content__input {
+	display: block;
 }
 
 .plain-text-field {
