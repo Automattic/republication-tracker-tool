@@ -23,9 +23,9 @@ if ( ! $post_object instanceof WP_Post ) {
 $content = Republication_Tracker_Tool_Content::get_republishable_content( $post_object->post_content, $republish_post_id );
 
 $license_statement = get_option( 'republication_tracker_tool_policy' );
-$license_key   = get_option( 'republication_tracker_tool_license', republication_tracker_tool_get_default_license() );
-$licenses      = republication_tracker_tool_get_licenses();
-$license_badge = '';
+$license_key       = get_option( 'republication_tracker_tool_license', republication_tracker_tool_get_default_license() );
+$licenses          = republication_tracker_tool_get_licenses();
+$license_badge     = '';
 if ( isset( $licenses[ $license_key ] ) ) {
 	$license_badge = sprintf(
 		'<a rel="noreferrer license" target="_blank" href="%s"><img alt="%s" style="border-width:0" src="%s" /></a>',
