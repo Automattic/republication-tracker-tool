@@ -23,13 +23,17 @@ if ( ! $post_object instanceof WP_Post ) {
 $content = Republication_Tracker_Tool_Content::get_republishable_content( $post_object->post_content, $republish_post_id );
 
 $license_statement = get_option( 'republication_tracker_tool_policy' );
-$license_key = get_option( 'republication_tracker_tool_license', REPUBLICATION_TRACKER_TOOL_DEFAULT_LICENSE );
-$license_badge = sprintf(
-	'<a rel="noreferrer license" target="_blank" href="%s"><img alt="%s" style="border-width:0" src="%s" /></a>',
-	REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['url'],
-	REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['description'],
-	REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['badge']
-);
+$license_key   = get_option( 'republication_tracker_tool_license', republication_tracker_tool_get_default_license() );
+$licenses      = republication_tracker_tool_get_licenses();
+$license_badge = '';
+if ( isset( $licenses[ $license_key ] ) ) {
+	$license_badge = sprintf(
+		'<a rel="noreferrer license" target="_blank" href="%s"><img alt="%s" style="border-width:0" src="%s" /></a>',
+		$licenses[ $license_key ]['url'],
+		$licenses[ $license_key ]['description'],
+		isset( $licenses[ $license_key ]['badge'] ) ? $licenses[ $license_key ]['badge'] : ''
+	);
+}
 
 // Article title.
 $article_title = get_the_title( $republish_post_id );
@@ -165,16 +169,18 @@ $republish_content = apply_filters( 'republication_tracker_tool_republish_articl
 					<div class="cc-license">
 						<?php
 						echo $license_badge;
-						echo wp_kses_post(
-							wpautop(
-								sprintf(
-								// translators: %1$s is the URL to the particular Creative Commons license.
-									__( 'This work is licensed under a <a rel="noreferrer license" target="_blank" href="%1$s">%2$s</a>.', 'republication-tracker-tool' ),
-									REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['url'],
-									REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['description'],
+						if ( isset( $licenses[ $license_key ] ) ) {
+							echo wp_kses_post(
+								wpautop(
+									sprintf(
+									// translators: %1$s is the URL to the particular Creative Commons license.
+										__( 'This work is licensed under a <a rel="noreferrer license" target="_blank" href="%1$s">%2$s</a>.', 'republication-tracker-tool' ),
+										$licenses[ $license_key ]['url'],
+										$licenses[ $license_key ]['description'],
+									)
 								)
-							)
-						);
+							);
+						}
 						?>
 					</div>
 				</div>

@@ -286,9 +286,10 @@ final class Republication_Tracker_Tool {
 		$additional_tracking_code = self::create_additional_tracking_code_markup( $post->ID );
 		$tracking_html            = htmlentities( $pixel ) . htmlentities( $parsely_tracking ) . htmlentities( $additional_tracking_code );
 
-		$license_key         = get_option( 'republication_tracker_tool_license', 'cc-by-nd-4.0' );
-		$license_url         = REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['url'];
-		$license_description = REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['description'];
+		$license_key         = get_option( 'republication_tracker_tool_license', republication_tracker_tool_get_default_license() );
+		$licenses            = republication_tracker_tool_get_licenses();
+		$license_url         = isset( $licenses[ $license_key ] ) ? $licenses[ $license_key ]['url'] : '';
+		$license_description = isset( $licenses[ $license_key ] ) ? $licenses[ $license_key ]['description'] : '';
 
 		$display_attribution = get_option( 'republication_tracker_tool_display_attribution', 'on' );
 		if ( 'on' === $display_attribution && null !== $post ) {

@@ -56,7 +56,8 @@ $article_info = str_replace( '<p></p>', '', wpautop( $article_info ) );
  * @var HTML $license_statement
  */
 $license_statement = wp_kses_post( get_option( 'republication_tracker_tool_policy' ) );
-$license_key = get_option( 'republication_tracker_tool_license', REPUBLICATION_TRACKER_TOOL_DEFAULT_LICENSE );
+$license_key = get_option( 'republication_tracker_tool_license', republication_tracker_tool_get_default_license() );
+$licenses    = republication_tracker_tool_get_licenses();
 
 echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 'style="display:none;"' ) . '>';
 	echo '<button ' . ( $is_amp ? 'on="tap:republication-tracker-tool-modal.close"' : '' ) . ' class="republication-tracker-tool-close">';
@@ -66,14 +67,16 @@ echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 's
 	// Explain Creative Commons
 	echo '<div class="cc-policy">';
 		echo '<div class="cc-license">';
-			printf( '<a rel="noreferrer license" target="_blank" href="%s"><img alt="%s" style="border-width:0" src="%s" /></a>', REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['url'], REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['description'], REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['badge'] );
+			if ( isset( $licenses[ $license_key ] ) ) {
+				printf( '<a rel="noreferrer license" target="_blank" href="%s"><img alt="%s" style="border-width:0" src="%s" /></a>', $licenses[ $license_key ]['url'], $licenses[ $license_key ]['description'], isset( $licenses[ $license_key ]['badge'] ) ? $licenses[ $license_key ]['badge'] : '' );
+			}
 			echo wp_kses_post(
 				wpautop(
 					sprintf(
 						// translators: %1$s is the URL to the particular Creative Commons license.
 						__( 'This work is licensed under a <a rel="noreferrer license" target="_blank" href="%1$s">%2$s</a>.', 'republication-tracker-tool' ),
-						REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['url'],
-						REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['description'],
+						isset( $licenses[ $license_key ] ) ? $licenses[ $license_key ]['url'] : '',
+						isset( $licenses[ $license_key ] ) ? $licenses[ $license_key ]['description'] : '',
 					)
 				)
 			);
