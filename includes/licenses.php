@@ -45,3 +45,53 @@ const REPUBLICATION_TRACKER_TOOL_LICENSES = [
 		'badge' => 'https://licensebuttons.net/l/zero/1.0/88x31.png'
 	],
 ];
+
+/**
+ * Get the available republication tracker tool licenses.
+ *
+ * This function allows licenses to be filtered and modified programmatically.
+ *
+ * @since 1.0
+ *
+ * @return array Array of available licenses
+ */
+function republication_tracker_tool_get_licenses() {
+	/**
+	 * Filter the available republication tracker tool licenses.
+	 *
+	 * This filter allows users to add, remove, or modify the available licenses
+	 * that can be selected for republication tracking.
+	 *
+	 * @since 1.0
+	 *
+	 * @param array $licenses Array of available licenses. Each license should be an array with:
+	 *                       - 'label' (string): Display label for the license
+	 *                       - 'description' (string): Description of the license
+	 *                       - 'url' (string): URL to the license text
+	 *                       - 'badge' (string): URL to the license badge image (optional)
+	 */
+	return apply_filters( 'republication_tracker_tool_licenses', REPUBLICATION_TRACKER_TOOL_LICENSES );
+}
+
+/**
+ * Get the default license key for republication tracker tool.
+ *
+ * This function allows the default license to be filtered and modified programmatically.
+ *
+ * @since 1.0
+ *
+ * @return string Default license key
+ */
+function republication_tracker_tool_get_default_license() {
+	/**
+	 * Filter the default republication tracker tool license.
+	 *
+	 * This filter allows users to change the default license that is selected
+	 * when the plugin is first installed or when no license has been chosen.
+	 *
+	 * @since 1.0
+	 *
+	 * @param string $default_license The default license key
+	 */
+	return apply_filters( 'republication_tracker_tool_default_license', REPUBLICATION_TRACKER_TOOL_DEFAULT_LICENSE );
+}
