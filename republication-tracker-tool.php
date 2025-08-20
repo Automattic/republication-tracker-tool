@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:     Republication Tracker Tool
- * Description:     Allow readers to share your content via a creative commons license.
+ * Description:     Allow readers to share your content under a license e.g. Creative Commons license
  * Author:          INN Labs
  * Author URI:      https://labs.inn.org
  * Text Domain:     republication-tracker-tool
