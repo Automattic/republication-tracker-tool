@@ -161,11 +161,20 @@ class Republication_Tracker_Tool_Rewrite_Endpoint {
 			REPUBLICATION_TRACKER_TOOL_VERSION
 		);
 
+		// Enqueue the clipboard utility first
+		wp_enqueue_script(
+			'republication-tracker-tool-clipboard-utils',
+			REPUBLICATION_TRACKER_TOOL_URL . 'assets/clipboard-utils.js',
+			array(),
+			REPUBLICATION_TRACKER_TOOL_VERSION,
+			true
+		);
+
 		// Enqueue the republish page scripts.
 		wp_enqueue_script(
 			'republication-tracker-tool-republish-template',
 			REPUBLICATION_TRACKER_TOOL_URL . 'assets/republish-template.js',
-			array(),
+			array( 'republication-tracker-tool-clipboard-utils' ),
 			REPUBLICATION_TRACKER_TOOL_VERSION,
 			true
 		);

@@ -40,7 +40,7 @@ const REPUBLICATION_TRACKER_TOOL_LICENSES = [
 	],
 	'cc-zero-1.0' => [
 		'label' => 'CC0 1.0',
-		'description' => 'CC0 1.0 Universal',
+		'description' => 'CC0 1.0 Universal License',
 		'url' => 'https://creativecommons.org/publicdomain/zero/1.0/',
 		'badge' => 'https://licensebuttons.net/l/zero/1.0/88x31.png'
 	],
