@@ -173,7 +173,7 @@ $republish_content = apply_filters( 'republication_tracker_tool_republish_articl
 							echo wp_kses_post(
 								wpautop(
 									sprintf(
-									// translators: %1$s is the URL to the particular Creative Commons license.
+									// translators: %1$s is the URL to the particular license, %2$s is the license description.
 										__( 'This work is licensed under a <a rel="noreferrer license" target="_blank" href="%1$s">%2$s</a>.', 'republication-tracker-tool' ),
 										$licenses[ $license_key ]['url'],
 										$licenses[ $license_key ]['description'],

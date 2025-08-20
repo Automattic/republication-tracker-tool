@@ -86,7 +86,7 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 		echo sprintf(
 			'<p><a class="license" rel="noreferrer license" target="_blank" href="%s"><img alt="%s" style="border-width:0" src="%s" /></a></p>',
 			isset( $licenses[ $license_key ] ) ? $licenses[ $license_key ]['url'] : '',
-			esc_html__( 'Creative Commons License', 'republication-tracker-tool' ),
+			isset( $licenses[ $license_key ] ) ? esc_attr( $licenses[ $license_key ]['description'] ) : esc_html__( 'License', 'republication-tracker-tool' ),
 			esc_url( plugin_dir_url( dirname( __FILE__ ) ) ) . 'assets/img/' . $license_key . '.png'
 		);
 
@@ -132,7 +132,7 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 	public function form( $instance ) {
 		echo sprintf( '<p><em>%s</em></p>', esc_html__( 'This widget will only display on single articles.', 'republication-tracker-tool' ) );
 		$title  = ! empty( $instance['title'] )  ? $instance['title'] : '';
-		$text   = ! empty( $instance['text'] )   ? $instance['text'] : esc_html__( 'Republish our articles for free, online or in print, under a Creative Commons license.', 'republication-tracker-tool' );
+		$text   = ! empty( $instance['text'] )   ? $instance['text'] : esc_html__( 'Republish our articles for free, online or in print, under the terms of our license.', 'republication-tracker-tool' );
 		$layout = ! empty( $instance['layout'] ) ? $instance['layout'] : 'modal'
 		?>
 		<p>

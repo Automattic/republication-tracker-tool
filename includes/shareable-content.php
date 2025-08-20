@@ -64,7 +64,7 @@ echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 's
 	echo '<span class="screen-reader-text">' . esc_html( 'Close window', 'republication-tracker-tool' ) . '</span> <span aria-hidden="true">X</span></button>';
 	printf( '<h2 id="republish-modal-label">%s</h2>', esc_html__( 'Republish this article', 'republication-tracker-tool' ) );
 
-	// Explain Creative Commons
+	// Explain licensing
 	echo '<div class="cc-policy">';
 		echo '<div class="cc-license">';
 			if ( isset( $licenses[ $license_key ] ) ) {
@@ -73,7 +73,7 @@ echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 's
 			echo wp_kses_post(
 				wpautop(
 					sprintf(
-						// translators: %1$s is the URL to the particular Creative Commons license.
+						// translators: %1$s is the URL to the particular license, %2$s is the license description.
 						__( 'This work is licensed under a <a rel="noreferrer license" target="_blank" href="%1$s">%2$s</a>.', 'republication-tracker-tool' ),
 						isset( $licenses[ $license_key ] ) ? $licenses[ $license_key ]['url'] : '',
 						isset( $licenses[ $license_key ] ) ? $licenses[ $license_key ]['description'] : '',
