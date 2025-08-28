@@ -38,7 +38,14 @@ $article_title = get_the_title( $republish_post_id );
 $article_subtitle = get_post_meta( $republish_post_id, 'newspack_post_subtitle', true );
 
 // Get article author byline.
-$author_byline = apply_filters( 'republication_tracker_tool_author_byline', '', $republish_post_id );
+$author_byline = apply_filters(
+	'republication_tracker_tool_author_byline',
+	sprintf(
+		'%1$s, %2$s',
+		__( 'By ', 'republication-tracker-tool' ) . get_the_author_meta( 'display_name', $post_object->post_author ),
+		get_bloginfo( 'name' )
+	)
+);
 
 // Get article date and time in current timezone.
 $article_date_gmt = get_post_time( 'U', true, $republish_post_id ); // Get post date in GMT.
@@ -95,7 +102,7 @@ if ( ! empty( $article_subtitle ) ) {
 // Add the article author to the republish content.
 if ( ! empty( $author_byline ) ) {
 	$republish_content .= sprintf(
-		"\n\n<div>%s</div>",
+		"\n\n<p class='byline'>%s</p>",
 		$author_byline
 	);
 }
@@ -151,6 +158,14 @@ $republish_content = preg_replace( '/ sizes=".*?"/', '', $republish_content );
 
 // Filter the republish content.
 $republish_content = apply_filters( 'republication_tracker_tool_republish_article_markup', $republish_content, $post_object );
+
+// Generate plain text content if the feature is enabled.
+$plain_text_enabled = Republication_Tracker_Tool_Settings::is_plain_text_enabled();
+$republish_plain_text_content = '';
+if ( $plain_text_enabled ) {
+	$republish_plain_text_content = Republication_Tracker_Tool_Content::get_republishable_plain_text_content( $post_object );
+	$additional_tracking_html     = Republication_Tracker_Tool::create_additional_tracking_code_markup( $post_object->ID );
+}
 ?>
 
 <section id="primary" class="content-area">
@@ -185,8 +200,84 @@ $republish_content = apply_filters( 'republication_tracker_tool_republish_articl
 				<?php endif; ?>
 				<div class="republish-article__content">
 					<section class="republish-article__info">
-						<textarea rows="19" readonly aria-readonly="true" aria-label="<?php esc_attr_e( 'Republish this article', 'republication-tracker-tool' ); ?>"><?php echo esc_html( $republish_content ); ?></textarea>
-						<button class="republish-article__copy-button" aria-label="<?php esc_attr_e( 'Copy to clipboard', 'republication-tracker-tool' ); ?>">
+						<?php if ( $plain_text_enabled ) : ?>
+							<div class="republish-format-tabs">
+								<button class="republish-format-tabs__button republish-format-tabs__button--active" data-tab="html" aria-label="<?php esc_attr_e( 'HTML format', 'republication-tracker-tool' ); ?>">
+									<?php esc_html_e( 'HTML', 'republication-tracker-tool' ); ?>
+								</button>
+								<button class="republish-format-tabs__button" data-tab="plain-text" aria-label="<?php esc_attr_e( 'Plain text format', 'republication-tracker-tool' ); ?>">
+									<?php esc_html_e( 'Plain Text', 'republication-tracker-tool' ); ?>
+								</button>
+							</div>
+						<?php endif; ?>
+
+						<div class="republish-content-container">
+							<textarea
+								id="republish-html-content"
+								class="republish-content__textarea <?php echo $plain_text_enabled ? 'republish-content republish-content--active' : ''; ?>"
+								data-tab-content="html"
+								rows="19"
+								readonly
+								aria-readonly="true"
+								aria-label="<?php esc_attr_e( 'Republish this article (HTML format)', 'republication-tracker-tool' ); ?>"
+							><?php echo esc_html( $republish_content ); ?></textarea>
+
+							<?php if ( $plain_text_enabled ) : ?>
+								<div class="republish-content" data-tab-content="plain-text">
+									<div class="plain-text-field">
+										<label class="plain-text-field__label" for="republish-canonical-url">
+											<strong><?php esc_html_e( 'Canonical Tag:', 'republication-tracker-tool' ); ?></strong>
+										</label>
+										<input
+											type="text"
+											id="republish-canonical-url"
+											class="republish-content__input"
+											readonly
+											value="<?php echo esc_html( $canonical_tag ); ?>"
+											aria-label="<?php esc_attr_e( 'Canonical Tag for this article', 'republication-tracker-tool' ); ?>"
+										/>
+										<button class="plain-text-field__button" data-target="#republish-canonical-url" aria-label="<?php esc_attr_e( 'Copy canonical URL', 'republication-tracker-tool' ); ?>">
+											<?php esc_html_e( 'Copy Tag', 'republication-tracker-tool' ); ?>
+										</button>
+									</div>
+
+									<div class="plain-text-field">
+										<label class="plain-text-field__label" for="republish-plain-text-content">
+											<strong><?php esc_html_e( 'Article Content:', 'republication-tracker-tool' ); ?></strong>
+										</label>
+										<textarea
+											id="republish-plain-text-content"
+											class="republish-content__textarea"
+											readonly
+											rows="12"
+											aria-label="<?php esc_attr_e( 'Plain text article content', 'republication-tracker-tool' ); ?>"
+										><?php echo $republish_plain_text_content; ?></textarea>
+										<button class="plain-text-field__button" data-target="#republish-plain-text-content" aria-label="<?php esc_attr_e( 'Copy article content', 'republication-tracker-tool' ); ?>">
+											<?php esc_html_e( 'Copy Content', 'republication-tracker-tool' ); ?>
+										</button>
+									</div>
+
+									<div class="plain-text-field">
+										<label class="plain-text-field__label" for="republish-tracking-snippet">
+											<strong><?php esc_html_e( 'Tracking Snippet:', 'republication-tracker-tool' ); ?></strong>
+										</label>
+										<input
+											type="text"
+											id="republish-tracking-snippet"
+											class="republish-content__input"
+											readonly
+											aria-label="<?php esc_attr_e( 'Tracking snippet', 'republication-tracker-tool' ); ?>"
+											value="<?php echo esc_html( $additional_tracking_html ); ?>"
+										/>
+										<button class="plain-text-field__button" data-target="#republish-tracking-snippet" aria-label="<?php esc_attr_e( 'Copy tracking snippet', 'republication-tracker-tool' ); ?>">
+											<?php esc_html_e( 'Copy Snippet', 'republication-tracker-tool' ); ?>
+										</button>
+									</div>
+								</div>
+							<?php endif; ?>
+						</div>
+
+						<button class="republish-article__copy-button republish-article__copy-button--main show-for-html" aria-label="<?php esc_attr_e( 'Copy to clipboard', 'republication-tracker-tool' ); ?>">
 							<?php esc_html_e( 'Copy to clipboard', 'republication-tracker-tool' ); ?>
 						</button>
 					</section>

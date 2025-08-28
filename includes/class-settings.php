@@ -92,6 +92,11 @@ class Republication_Tracker_Tool_Settings {
 				'label'    => esc_html__( 'Hide republication widgets on posts by default', 'republication-tracker-tool' ),
 				'callback' => array( $this, 'republication_tracker_tool_default_post_distribution_callback' ),
 			],
+			[
+				'key'      => 'republication_tracker_tool_enable_plain_text',
+				'label'    => esc_html__( 'Enable plain text option', 'republication-tracker-tool' ),
+				'callback' => array( $this, 'republication_tracker_tool_enable_plain_text_callback' ),
+			],
 		];
 		foreach ( $settings as $setting ) {
 			add_settings_field(
@@ -287,6 +292,24 @@ class Republication_Tracker_Tool_Settings {
 		<?php
 	}
 
+	public function republication_tracker_tool_enable_plain_text_callback() {
+		$enable_plain_text = get_option( 'republication_tracker_tool_enable_plain_text', 'off' );
+		?>
+			<input
+				type="checkbox"
+				id="<?php echo esc_attr( 'republication_tracker_tool_enable_plain_text' ); ?>"
+				name="<?php echo esc_attr( 'republication_tracker_tool_enable_plain_text' ); ?>"
+				<?php if ( 'on' === $enable_plain_text ) : ?>
+					checked
+				<?php endif; ?>
+			/>
+			<label for="<?php echo esc_attr( 'republication_tracker_tool_enable_plain_text' ); ?>">
+				<?php echo esc_html__( 'Offer plain text version alongside HTML', 'republication-tracker-tool' ); ?>
+			</label>
+			<p><em><?php echo esc_html__( 'If checked, users will be able to copy both HTML and plain text versions of the republishable content.', 'republication-tracker-tool' ); ?></em></p>
+		<?php
+	}
+
 	/**
 	 * Sanitize tracking code to allow only safe HTML elements for tracking.
 	 *
@@ -334,5 +357,15 @@ class Republication_Tracker_Tool_Settings {
 		];
 
 		return wp_kses( $content, $allowed_html );
+	}
+
+	/**
+	 * Check if plain text content feature is enabled.
+	 *
+	 * @return bool True if plain text content is enabled, false otherwise.
+	 */
+	public static function is_plain_text_enabled() {
+		$enable_plain_text = get_option( 'republication_tracker_tool_enable_plain_text', 'off' );
+		return 'on' === $enable_plain_text;
 	}
 }

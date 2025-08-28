@@ -1,10 +1,41 @@
-function copyToClipboard( element, button ) {
-	var $temp = jQuery( '<input>' );
-	jQuery( 'body' ).append( $temp );
-	$temp.val( jQuery( element ).text() ).select();
-	document.execCommand( 'copy' );
-	$temp.remove();
-	button.focus();
+function getActiveTextarea() {
+	const activeTextarea = document.querySelector('.republish-content.republish-content--active textarea');
+	if (activeTextarea) {
+		return activeTextarea;
+	}
+	// Fallback to the original textarea if no tabs are present
+	return document.querySelector('#republication-tracker-tool-shareable-content');
+}
+
+function initTabSwitching() {
+	const $ = jQuery;
+	$( '.republish-format-tabs__button' ).on( 'click', function(e) {
+		e.preventDefault();
+		const targetTab = $(this).attr('data-tab');
+
+		$( '.republish-format-tabs__button' ).removeClass( 'republish-format-tabs__button--active' );
+		$( '.republish-content' ).removeClass( 'republish-content--active' );
+
+		$( this ).addClass( 'republish-format-tabs__button--active' );
+		$('[data-tab-content="' + targetTab + '"]').addClass( 'republish-content--active' );
+
+		// Show/hide main copy button based on active tab
+		const $mainCopyButton = $( '.republication-tracker-tool__copy-button--main' );
+		if ( $mainCopyButton.length ) {
+			if ( targetTab === 'html' ) {
+				$mainCopyButton.addClass( 'show-for-html' );
+			} else {
+				$mainCopyButton.removeClass( 'show-for-html' );
+			}
+		}
+	} );
+
+	// Initialize copy buttons for individual fields
+	$( '.plain-text-field__button' ).on( 'click', function(e) {
+		e.preventDefault();
+		const target = $( this ).attr( 'data-target' );
+		ClipboardUtils.copyFromElement( target, this );
+	} );
 }
 
 function modal_actions(){
@@ -59,9 +90,12 @@ function show_modal( $modal, $close ) {
 	$modal.show();
 	$modal_content.show();
 	$('body').addClass('modal-open-disallow-scrolling');
-	$('#republication-tracker-tool-modal-content').unbind().click(function(e) {
+	$modal_content.unbind().click(function(e) {
 		e.stopPropagation();
 	});
+
+	initTabSwitching();
+
 	trapFocus( $modal );
 	$close.focus();
 }
