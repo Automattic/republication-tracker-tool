@@ -171,14 +171,7 @@ class Republication_Tracker_Tool_Content {
 		// Add attribution.
 		$display_attribution = get_option( 'republication_tracker_tool_display_attribution', 'on' );
 		if ( 'on' === $display_attribution ) {
-			$license_key         = get_option( 'republication_tracker_tool_license', REPUBLICATION_TRACKER_TOOL_DEFAULT_LICENSE );
-			$license_description = REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['description'];
-			$plain_text_content .= "\n" . sprintf(
-				// translators: %1$s is the site name, %2$s is the license description.
-				esc_html__( 'This article first appeared on %1$s and is republished here under a %2$s.', 'republication-tracker-tool' ),
-				get_bloginfo( 'name' ),
-				$license_description
-			) . "\n\n";
+			$plain_text_content .= Republication_Tracker_Tool::get_attribution( $post_object, true ) . "\n\n";
 		}
 
 		/**
