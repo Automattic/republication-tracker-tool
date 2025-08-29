@@ -281,7 +281,7 @@ class Republication_Tracker_Tool_Settings {
 						<?php if ( 'none' === $selected ) : ?>
 							checked
 						<?php endif; ?>
-						value="<?php esc_attr_e( 'none' ); ?>"
+						value="none"
 					/>
 					<?php _e( 'No License', 'republication-tracker-tool' ); ?>
 				</label>
