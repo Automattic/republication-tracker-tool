@@ -266,7 +266,7 @@ class Republication_Tracker_Tool_Settings {
 							<?php if ( $license_key === $selected ) : ?>
 								checked
 							<?php endif; ?>
-							value="<?php esc_attr_e( $license_key ); ?>"
+							value="<?php esc_attr( $license_key ); ?>"
 						/>
 						<?php esc_html_e( $license_values['label'] . ' - ' . $license_values['description'] ); ?>
 					</label>
