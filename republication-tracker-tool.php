@@ -345,8 +345,8 @@ final class Republication_Tracker_Tool {
 
 			if ( $plain_text ) {
 				$attribution = sprintf(
-					// translators: %1$s is a URL, %2$s is the site home URL, %3$s is the site title. %4$s is the license URL, %5$s is the license description.
-					esc_html__( 'This article first appeared on %1$s.', 'republication-tracker-tool' ),
+					// translators: %s is the site title.
+					esc_html__( 'This article first appeared on %s.', 'republication-tracker-tool' ),
 					esc_html( get_bloginfo() )
 				);
 			} else {
