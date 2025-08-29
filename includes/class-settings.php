@@ -261,14 +261,14 @@ class Republication_Tracker_Tool_Settings {
 					<label>
 						<input
 							type="radio"
-							id="<?php echo esc_attr( 'republication_tracker_tool_license' ) . '_' . $license_key; ?>"
-							name="<?php echo esc_attr( 'republication_tracker_tool_license' ); ?>"
+							id="<?php echo esc_attr( 'republication_tracker_tool_license' . '_' . $license_key ); ?>"
+							name="republication_tracker_tool_license"
 							<?php if ( $license_key === $selected ) : ?>
 								checked
 							<?php endif; ?>
-							value="<?php esc_attr( $license_key ); ?>"
+							value="<?php echo esc_attr( $license_key ); ?>"
 						/>
-						<?php esc_html( $license_values['label'] . ' - ' . $license_values['description'] ); ?>
+						<?php echo esc_html( $license_values['label'] . ' - ' . $license_values['description'] ); ?>
 					</label>
 					<br>
 				<?php endforeach; ?>
