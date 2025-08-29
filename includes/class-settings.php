@@ -283,7 +283,7 @@ class Republication_Tracker_Tool_Settings {
 						<?php endif; ?>
 						value="<?php esc_attr_e( 'none' ); ?>"
 					/>
-					<?php _e( 'No License' ); ?>
+					<?php _e( 'No License', 'republication-tracker-tool' ); ?>
 				</label>
 				<br>
 
