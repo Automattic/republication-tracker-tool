@@ -257,21 +257,37 @@ class Republication_Tracker_Tool_Settings {
 		?>
 		<fieldset>
 			<p>
-			<?php foreach ( $licenses as $license_key => $license_values ) : ?>
+				<?php foreach ( $licenses as $license_key => $license_values ) : ?>
+					<label>
+						<input
+							type="radio"
+							id="<?php echo esc_attr( 'republication_tracker_tool_license' ) . '_' . $license_key; ?>"
+							name="<?php echo esc_attr( 'republication_tracker_tool_license' ); ?>"
+							<?php if ( $license_key === $selected ) : ?>
+								checked
+							<?php endif; ?>
+							value="<?php esc_attr( $license_key ); ?>"
+						/>
+						<?php esc_html( $license_values['label'] . ' - ' . $license_values['description'] ); ?>
+					</label>
+					<br>
+				<?php endforeach; ?>
+
 				<label>
 					<input
 						type="radio"
-						id="<?php echo esc_attr( 'republication_tracker_tool_license' ) . '_' . $license_key; ?>"
+						id="republication_tracker_tool_license_none"
 						name="<?php echo esc_attr( 'republication_tracker_tool_license' ); ?>"
-						<?php if ( $license_key === $selected ) : ?>
+						<?php if ( 'none' === $selected ) : ?>
 							checked
 						<?php endif; ?>
-						value="<?php esc_attr_e( $license_key ); ?>"
+						value="none"
 					/>
-					<?php esc_html_e( $license_values['label'] . ' - ' . $license_values['description'] ); ?>
+					<?php _e( 'No License', 'republication-tracker-tool' ); ?>
 				</label>
 				<br>
-			<?php endforeach; ?>
+
+
 			</p>
 		</fieldset>
 		<?php

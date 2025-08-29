@@ -66,6 +66,7 @@ if ( $plain_text_enabled ) {
  */
 $license_statement = wp_kses_post( get_option( 'republication_tracker_tool_policy' ) );
 $license_key = get_option( 'republication_tracker_tool_license', REPUBLICATION_TRACKER_TOOL_DEFAULT_LICENSE );
+$using_license = isset( REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ] );
 
 echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 'style="display:none;"' ) . '>';
 	echo '<button ' . ( $is_amp ? 'on="tap:republication-tracker-tool-modal.close"' : '' ) . ' class="republication-tracker-tool-close">';
@@ -74,7 +75,8 @@ echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 's
 
 	// Explain Creative Commons
 	echo '<div class="cc-policy">';
-		echo '<div class="cc-license">';
+	echo '<div class="cc-license">';
+		if ( $using_license ) {
 			printf( '<a rel="noreferrer license" target="_blank" href="%s"><img alt="%s" style="border-width:0" src="%s" /></a>', REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['url'], REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['description'], REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['badge'] );
 			echo wp_kses_post(
 				wpautop(
@@ -86,9 +88,10 @@ echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 's
 					)
 				)
 			);
-			echo '</div>'; // .cc-license
-			echo wp_kses_post( $license_statement );
-			echo '</div>'; // .cc-policy
+		}
+	echo '</div>'; // .cc-license
+	echo "<p>" . wp_kses_post( $license_statement ) . "</p>";
+	echo '</div>'; // .cc-policy
 
 			// what we display to the embedder
 			echo '<div class="article-info">';
