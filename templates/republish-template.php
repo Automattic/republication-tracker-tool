@@ -189,7 +189,7 @@ if ( $plain_text_enabled ) {
 							echo wp_kses_post(
 								wpautop(
 									sprintf(
-									// translators: %1$s is the URL to the particular Creative Commons license.
+									// translators: %1$s is the URL to the particular Creative Commons license, %2$s is the license description.
 										__( 'This work is licensed under a <a rel="noreferrer license" target="_blank" href="%1$s">%2$s</a>.', 'republication-tracker-tool' ),
 										REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['url'],
 										REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['description'],
