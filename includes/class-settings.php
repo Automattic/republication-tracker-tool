@@ -261,8 +261,8 @@ class Republication_Tracker_Tool_Settings {
 					<label>
 						<input
 							type="radio"
-							id="<?php echo esc_attr( 'republication_tracker_tool_license' ) . '_' . $license_key; ?>"
-							name="<?php echo esc_attr( 'republication_tracker_tool_license' ); ?>"
+							id="<?php echo esc_attr( 'republication_tracker_tool_license' . '_' . $license_key ); ?>"
+							name="republication_tracker_tool_license"
 							<?php if ( $license_key === $selected ) : ?>
 								checked
 							<?php endif; ?>
