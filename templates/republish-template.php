@@ -24,12 +24,17 @@ $content = Republication_Tracker_Tool_Content::get_republishable_content( $post_
 
 $license_statement = get_option( 'republication_tracker_tool_policy' );
 $license_key = get_option( 'republication_tracker_tool_license', REPUBLICATION_TRACKER_TOOL_DEFAULT_LICENSE );
-$license_badge = sprintf(
-	'<a rel="noreferrer license" target="_blank" href="%s"><img alt="%s" style="border-width:0" src="%s" /></a>',
-	REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['url'],
-	REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['description'],
-	REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['badge']
-);
+
+$using_license = isset( REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ] );
+
+if ( $using_license ) {
+	$license_badge = sprintf(
+		'<a rel="noreferrer license" target="_blank" href="%s"><img alt="%s" style="border-width:0" src="%s" /></a>',
+		REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['url'],
+		REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['description'],
+		REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['badge']
+	);
+}
 
 // Article title.
 $article_title = get_the_title( $republish_post_id );
@@ -177,21 +182,23 @@ if ( $plain_text_enabled ) {
 				<?php do_action( 'republication_tracker_tool_before_republish_content', $post_object ); ?>
 
 				<div class="cc-policy">
-					<div class="cc-license">
-						<?php
-						echo $license_badge;
-						echo wp_kses_post(
-							wpautop(
-								sprintf(
-								// translators: %1$s is the URL to the particular Creative Commons license.
-									__( 'This work is licensed under a <a rel="noreferrer license" target="_blank" href="%1$s">%2$s</a>.', 'republication-tracker-tool' ),
-									REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['url'],
-									REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['description'],
+					<?php if ( $using_license ) : ?>
+						<div class="cc-license">
+							<?php
+							echo $license_badge;
+							echo wp_kses_post(
+								wpautop(
+									sprintf(
+									// translators: %1$s is the URL to the particular Creative Commons license, %2$s is the license description.
+										__( 'This work is licensed under a <a rel="noreferrer license" target="_blank" href="%1$s">%2$s</a>.', 'republication-tracker-tool' ),
+										REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['url'],
+										REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['description'],
+									)
 								)
-							)
-						);
-						?>
-					</div>
+							);
+							?>
+						</div>
+					<?php endif; ?>
 				</div>
 				<?php if ( ! empty( $license_statement ) ) : ?>
 					<section class="republish-article__license">

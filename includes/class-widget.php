@@ -43,6 +43,10 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 
 		$license_key = get_option( 'republication_tracker_tool_license', REPUBLICATION_TRACKER_TOOL_DEFAULT_LICENSE );
 
+		$using_license = isset( REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ] );
+
+		$license_statement = get_option( 'republication_tracker_tool_policy' );
+
 		// our post `republication-tracker-tool-hide-widget` meta is our default filter value
 		$hide_republication_widget_on_post = apply_filters( 'hide_republication_widget', get_post_meta( $post->ID, 'republication-tracker-tool-hide-widget', true ), $post );
 
@@ -83,12 +87,16 @@ class Republication_Tracker_Tool_Widget extends WP_Widget {
 			);
 		}
 
-		echo sprintf(
-			'<p><a class="license" rel="noreferrer license" target="_blank" href="%s"><img alt="%s" style="border-width:0" src="%s" /></a></p>',
-			REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['url'],
-			esc_html__( 'Creative Commons License', 'republication-tracker-tool' ),
-			esc_url( plugin_dir_url( dirname( __FILE__ ) ) ) . 'assets/img/' . $license_key . '.png'
-		);
+		if ( $using_license ) {
+			echo sprintf(
+				'<p><a class="license" rel="noreferrer license" target="_blank" href="%s"><img alt="%s" style="border-width:0" src="%s" /></a></p>',
+				REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['url'],
+				esc_html__( 'Creative Commons License', 'republication-tracker-tool' ),
+				esc_url( plugin_dir_url( dirname( __FILE__ ) ) ) . 'assets/img/' . $license_key . '.png'
+			);
+		}
+
+		echo "<div class=\"message\">$license_statement</div>";
 
 		echo '</div>';
 
