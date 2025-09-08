@@ -1,3 +1,17 @@
+# [2.6.0](https://github.com/Automattic/republication-tracker-tool/compare/v2.5.2...v2.6.0) (2025-09-08)
+
+
+### Bug Fixes
+
+* displaying the values ([e4c83fd](https://github.com/Automattic/republication-tracker-tool/commit/e4c83fdbf28718b31e072a5ca94ce5f1c07a0543))
+* escaping ([76eb893](https://github.com/Automattic/republication-tracker-tool/commit/76eb8930080d0cf85e6a855c5905411efdecbdb2))
+
+
+### Features
+
+* Add plain text option ([#268](https://github.com/Automattic/republication-tracker-tool/issues/268)) ([b484c57](https://github.com/Automattic/republication-tracker-tool/commit/b484c57b47cf6436cc86b0d22fdbf8d1c8cd144b))
+* gracefully support no licenses ([#270](https://github.com/Automattic/republication-tracker-tool/issues/270)) ([733b088](https://github.com/Automattic/republication-tracker-tool/commit/733b08899c487c6d058c5c95755516b39cda1a6c))
+
 ## [2.5.2](https://github.com/Automattic/republication-tracker-tool/compare/v2.5.1...v2.5.2) (2025-07-30)
 
 
