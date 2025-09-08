@@ -6,7 +6,7 @@
  * Author URI:      https://labs.inn.org
  * Text Domain:     republication-tracker-tool
  * Domain Path:     /languages
- * Version:         2.5.2
+ * Version:         2.6.0-alpha.3
  *
  * @package         Republication_Tracker_Tool
  */
@@ -276,7 +276,7 @@ final class Republication_Tracker_Tool {
 	}
 
 	/**
-	 * Get attribution text, which will be inserted at the end of the copyable content.
+	 * Get attribution text and tracking code to be added to the content footer
 	 *
 	 * @param $post The shared post.
 	 */
@@ -286,35 +286,94 @@ final class Republication_Tracker_Tool {
 		$additional_tracking_code = self::create_additional_tracking_code_markup( $post->ID );
 		$tracking_html            = htmlentities( $pixel ) . htmlentities( $parsely_tracking ) . htmlentities( $additional_tracking_code );
 
-		$license_key         = get_option( 'republication_tracker_tool_license', 'cc-by-nd-4.0' );
-		$license_url         = REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['url'];
-		$license_description = REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['description'];
-
 		$display_attribution = get_option( 'republication_tracker_tool_display_attribution', 'on' );
+
+		$attribution = '';
+
 		if ( 'on' === $display_attribution && null !== $post ) {
-			$site_icon_markup = '';
-			$site_icon_url    = get_site_icon_url( 150 );
-			if ( ! empty( $site_icon_url ) ) {
-				$site_icon_markup = sprintf(
-					'<img src="%1$s" style="width:1em;height:1em;margin-left:10px;">',
-					esc_attr( $site_icon_url ),
+			$attribution = self::get_attribution( $post );
+		}
+
+		return $attribution . $tracking_html;
+	}
+
+	/**
+	 * Get attribution text and tracking code to be added to the content footer
+	 *
+	 * @param \WP_Post $post The shared post.
+	 * @param bool $plain_text Whether to return plain text.
+	 */
+	public static function get_attribution( \WP_Post $post, $plain_text = false ) {
+		$license_key         = get_option( 'republication_tracker_tool_license', 'cc-by-nd-4.0' );
+
+		$site_icon_markup = '';
+		$site_icon_url    = get_site_icon_url( 150 );
+		if ( ! empty( $site_icon_url ) ) {
+			$site_icon_markup = sprintf(
+				'<img src="%1$s" style="width:1em;height:1em;margin-left:10px;">',
+				esc_attr( $site_icon_url ),
+			);
+		}
+
+		if ( isset( REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ] ) ) {
+			$license_url         = REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['url'];
+			$license_description = REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['description'];
+
+			if ( $plain_text ) {
+				$attribution = sprintf(
+					// translators: %1$s is the site title, %2$s is the license description.
+					esc_html__( 'This article first appeared on %1$s and is republished here under a %2$s.', 'republication-tracker-tool' ),
+					esc_html( get_bloginfo() ),
+					$license_description
+				);
+			} else {
+				$attribution = wpautop(
+					sprintf(
+						// translators: %1$s is a URL, %2$s is the site home URL, %3$s is the site title. %4$s is the license URL, %5$s is the license description.
+						esc_html__( 'This <a target="_blank" href="%1$s">article</a> first appeared on <a target="_blank" href="%2$s">%3$s</a> and is republished here under a <a target="_blank" href="%4$s">%5$s</a>.', 'republication-tracker-tool' ),
+						get_permalink( $post ),
+						home_url(),
+						esc_html( get_bloginfo() ),
+						$license_url,
+						$license_description
+					) . htmlentities( $site_icon_markup )
 				);
 			}
 
-			return wpautop(
-				sprintf(
-				// translators: %1$s is a URL, %2$s is the site home URL, %3$s is the site title. %4$s is the license URL, %5$s is the license description.
-					esc_html__( 'This <a target="_blank" href="%1$s">article</a> first appeared on <a target="_blank" href="%2$s">%3$s</a> and is republished here under a <a target="_blank" href="%4$s">%5$s</a>.', 'republication-tracker-tool' ),
-					get_permalink( $post ),
-					home_url(),
-					esc_html( get_bloginfo() ),
-					$license_url,
-					$license_description
-				) . htmlentities( $site_icon_markup ) . $tracking_html
-			);
+
+		} else {
+
+			if ( $plain_text ) {
+				$attribution = sprintf(
+					// translators: %s is the site title.
+					esc_html__( 'This article first appeared on %s.', 'republication-tracker-tool' ),
+					esc_html( get_bloginfo() )
+				);
+			} else {
+
+				$attribution = wpautop(
+					sprintf(
+						// translators: %1$s is a URL, %2$s is the site home URL, %3$s is the site title.
+						esc_html__( 'This <a target="_blank" href="%1$s">article</a> first appeared on <a target="_blank" href="%2$s">%3$s</a>.', 'republication-tracker-tool' ),
+						get_permalink( $post ),
+						home_url(),
+						esc_html( get_bloginfo() ),
+					) . htmlentities( $site_icon_markup )
+				);
+			}
 		}
-		return $tracking_html;
+
+		/**
+		 * Filters the attribution HTML for the given post.
+		 *
+		 * @param string $attribution The attribution HTML.
+		 * @param \WP_Post $post The post object.
+		 * @param bool $plain_text Whether the attribution is plain text.
+		 */
+		return apply_filters( 'republication_tracker_tool_attribution', $attribution, $post, $plain_text );
+
 	}
+
 }
 
 /**

@@ -17,8 +17,9 @@ class Republication_Tracker_Tool_Content {
 	 *
 	 * @param string $content The post content.
 	 * @param int    $post_id Optional. Current post ID by default.
+	 * @param bool   $escape_html Optional. Whether to escape HTML for final output. Default true.
 	 */
-	public static function get_republishable_content( $content, $post_id = false ) {
+	public static function get_republishable_content( $content, $post_id = false, $escape_html = true ) {
 		if ( ! $post_id ) {
 			$post_id = get_the_ID();
 		}
@@ -72,8 +73,10 @@ class Republication_Tracker_Tool_Content {
 		// Remove non-distributable images.
 		$content = self::remove_non_distributable_images( $content, 'RTT removed image' );
 
-		// Force the content to be UTF-8 escaped HTML.
-		$content = htmlspecialchars( $content, ENT_HTML5, 'UTF-8', true );
+		// Force the content to be UTF-8 escaped HTML only if requested.
+		if ( $escape_html ) {
+			$content = htmlspecialchars( $content, ENT_HTML5, 'UTF-8', true );
+		}
 
 		$post_object = get_post( $post_id );
 
@@ -118,5 +121,129 @@ class Republication_Tracker_Tool_Content {
 		}
 
 		return $content;
+	}
+
+	/**
+	 * Generate plain text version of republishable content.
+	 *
+	 * @param WP_Post $post_object The post object.
+	 * @return string The plain text content.
+	 */
+	public static function get_republishable_plain_text_content( $post_object ) {
+		if ( ! $post_object instanceof WP_Post ) {
+			return '';
+		}
+
+		// Start building the plain text content
+		$plain_text_content = '';
+
+		// Get article metadata
+		$article_title = get_the_title( $post_object );
+		$author_byline = sprintf( '%1$s, %2$s', apply_filters( 'republication_tracker_tool_byline', __( 'By ', 'republication-tracker-tool' ) . get_the_author_meta( 'display_name', $post_object->post_author ) ), get_bloginfo( 'name' ) );
+		$article_date  = date( 'F j, Y', strtotime( $post_object->post_date ) );
+
+		// Add the article title
+		if ( ! empty( $article_title ) ) {
+			$plain_text_content .= $article_title . "\n\n";
+		}
+
+		// Add the author byline (strip HTML tags)
+		if ( ! empty( $author_byline ) ) {
+			$plain_text_content .= wp_strip_all_tags( $author_byline ) . "\n";
+		}
+
+		// Add the article date
+		if ( ! empty( $article_date ) ) {
+			$plain_text_content .= $article_date . "\n\n";
+		}
+
+		// Process the main content
+		if ( ! empty( $post_object->post_content ) ) {
+			// Get HTML content without escaping for plain text conversion
+			$html_content = self::get_republishable_content( $post_object->post_content, $post_object->ID, false );
+
+			// Convert HTML to plain text
+			$plain_content = self::convert_html_to_plain_text( $html_content );
+
+			$plain_text_content .= $plain_content . "\n\n";
+		}
+
+		// Add attribution.
+		$display_attribution = get_option( 'republication_tracker_tool_display_attribution', 'on' );
+		if ( 'on' === $display_attribution ) {
+			$plain_text_content .= Republication_Tracker_Tool::get_attribution( $post_object, true ) . "\n\n";
+		}
+
+		/**
+		 * Filters the plain text content of the republished post.
+		 *
+		 * @param string $plain_text_content The plain text content of the post.
+		 * @param WP_Post $post_object The post object.
+		 * @return string The filtered plain text content.
+		 */
+		$plain_text_content = apply_filters( 'republication_tracker_tool_republish_plain_text_content', $plain_text_content, $post_object );
+
+		return trim( $plain_text_content );
+	}
+
+	/**
+	 * Convert HTML content to formatted plain text.
+	 *
+	 * @param string $html_content The HTML content to convert.
+	 * @return string The converted plain text content.
+	 */
+	private static function convert_html_to_plain_text( $html_content ) {
+		$html_content = html_entity_decode( $html_content, ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+
+		// Filter tags and clean up the content.
+		$html_content = preg_replace( '/<figure[^>]*>.*?<\/figure>/is', '', $html_content );
+		$html_content = preg_replace( '/<img[^>]*>/i', '', $html_content );
+		$html_content = preg_replace( '/<h[1-6][^>]*>(.*?)<\/h[1-6]>/is', "\n$1\n\n", $html_content );
+		$html_content = preg_replace( '/<p[^>]*>(.*?)<\/p>/is', "$1\n\n", $html_content );
+		$html_content = preg_replace( '/<br\s*\/?>/i', "\n", $html_content );
+
+		// ul to bullet points
+		$html_content = preg_replace_callback(
+			'/<ul[^>]*>(.*?)<\/ul>/is',
+			function( $matches ) {
+				$list_content = $matches[1];
+				// Convert each list item to a bullet point
+				$list_content = preg_replace( '/<li[^>]*>(.*?)<\/li>/is', "• $1\n", $list_content );
+				return "\n" . $list_content . "\n";
+			},
+			$html_content
+		);
+
+		// ol to numbered points
+		$html_content = preg_replace_callback(
+			'/<ol[^>]*>(.*?)<\/ol>/is',
+			function( $matches ) {
+				$list_content = $matches[1];
+				$counter = 1;
+				// Convert each list item to a numbered point
+				$list_content = preg_replace_callback(
+					'/<li[^>]*>(.*?)<\/li>/is',
+					function( $item_matches ) use ( &$counter ) {
+						return $counter++ . ". " . $item_matches[1] . "\n";
+					},
+					$list_content
+				);
+				return "\n" . $list_content . "\n";
+			},
+			$html_content
+		);
+
+		// Handle tags containing information
+		$html_content = preg_replace( '/<blockquote[^>]*>(.*?)<\/blockquote>/is', "\n> $1\n\n", $html_content );
+		$html_content = preg_replace( '/<a[^>]*>(.*?)<\/a>/is', '$1', $html_content );
+		$html_content = preg_replace( '/<(strong|b)[^>]*>(.*?)<\/\1>/is', '$2', $html_content );
+		$html_content = preg_replace( '/<(em|i)[^>]*>(.*?)<\/\1>/is', '$2', $html_content );
+
+		// Remove all remaining HTML tags
+		$plain_text = wp_strip_all_tags( $html_content );
+		$plain_text = preg_replace( '/\n\s*\n\s*\n/', "\n\n", $plain_text );
+		$plain_text = preg_replace( '/[ \t]+/', ' ', $plain_text );
+
+		return trim( $plain_text );
 	}
 }

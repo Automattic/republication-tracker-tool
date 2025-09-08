@@ -92,6 +92,11 @@ class Republication_Tracker_Tool_Settings {
 				'label'    => esc_html__( 'Hide republication widgets on posts by default', 'republication-tracker-tool' ),
 				'callback' => array( $this, 'republication_tracker_tool_default_post_distribution_callback' ),
 			],
+			[
+				'key'      => 'republication_tracker_tool_enable_plain_text',
+				'label'    => esc_html__( 'Enable plain text option', 'republication-tracker-tool' ),
+				'callback' => array( $this, 'republication_tracker_tool_enable_plain_text_callback' ),
+			],
 		];
 		foreach ( $settings as $setting ) {
 			add_settings_field(
@@ -252,21 +257,37 @@ class Republication_Tracker_Tool_Settings {
 		?>
 		<fieldset>
 			<p>
-			<?php foreach ( $licenses as $license_key => $license_values ) : ?>
+				<?php foreach ( $licenses as $license_key => $license_values ) : ?>
+					<label>
+						<input
+							type="radio"
+							id="<?php echo esc_attr( 'republication_tracker_tool_license' . '_' . $license_key ); ?>"
+							name="republication_tracker_tool_license"
+							<?php if ( $license_key === $selected ) : ?>
+								checked
+							<?php endif; ?>
+							value="<?php echo esc_attr( $license_key ); ?>"
+						/>
+						<?php echo esc_html( $license_values['label'] . ' - ' . $license_values['description'] ); ?>
+					</label>
+					<br>
+				<?php endforeach; ?>
+
 				<label>
 					<input
 						type="radio"
-						id="<?php echo esc_attr( 'republication_tracker_tool_license' ) . '_' . $license_key; ?>"
+						id="republication_tracker_tool_license_none"
 						name="<?php echo esc_attr( 'republication_tracker_tool_license' ); ?>"
-						<?php if ( $license_key === $selected ) : ?>
+						<?php if ( 'none' === $selected ) : ?>
 							checked
 						<?php endif; ?>
-						value="<?php esc_attr_e( $license_key ); ?>"
+						value="none"
 					/>
-					<?php esc_html_e( $license_values['label'] . ' - ' . $license_values['description'] ); ?>
+					<?php _e( 'No License', 'republication-tracker-tool' ); ?>
 				</label>
 				<br>
-			<?php endforeach; ?>
+
+
 			</p>
 		</fieldset>
 		<?php
@@ -284,6 +305,24 @@ class Republication_Tracker_Tool_Settings {
 				<?php endif; ?>
 			/>
 			<p><em><?php echo esc_html__( 'If checked, "Hide Republication Widget" will be enabled by default for new posts.', 'republication-tracker-tool' ); ?></em></p>
+		<?php
+	}
+
+	public function republication_tracker_tool_enable_plain_text_callback() {
+		$enable_plain_text = get_option( 'republication_tracker_tool_enable_plain_text', 'off' );
+		?>
+			<input
+				type="checkbox"
+				id="<?php echo esc_attr( 'republication_tracker_tool_enable_plain_text' ); ?>"
+				name="<?php echo esc_attr( 'republication_tracker_tool_enable_plain_text' ); ?>"
+				<?php if ( 'on' === $enable_plain_text ) : ?>
+					checked
+				<?php endif; ?>
+			/>
+			<label for="<?php echo esc_attr( 'republication_tracker_tool_enable_plain_text' ); ?>">
+				<?php echo esc_html__( 'Offer plain text version alongside HTML', 'republication-tracker-tool' ); ?>
+			</label>
+			<p><em><?php echo esc_html__( 'If checked, users will be able to copy both HTML and plain text versions of the republishable content.', 'republication-tracker-tool' ); ?></em></p>
 		<?php
 	}
 
@@ -334,5 +373,15 @@ class Republication_Tracker_Tool_Settings {
 		];
 
 		return wp_kses( $content, $allowed_html );
+	}
+
+	/**
+	 * Check if plain text content feature is enabled.
+	 *
+	 * @return bool True if plain text content is enabled, false otherwise.
+	 */
+	public static function is_plain_text_enabled() {
+		$enable_plain_text = get_option( 'republication_tracker_tool_enable_plain_text', 'off' );
+		return 'on' === $enable_plain_text;
 	}
 }

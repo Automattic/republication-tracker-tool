@@ -7,56 +7,74 @@
  */
 document.addEventListener("DOMContentLoaded", () => {
 	/**
-	 * Selects the text in the textarea when it is focused.
+	 * Handle tab switching for format selection.
 	 */
-	document
-		.querySelector(".republish-article .republish-article__info textarea")
-		?.addEventListener("focus", (event) => {
-			event.target.select();
-		});
+	const tabButtons = document.querySelectorAll(".republish-format-tabs__button");
+	const tabContents = document.querySelectorAll(".republish-content");
 
-	/**
-	 * Copies the text in the textarea to the clipboard when the copy button is clicked.
-	 */
-	document
-		.querySelector(".republish-article .republish-article__copy-button")
-		?.addEventListener("click", (event) => {
+	tabButtons.forEach((button) => {
+		button.addEventListener("click", (event) => {
 			event.preventDefault();
-			const textarea = document.querySelector(
-				".republish-article .republish-article__info textarea"
-			);
-			const success = copyTextToClipboard(textarea.value);
+			const targetTab = button.getAttribute("data-tab");
 
-			if (success) {
-				event.target.innerText = __("Copied!", "the-city-features");
+			tabButtons.forEach((btn) => btn.classList.remove("republish-format-tabs__button--active"));
+			tabContents.forEach((content) => content.classList.remove("republish-content--active"));
 
-				setTimeout(() => {
-					event.target.innerText = __(
-						"Copy to clipboard",
-						"the-city-features"
-					);
-				}, 2000);
+			button.classList.add("republish-format-tabs__button--active");
+			const targetContent = document.querySelector(`[data-tab-content="${targetTab}"]`);
+			if (targetContent) {
+				targetContent.classList.add("republish-content--active");
+			}
+
+			// Show/hide main copy button based on active tab
+			const mainCopyButton = document.querySelector(".republish-article__copy-button--main");
+			if (mainCopyButton) {
+				if (targetTab === "html") {
+					mainCopyButton.classList.add("show-for-html");
+				} else {
+					mainCopyButton.classList.remove("show-for-html");
+				}
 			}
 		});
+	});
 
 	/**
-	 * Copies the given text to the clipboard.
-	 *
-	 * @param {string} text The text to copy to the clipboard.
-	 *
-	 * @return {boolean} True if the text was copied to the clipboard, false otherwise.
+	 * Selects the text in the active textarea when it is focused.
 	 */
-	const copyTextToClipboard = (text) => {
-		// Check if the clipboard API is available.
-		if (!navigator.clipboard) {
-			return false;
-		}
-		// Copy the text to the clipboard.
-		navigator.clipboard
-			.writeText(text)
-			.then(() => true)
-			.catch(() => false);
+	const textareas = document.querySelectorAll(".republish-content__textarea");
+	textareas.forEach((textarea) => {
+		textarea.addEventListener("focus", (event) => {
+			event.target.select();
+		});
+	});
 
-		return true;
-	};
+	/**
+	 * Copies the text in the active textarea to the clipboard when the copy button is clicked.
+	 */
+	document
+		.querySelector(".republish-article__copy-button")
+		?.addEventListener("click", (event) => {
+			event.preventDefault();
+
+			const activeTextarea = document.querySelector(".republish-content.republish-content--active.republish-content__textarea");
+
+			if (!activeTextarea) {
+				return;
+			}
+
+			ClipboardUtils.copyFromElement(activeTextarea, event.target);
+		});
+
+	/**
+	 * Handle individual field copy buttons for plain text format.
+	 */
+	const copyFieldButtons = document.querySelectorAll(".plain-text-field__button");
+	copyFieldButtons.forEach((button) => {
+		button.addEventListener("click", (event) => {
+			event.preventDefault();
+
+			const targetSelector = button.getAttribute("data-target");
+			ClipboardUtils.copyFromElement(targetSelector, button);
+		});
+	});
 });
