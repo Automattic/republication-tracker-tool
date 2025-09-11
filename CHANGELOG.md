@@ -1,3 +1,10 @@
+## [2.6.1](https://github.com/Automattic/republication-tracker-tool/compare/v2.6.0...v2.6.1) (2025-09-11)
+
+
+### Bug Fixes
+
+* remove license statement from widget ([15aa1be](https://github.com/Automattic/republication-tracker-tool/commit/15aa1bed79a80e4122f94cda7a5f448c04c4321f))
+
 # [2.6.0](https://github.com/Automattic/republication-tracker-tool/compare/v2.5.2...v2.6.0) (2025-09-08)
 
 
