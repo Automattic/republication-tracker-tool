@@ -1,3 +1,10 @@
+## [2.6.2](https://github.com/Automattic/republication-tracker-tool/compare/v2.6.1...v2.6.2) (2025-09-12)
+
+
+### Bug Fixes
+
+* add tracking snippets to the plain text share screen ([ae39058](https://github.com/Automattic/republication-tracker-tool/commit/ae39058a170fdf51bf93a7328b840a06d92a7362))
+
 ## [2.6.1](https://github.com/Automattic/republication-tracker-tool/compare/v2.6.0...v2.6.1) (2025-09-11)
 
 
