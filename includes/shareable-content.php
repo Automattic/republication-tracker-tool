@@ -54,11 +54,19 @@ $article_info = str_replace( '<p></p>', '', wpautop( $article_info ) );
 $plain_text_enabled = Republication_Tracker_Tool_Settings::is_plain_text_enabled();
 $plain_text_content = '';
 if ( $plain_text_enabled ) {
-	$canonical_tag            = sprintf( '<link rel="canonical" href="%s" />', esc_url( get_permalink( $post->ID ) ) );
-	$plain_text_content       = Republication_Tracker_Tool_Content::get_republishable_plain_text_content( $post );
-	$additional_tracking_html = Republication_Tracker_Tool::create_additional_tracking_code_markup( $post->ID );
-	$pixel                    = Republication_Tracker_Tool::create_tracking_pixel_markup( $post->ID );
-	$parsely_tracking         = Republication_Tracker_Tool::create_parsely_tracking( $post->ID );
+		$canonical_tag            = sprintf( '<link rel="canonical" href="%s" />', esc_url( get_permalink( $post->ID ) ) );
+		$plain_text_content       = Republication_Tracker_Tool_Content::get_republishable_plain_text_content( $post );
+		$additional_tracking_html = Republication_Tracker_Tool::create_additional_tracking_code_markup( $post->ID );
+		$pixel                    = Republication_Tracker_Tool::create_tracking_pixel_markup( $post->ID );
+		$parsely_tracking         = Republication_Tracker_Tool::create_parsely_tracking( $post->ID );
+
+		/**
+		 * Filters the tracking code for the plain text snippet.
+		 *
+		 * @param string $plain_text_tracking_snippet The tracking code for the plain text snippet.
+		 * @param WP_Post $post The post object.
+		 */
+		$plain_text_tracking_snippet = apply_filters( 'republication_tracker_tool_text_tracking_code', $pixel . $parsely_tracking . $additional_tracking_html, $post );
 }
 
 /**
@@ -169,7 +177,7 @@ echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 's
 									class="plain-text-field__input"
 									readonly
 									aria-label="<?php esc_attr_e( 'Tracking snippet', 'republication-tracker-tool' ); ?>"
-									value="<?php echo esc_html( $pixel . $parsely_tracking . $additional_tracking_html ); ?>"
+									value="<?php echo esc_html( $plain_text_tracking_snippet ); ?>"
 								/>
 								<button class="plain-text-field__button" data-target="#republication-tracker-tool-tracking-snippet" aria-label="<?php esc_attr_e( 'Copy tracking snippet', 'republication-tracker-tool' ); ?>">
 									<?php esc_html_e( 'Copy Snippet', 'republication-tracker-tool' ); ?>
