@@ -30,6 +30,9 @@ class Republication_Tracker_Tool_Content {
 		// Remove comments from the content. (Lookin' at you, Gutenberg.)
 		$content = preg_replace( '/<!--(.|\s)*?-->/i', ' ', $content );
 
+		// Remove scripts from the content.
+		$content = preg_replace( '@<script\b[^>]*?>.*?</script>@si', '', $content );
+
 		/**
 		 * What tags do we want to keep in the embed?
 		 * Not things from our server.
@@ -201,6 +204,7 @@ class Republication_Tracker_Tool_Content {
 		$html_content = preg_replace( '/<h[1-6][^>]*>(.*?)<\/h[1-6]>/is', "\n$1\n\n", $html_content );
 		$html_content = preg_replace( '/<p[^>]*>(.*?)<\/p>/is', "$1\n\n", $html_content );
 		$html_content = preg_replace( '/<br\s*\/?>/i', "\n", $html_content );
+		$html_content = preg_replace( '/<style\b[^>]*?>.*?<\/style>/si', '', $html_content );
 
 		// ul to bullet points
 		$html_content = preg_replace_callback(
