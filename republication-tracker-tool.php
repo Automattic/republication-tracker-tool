@@ -6,7 +6,7 @@
  * Author URI:      https://labs.inn.org
  * Text Domain:     republication-tracker-tool
  * Domain Path:     /languages
- * Version:         2.6.2
+ * Version:         2.7.0-alpha.1
  *
  * @package         Republication_Tracker_Tool
  */
@@ -285,6 +285,14 @@ final class Republication_Tracker_Tool {
 		$parsely_tracking         = self::create_parsely_tracking( $post->ID );
 		$additional_tracking_code = self::create_additional_tracking_code_markup( $post->ID );
 		$tracking_html            = htmlentities( $pixel ) . htmlentities( $parsely_tracking ) . htmlentities( $additional_tracking_code );
+
+		/**
+		 * Filters the tracking code HTML for the given post.
+		 *
+		 * @param string $tracking_html The tracking HTML.
+		 * @param \WP_Post $post The post object.
+		 */
+		$tracking_html = apply_filters( 'republication_tracker_tool_tracking_code', $tracking_html, $post );
 
 		$display_attribution = get_option( 'republication_tracker_tool_display_attribution', 'on' );
 
