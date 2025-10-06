@@ -1,3 +1,17 @@
+# [2.7.0](https://github.com/Automattic/republication-tracker-tool/compare/v2.6.2...v2.7.0) (2025-10-06)
+
+
+### Bug Fixes
+
+* indentation ([dbc2b49](https://github.com/Automattic/republication-tracker-tool/commit/dbc2b49533acfafdc3c10b8d85bc419ec4dffb5c))
+* removing scripts and styles ([#282](https://github.com/Automattic/republication-tracker-tool/issues/282)) ([aa2b33d](https://github.com/Automattic/republication-tracker-tool/commit/aa2b33d0c0a09e924e31c75ba4abded2cc782cc3))
+* update download URL for db.php ([#280](https://github.com/Automattic/republication-tracker-tool/issues/280)) ([5f42bd1](https://github.com/Automattic/republication-tracker-tool/commit/5f42bd142a3f2d28423009ea03971f86f124247a))
+
+
+### Features
+
+* add filters for tracking markup snippets ([cffecb0](https://github.com/Automattic/republication-tracker-tool/commit/cffecb0dd60116508a2a40bc42ac4ecd8c9f6583))
+
 ## [2.6.2](https://github.com/Automattic/republication-tracker-tool/compare/v2.6.1...v2.6.2) (2025-09-12)
 
 
