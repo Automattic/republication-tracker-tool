@@ -1,3 +1,10 @@
+# [2.8.0](https://github.com/Automattic/republication-tracker-tool/compare/v2.7.0...v2.8.0) (2025-11-24)
+
+
+### Features
+
+* Merge pull request [#287](https://github.com/Automattic/republication-tracker-tool/issues/287) from Automattic/trunk ([905b9c3](https://github.com/Automattic/republication-tracker-tool/commit/905b9c321d5cd94edfb19f34420d9ca4c3deadc3))
+
 # [2.7.0](https://github.com/Automattic/republication-tracker-tool/compare/v2.6.2...v2.7.0) (2025-10-06)
 
 
