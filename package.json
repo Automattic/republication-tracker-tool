@@ -7,6 +7,7 @@
 		"start": "npm ci",
 		"cm": "newspack-scripts commit",
 		"i18n": "grunt i18n",
+		"lint-js": "echo 'No JS to lint in this repository.'",
 		"readme": "grunt readme",
 		"semantic-release": "newspack-scripts release --files=republication-tracker-tool.php",
 		"release:archive": "rm -rf release && mkdir -p release && rsync -r . ./release/republication-tracker-tool --exclude-from='./.distignore' && cd release && zip -r republication-tracker-tool.zip republication-tracker-tool",
