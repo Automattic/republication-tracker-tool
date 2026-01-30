@@ -4,9 +4,9 @@
 	"type": "wordpress-plugin",
 	"require-dev": {
 		"composer/installers": "~1.6",
-		"automattic/vipwpcs": "^2.0.0",
+		"automattic/vipwpcs": "^3.0",
+		"wp-coding-standards/wpcs": "^3.0",
 		"brainmaestro/composer-git-hooks": "^2.6",
-		"wp-coding-standards/wpcs": "*",
 		"dealerdirect/phpcodesniffer-composer-installer": "*",
 		"phpcompatibility/phpcompatibility-wp": "*",
 		"phpunit/phpunit": "^9.6",
