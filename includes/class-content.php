@@ -27,7 +27,7 @@ class Republication_Tracker_Tool_Content {
 		// Remove shortcodes from the content.
 		$content = strip_shortcodes( $content );
 
-		// Remove comments from the content. (Lookin' at you, Gutenberg.)
+		// Remove comments from the content (Lookin' at you, Gutenberg).
 		$content = preg_replace( '/<!--(.|\s)*?-->/i', ' ', $content );
 
 		// Remove scripts from the content.
@@ -37,7 +37,7 @@ class Republication_Tracker_Tool_Content {
 		 * What tags do we want to keep in the embed?
 		 * Not things from our server.
 		 *
-		 * Generall: wp_kses_post, but not allowing the terms listed below because
+		 * Generally: wp_kses_post, but not allowing the terms listed below because:
 		 * - they're referencing assets on our server: audio, figure, img, track, video
 		 * - they're referencing the referenced asset: figure, figcaption
 		 * - they're not likely to work: form, button
@@ -70,7 +70,7 @@ class Republication_Tracker_Tool_Content {
 		// And finally, remove some tags.
 		$content = wp_kses( $content, $allowed_tags_excerpt );
 
-		// remove spare p tags and clean up these paragraphs
+		// Remove spare p tags and clean up these paragraphs.
 		$content = str_replace( '<p></p>', '', wpautop( $content ) );
 
 		// Remove non-distributable images.
@@ -137,35 +137,35 @@ class Republication_Tracker_Tool_Content {
 			return '';
 		}
 
-		// Start building the plain text content
+		// Start building the plain text content.
 		$plain_text_content = '';
 
-		// Get article metadata
+		// Get article metadata.
 		$article_title = get_the_title( $post_object );
 		$author_byline = sprintf( '%1$s, %2$s', apply_filters( 'republication_tracker_tool_byline', __( 'By ', 'republication-tracker-tool' ) . get_the_author_meta( 'display_name', $post_object->post_author ) ), get_bloginfo( 'name' ) );
-		$article_date  = date( 'F j, Y', strtotime( $post_object->post_date ) );
+		$article_date  = gmdate( 'F j, Y', strtotime( $post_object->post_date ) );
 
-		// Add the article title
+		// Add the article title.
 		if ( ! empty( $article_title ) ) {
 			$plain_text_content .= $article_title . "\n\n";
 		}
 
-		// Add the author byline (strip HTML tags)
+		// Add the author byline (strip HTML tags).
 		if ( ! empty( $author_byline ) ) {
 			$plain_text_content .= wp_strip_all_tags( $author_byline ) . "\n";
 		}
 
-		// Add the article date
+		// Add the article date.
 		if ( ! empty( $article_date ) ) {
 			$plain_text_content .= $article_date . "\n\n";
 		}
 
-		// Process the main content
+		// Process the main content.
 		if ( ! empty( $post_object->post_content ) ) {
-			// Get HTML content without escaping for plain text conversion
+			// Get HTML content without escaping for plain text conversion.
 			$html_content = self::get_republishable_content( $post_object->post_content, $post_object->ID, false );
 
-			// Convert HTML to plain text
+			// Convert HTML to plain text.
 			$plain_content = self::convert_html_to_plain_text( $html_content );
 
 			$plain_text_content .= $plain_content . "\n\n";
@@ -206,29 +206,29 @@ class Republication_Tracker_Tool_Content {
 		$html_content = preg_replace( '/<br\s*\/?>/i', "\n", $html_content );
 		$html_content = preg_replace( '/<style\b[^>]*?>.*?<\/style>/si', '', $html_content );
 
-		// ul to bullet points
+		// ul to bullet points.
 		$html_content = preg_replace_callback(
 			'/<ul[^>]*>(.*?)<\/ul>/is',
 			function( $matches ) {
 				$list_content = $matches[1];
-				// Convert each list item to a bullet point
+				// Convert each list item to a bullet point.
 				$list_content = preg_replace( '/<li[^>]*>(.*?)<\/li>/is', "• $1\n", $list_content );
 				return "\n" . $list_content . "\n";
 			},
 			$html_content
 		);
 
-		// ol to numbered points
+		// ol to numbered points.
 		$html_content = preg_replace_callback(
 			'/<ol[^>]*>(.*?)<\/ol>/is',
 			function( $matches ) {
 				$list_content = $matches[1];
 				$counter = 1;
-				// Convert each list item to a numbered point
+				// Convert each list item to a numbered point.
 				$list_content = preg_replace_callback(
 					'/<li[^>]*>(.*?)<\/li>/is',
 					function( $item_matches ) use ( &$counter ) {
-						return $counter++ . ". " . $item_matches[1] . "\n";
+						return ( $counter++ ) . '. ' . $item_matches[1] . "\n";
 					},
 					$list_content
 				);
@@ -237,13 +237,13 @@ class Republication_Tracker_Tool_Content {
 			$html_content
 		);
 
-		// Handle tags containing information
+		// Handle tags containing information.
 		$html_content = preg_replace( '/<blockquote[^>]*>(.*?)<\/blockquote>/is', "\n> $1\n\n", $html_content );
 		$html_content = preg_replace( '/<a[^>]*>(.*?)<\/a>/is', '$1', $html_content );
 		$html_content = preg_replace( '/<(strong|b)[^>]*>(.*?)<\/\1>/is', '$2', $html_content );
 		$html_content = preg_replace( '/<(em|i)[^>]*>(.*?)<\/\1>/is', '$2', $html_content );
 
-		// Remove all remaining HTML tags
+		// Remove all remaining HTML tags.
 		$plain_text = wp_strip_all_tags( $html_content );
 		$plain_text = preg_replace( '/\n\s*\n\s*\n/', "\n\n", $plain_text );
 		$plain_text = preg_replace( '/[ \t]+/', ' ', $plain_text );

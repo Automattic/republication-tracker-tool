@@ -74,14 +74,13 @@ class Republication_Tracker_Tool_Article_Settings {
 				'__block_editor_compatible_meta_box' => true,
 			)
 		);
-
 	}
 
 	/**
 	 * Save the value of the hide widget metabox checkbox
 	 *
 	 * @since 1.0.2
-	 * @param int $post_id The post ID
+	 * @param int $post_id The post ID.
 	 */
 	public function save_hide_widget_metabox( $post_id ) {
 
@@ -89,11 +88,11 @@ class Republication_Tracker_Tool_Article_Settings {
 			return;
 		}
 
-		if ( ! isset( $_POST['republication-tracker-tool-hide-widget-submit'] ) ) {
+		if ( ! isset( $_POST['republication-tracker-tool-hide-widget-submit'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			return;
 		}
 
-		if ( isset( $_POST['republication-tracker-tool-hide-widget'] ) ) {
+		if ( isset( $_POST['republication-tracker-tool-hide-widget'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 
 			update_post_meta( $post_id, 'republication-tracker-tool-hide-widget', true );
 
@@ -102,15 +101,14 @@ class Republication_Tracker_Tool_Article_Settings {
 			update_post_meta( $post_id, 'republication-tracker-tool-hide-widget', false );
 
 		}
-
 	}
 
 	/**
-	 * Render a custom metabox
+	 * Render a custom metabox.
 	 *
 	 * @since 1.0
-	 * @param obj $post Post object.
-	 * @param obj $args Arguments object.
+	 * @param WP_Post $post Post object.
+	 * @param array   $args Arguments object.
 	 */
 	public function render_metabox( $post, $args ) {
 		$shares      = get_post_meta( $post->ID, 'republication_tracker_tool_sharing', true );
@@ -124,12 +122,12 @@ class Republication_Tracker_Tool_Article_Settings {
 		if ( is_array( $shares ) && ! empty( $shares ) ) {
 			echo '<table class="wp-list-table widefat striped posts">';
 				echo '<thead>';
-					echo sprintf( '<th scope="col" id="url" class="manage-column column-primary"><span>%s</span><span class="sorting-indicator"></span></th>', esc_html__( 'Republished URL', 'republication-tracker-tool' ) );
-					echo sprintf( '<th scope="col" id="views" class="manage-column ">%s</th>', esc_html__( 'Views', 'republication-tracker-tool' ) );
+					printf( '<th scope="col" id="url" class="manage-column column-primary"><span>%s</span><span class="sorting-indicator"></span></th>', esc_html__( 'Republished URL', 'republication-tracker-tool' ) );
+					printf( '<th scope="col" id="views" class="manage-column ">%s</th>', esc_html__( 'Views', 'republication-tracker-tool' ) );
 				echo '</thead>';
 				echo '<tbody id="the-list">';
 			foreach ( $shares as $url => $count ) {
-				echo sprintf(
+				printf(
 					'<tr><td class="column-primary" data-colname="URL"><a href="%1$s" target="_blank">%1$s</a></td><td class="views" data-colname="Views">%2$s</td></tr>',
 					wp_kses_post( $url ),
 					wp_kses_post( $count )
@@ -137,8 +135,8 @@ class Republication_Tracker_Tool_Article_Settings {
 			}
 				echo '</tbody>';
 				echo '<tfoot>';
-					echo sprintf( '<th scope="col" id="url" class="manage-column column-primary"><span>%s</span><span class="sorting-indicator"></span></th>', esc_html__( 'Republished URL', 'republication-tracker-tool' ) );
-					echo sprintf( '<th scope="col" id="views" class="manage-column">%s</th>', esc_html__( 'Views', 'republication-tracker-tool' ) );
+					printf( '<th scope="col" id="url" class="manage-column column-primary"><span>%s</span><span class="sorting-indicator"></span></th>', esc_html__( 'Republished URL', 'republication-tracker-tool' ) );
+					printf( '<th scope="col" id="views" class="manage-column">%s</th>', esc_html__( 'Views', 'republication-tracker-tool' ) );
 				echo '</tfoot>';
 			echo '</table>';
 		} else {
@@ -174,24 +172,41 @@ class Republication_Tracker_Tool_Article_Settings {
 
 			echo '<label>';
 				echo '<input type="hidden" name="republication-tracker-tool-hide-widget-submit" value="yes">';
-				echo '<input type="checkbox" name="republication-tracker-tool-hide-widget" id="republication-tracker-tool-hide-widget" ' . $checked . '>';
-				echo __( 'Hide the Republication sharing widget on this post?', 'republication-tracker-tool' );
+				echo '<input type="checkbox" name="republication-tracker-tool-hide-widget" id="republication-tracker-tool-hide-widget" ' . esc_attr( $checked ) . '>';
+				echo esc_html__( 'Hide the Republication sharing widget on this post?', 'republication-tracker-tool' );
 			echo '</label>';
 
 		}
-
 	}
 
+	/**
+	 * Add custom columns to the post list table.
+	 *
+	 * @param array $columns The columns.
+	 * @return array The columns.
+	 */
 	public function add_custom_columns( $columns ) {
 		$columns['republication_tracker_tool'] = esc_html__( 'Total Views', 'republication-tracker-tool' );
 		return $columns;
 	}
 
+	/**
+	 * Add sortable columns to the post list table.
+	 *
+	 * @param array $columns The columns.
+	 * @return array The columns.
+	 */
 	public function add_sortable_columns( $columns ) {
 		$columns['republication_tracker_tool'] = esc_html__( 'Total Views', 'republication-tracker-tool' );
 		return $columns;
 	}
 
+	/**
+	 * Display the content of the custom columns in the post list table.
+	 *
+	 * @param string $column The column name.
+	 * @param int    $post_id The post ID.
+	 */
 	public function custom_column_content( $column, $post_id ) {
 		switch ( $column ) {
 			case 'republication_tracker_tool':
@@ -202,7 +217,7 @@ class Republication_Tracker_Tool_Article_Settings {
 						$total_count = $total_count + $count;
 					}
 				}
-				echo sprintf( '%s', number_format( $total_count ) );
+				printf( '%s', number_format( $total_count ) );
 				break;
 		}
 	}
@@ -215,7 +230,7 @@ class Republication_Tracker_Tool_Article_Settings {
 	 * @param bool    $update  Whether this is an existing post being updated.
 	 */
 	public function apply_default_post_distribution( $post_id, $post, $update ) {
-		// Only apply to new posts
+		// Only apply to new posts.
 		if ( ! $update && 'post' === $post->post_type ) {
 			$default_post_distribution = get_option( 'republication_tracker_tool_default_post_distribution', 'off' );
 
@@ -224,5 +239,4 @@ class Republication_Tracker_Tool_Article_Settings {
 			}
 		}
 	}
-
 }

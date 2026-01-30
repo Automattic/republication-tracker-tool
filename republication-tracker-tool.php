@@ -34,10 +34,10 @@ require plugin_dir_path( __FILE__ ) . 'includes/compatibility-co-authors-plus.ph
 require plugin_dir_path( __FILE__ ) . 'includes/class-republication-rewrite.php';
 
 /**
-* Main initiation class.
-*
-* @since  1.0
-*/
+ * Main initiation class.
+ *
+ * @since  1.0
+ */
 final class Republication_Tracker_Tool {
 
 	/**
@@ -156,21 +156,20 @@ final class Republication_Tracker_Tool {
 
 		add_filter( 'query_vars', array( $this, 'enable_pixel_query_vars' ) );
 
-		// fire our pixel is the correct param is set
+		// Fire our pixel if the correct params are set.
 		add_filter(
 			'template_include',
 			function( $template ) {
-				// if the params are set, use our pixel functions
-				if ( isset( $_GET['republication-pixel'] ) && isset( $_GET['post'] ) && isset( $_GET['ga4'] ) ) {
+				// If the params are set, use our pixel functions.
+				if ( isset( $_GET['republication-pixel'] ) && isset( $_GET['post'] ) && isset( $_GET['ga4'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 					return include_once plugin_dir_path( __FILE__ ) . 'includes/pixel.php';
-					// else, continue with whatever template was being loaded
+					// Else, continue with whatever template was being loaded.
 				} else {
 					return $template;
 				}
 			},
 			99
 		);
-
 	}
 
 
@@ -189,16 +188,23 @@ final class Republication_Tracker_Tool {
 	 *
 	 * @since  1.0
 	 */
-	public function _activate() {}
+	public function _activate() {} // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
 
 	/**
 	 * Deactivate the plugin.
 	 *
 	 * @since  1.0
 	 */
-	public function _deactivate() {}
+	public function _deactivate() {} // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
 
-	public function _plugin_row_meta( $links, $file ) {
+	/**
+	 * Add plugin row meta.
+	 *
+	 * @param array  $links An array of the plugin’s metadata, including the version, author, author URI, and plugin URI.
+	 * @param string $file Path to the plugin file relative to the plugins directory.
+	 * @return array The updated plugin row meta links.
+	 */
+	public function _plugin_row_meta( $links, $file ) { // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
 
 		if ( strpos( $file, 'republication-tracker-tool/republication-tracker-tool.php' ) !== false ) {
 
@@ -212,9 +218,14 @@ final class Republication_Tracker_Tool {
 		}
 
 		return $links;
-
 	}
 
+	/**
+	 * Enable tracking pixel query vars.
+	 *
+	 * @param array $vars The query vars.
+	 * @return array The updated query vars.
+	 */
 	public function enable_pixel_query_vars( $vars ) {
 
 		$vars[] .= 'republication-pixel';
@@ -223,13 +234,12 @@ final class Republication_Tracker_Tool {
 		$vars[] .= 'post';
 
 		return $vars;
-
 	}
 
 	/**
 	 * Create tracking pixel HTML markup.
 	 *
-	 * @param $post_id Id of the post to track.
+	 * @param int $post_id ID of the post to track.
 	 */
 	public static function create_tracking_pixel_markup( $post_id ) {
 		$ga4_id = \get_option( 'republication_tracker_tool_analytics_ga4_id' );
@@ -245,7 +255,7 @@ final class Republication_Tracker_Tool {
 	/**
 	 * Create Parse.ly tracking code.
 	 *
-	 * @param $post_id Id of the post to track.
+	 * @param int $post_id ID of the post to track.
 	 */
 	public static function create_parsely_tracking( $post_id ) {
 		$parsely_settings = get_option( 'parsely', [] );
@@ -265,7 +275,7 @@ final class Republication_Tracker_Tool {
 	/**
 	 * Create additional tracking code HTML markup.
 	 *
-	 * @param $post_id Id of the post to track.
+	 * @param int $post_id ID of the post to track.
 	 * @return string additional tracking code HTML markup.
 	 */
 	public static function create_additional_tracking_code_markup( $post_id ) {
@@ -278,7 +288,7 @@ final class Republication_Tracker_Tool {
 	/**
 	 * Get attribution text and tracking code to be added to the content footer
 	 *
-	 * @param $post The shared post.
+	 * @param \WP_Post $post The shared post.
 	 */
 	public static function create_content_footer( $post = null ) {
 		$pixel                    = self::create_tracking_pixel_markup( $post->ID );
@@ -309,17 +319,17 @@ final class Republication_Tracker_Tool {
 	 * Get attribution text and tracking code to be added to the content footer
 	 *
 	 * @param \WP_Post $post The shared post.
-	 * @param bool $plain_text Whether to return plain text.
+	 * @param bool     $plain_text Whether to return plain text.
 	 */
 	public static function get_attribution( \WP_Post $post, $plain_text = false ) {
-		$license_key         = get_option( 'republication_tracker_tool_license', 'cc-by-nd-4.0' );
+		$license_key = get_option( 'republication_tracker_tool_license', 'cc-by-nd-4.0' );
 
 		$site_icon_markup = '';
 		$site_icon_url    = get_site_icon_url( 150 );
 		if ( ! empty( $site_icon_url ) ) {
 			$site_icon_markup = sprintf(
 				'<img src="%1$s" style="width:1em;height:1em;margin-left:10px;">',
-				esc_attr( $site_icon_url ),
+				esc_attr( $site_icon_url )
 			);
 		}
 
@@ -347,28 +357,24 @@ final class Republication_Tracker_Tool {
 					) . htmlentities( $site_icon_markup )
 				);
 			}
+		} elseif ( $plain_text ) {
 
-
-		} else {
-
-			if ( $plain_text ) {
 				$attribution = sprintf(
 					// translators: %s is the site title.
 					esc_html__( 'This article first appeared on %s.', 'republication-tracker-tool' ),
 					esc_html( get_bloginfo() )
 				);
-			} else {
+		} else {
 
-				$attribution = wpautop(
-					sprintf(
-						// translators: %1$s is a URL, %2$s is the site home URL, %3$s is the site title.
-						esc_html__( 'This <a target="_blank" href="%1$s">article</a> first appeared on <a target="_blank" href="%2$s">%3$s</a>.', 'republication-tracker-tool' ),
-						get_permalink( $post ),
-						home_url(),
-						esc_html( get_bloginfo() ),
-					) . htmlentities( $site_icon_markup )
-				);
-			}
+			$attribution = wpautop(
+				sprintf(
+					// translators: %1$s is a URL, %2$s is the site home URL, %3$s is the site title.
+					esc_html__( 'This <a target="_blank" href="%1$s">article</a> first appeared on <a target="_blank" href="%2$s">%3$s</a>.', 'republication-tracker-tool' ),
+					get_permalink( $post ),
+					home_url(),
+					esc_html( get_bloginfo() )
+				) . htmlentities( $site_icon_markup )
+			);
 		}
 
 		/**
@@ -379,9 +385,7 @@ final class Republication_Tracker_Tool {
 		 * @param bool $plain_text Whether the attribution is plain text.
 		 */
 		return apply_filters( 'republication_tracker_tool_attribution', $attribution, $post, $plain_text );
-
 	}
-
 }
 
 /**
@@ -391,7 +395,7 @@ final class Republication_Tracker_Tool {
  * @since  1.0
  * @return Republication_Tracker_Tool  Singleton instance of plugin class.
  */
-function Republication_Tracker_Tool() {
+function Republication_Tracker_Tool() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid, Universal.Files.SeparateFunctionsFromOO.Mixed
 	return Republication_Tracker_Tool::get_instance();
 }
 
