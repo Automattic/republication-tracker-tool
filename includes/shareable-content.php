@@ -6,17 +6,19 @@
  *
  * Expected URLs is something like /wp-content/plugins/republication-tracker-tool/includes/shareable-content.php?post=22078&_=1512494948576 or something
  * We aren't passing a NONCE; this isn't a form.
+ *
+ * @package Republication_Tracker_Tool
  */
 
 /**
- * The article WP_Post object
+ * The article WP_Post object.
  *
  * @var WP_Post $post the post object
  */
 global $post;
 
 /**
- * The content of the aforementioned post
+ * The content of the aforementioned post.
  *
  * @var HTML $content
  */
@@ -45,12 +47,12 @@ $article_info = sprintf(
 	 */
 	wp_kses_post( apply_filters( 'republication_tracker_tool_byline', get_the_author() ) ),
 	wp_kses_post( get_bloginfo( 'name' ) ),
-	wp_kses_post( date( 'F j, Y', strtotime( $post->post_date ) ) )
+	wp_kses_post( gmdate( 'F j, Y', strtotime( $post->post_date ) ) )
 );
 // strip empty tags after automatically applying p tags.
 $article_info = str_replace( '<p></p>', '', wpautop( $article_info ) );
 
-// Check if plain text feature is enabled
+// Check if plain text feature is enabled.
 $plain_text_enabled = Republication_Tracker_Tool_Settings::is_plain_text_enabled();
 $plain_text_content = '';
 if ( $plain_text_enabled ) {
@@ -80,36 +82,36 @@ $using_license = isset( REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ] );
 
 echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 'style="display:none;"' ) . '>';
 	echo '<button ' . ( $is_amp ? 'on="tap:republication-tracker-tool-modal.close"' : '' ) . ' class="republication-tracker-tool-close">';
-	echo '<span class="screen-reader-text">' . esc_html( 'Close window', 'republication-tracker-tool' ) . '</span><span class="republication-tracker-tool-close-icon"></span></button>';
+	echo '<span class="screen-reader-text">' . esc_html__( 'Close window', 'republication-tracker-tool' ) . '</span><span class="republication-tracker-tool-close-icon"></span></button>';
 	printf( '<h2 id="republish-modal-label">%s</h2>', esc_html__( 'Republish this article', 'republication-tracker-tool' ) );
 
-	// Explain Creative Commons
+	// Explain Creative Commons.
 	echo '<div class="cc-policy">';
 	echo '<div class="cc-license">';
-		if ( $using_license ) {
-			printf( '<a rel="noreferrer license" target="_blank" href="%s"><img alt="%s" style="border-width:0" src="%s" /></a>', REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['url'], REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['description'], REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['badge'] );
-			echo wp_kses_post(
-				wpautop(
-					sprintf(
-						// translators: %1$s is the URL to the particular Creative Commons license.
-						__( 'This work is licensed under a <a rel="noreferrer license" target="_blank" href="%1$s">%2$s</a>.', 'republication-tracker-tool' ),
-						REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['url'],
-						REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['description'],
-					)
-				)
-			);
-		}
+if ( $using_license ) {
+	printf( '<a rel="noreferrer license" target="_blank" href="%s"><img alt="%s" style="border-width:0" src="%s" /></a>', esc_url( REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['url'] ), esc_html( REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['description'] ), esc_url( REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['badge'] ) );
+	echo wp_kses_post(
+		wpautop(
+			sprintf(
+				// translators: %1$s is the URL to the particular Creative Commons license.
+				__( 'This work is licensed under a <a rel="noreferrer license" target="_blank" href="%1$s">%2$s</a>.', 'republication-tracker-tool' ),
+				REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['url'],
+				REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['description']
+			)
+		)
+	);
+}
 	echo '</div>'; // .cc-license
-	echo "<p>" . wp_kses_post( $license_statement ) . "</p>";
+	echo '<p>' . wp_kses_post( $license_statement ) . '</p>';
 	echo '</div>'; // .cc-policy
 
-			// what we display to the embedder
+			// What we display to the embedder.
 			echo '<div class="article-info">';
 			echo wp_kses_post( $article_info );
 			echo '</div>'; // .article-info
 
-			// the text area that is copyable
-			?>
+			// The text area that is copyable.
+?>
 			<div class="republication-content-section">
 				<?php if ( $plain_text_enabled ) : ?>
 					<div class="republish-format-tabs">
@@ -130,7 +132,7 @@ echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 's
 						readonly
 						rows="5"
 						aria-label="<?php esc_attr_e( 'Republish this article (HTML format)', 'republication-tracker-tool' ); ?>"
-					><?php echo esc_html( $article_info ); ?><?php echo $content; ?><?php echo htmlspecialchars( $content_footer, ENT_QUOTES, 'UTF-8' ); ?></textarea>
+					><?php echo esc_html( $article_info ); ?><?php echo wp_kses_post( $content ); ?><?php echo wp_kses_post( htmlspecialchars( $content_footer, ENT_QUOTES, 'UTF-8' ) ); ?></textarea>
 
 					<?php if ( $plain_text_enabled ) : ?>
 						<div class="republish-content" data-tab-content="plain-text">
@@ -143,7 +145,7 @@ echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 's
 									id="republication-tracker-tool-canonical-url"
 									class="plain-text-field__input"
 									readonly
-									value="<?php echo esc_html( $canonical_tag ); ?>"
+									value="<?php echo esc_attr( $canonical_tag ); ?>"
 									aria-label="<?php esc_attr_e( 'Canonical tag for this article', 'republication-tracker-tool' ); ?>"
 								/>
 								<button class="plain-text-field__button" data-target="#republication-tracker-tool-canonical-url" aria-label="<?php esc_attr_e( 'Copy canonical URL', 'republication-tracker-tool' ); ?>">
@@ -161,7 +163,7 @@ echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 's
 									readonly
 									rows="8"
 									aria-label="<?php esc_attr_e( 'Plain text article content', 'republication-tracker-tool' ); ?>"
-								><?php echo $plain_text_content ?></textarea>
+								><?php echo wp_kses_post( $plain_text_content ); ?></textarea>
 								<button class="plain-text-field__button" data-target="#republication-tracker-tool-plain-text-content" aria-label="<?php esc_attr_e( 'Copy article content', 'republication-tracker-tool' ); ?>">
 									<?php esc_html_e( 'Copy Content', 'republication-tracker-tool' ); ?>
 								</button>
@@ -177,7 +179,7 @@ echo '<div id="republication-tracker-tool-modal-content" ' . ( $is_amp ? '' : 's
 									class="plain-text-field__input"
 									readonly
 									aria-label="<?php esc_attr_e( 'Tracking snippet', 'republication-tracker-tool' ); ?>"
-									value="<?php echo esc_html( $plain_text_tracking_snippet ); ?>"
+									value="<?php echo esc_attr( $plain_text_tracking_snippet ); ?>"
 								/>
 								<button class="plain-text-field__button" data-target="#republication-tracker-tool-tracking-snippet" aria-label="<?php esc_attr_e( 'Copy tracking snippet', 'republication-tracker-tool' ); ?>">
 									<?php esc_html_e( 'Copy Snippet', 'republication-tracker-tool' ); ?>

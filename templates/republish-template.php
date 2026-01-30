@@ -185,14 +185,14 @@ if ( $plain_text_enabled ) {
 					<?php if ( $using_license ) : ?>
 						<div class="cc-license">
 							<?php
-							echo $license_badge;
+							echo wp_kses_post( $license_badge );
 							echo wp_kses_post(
 								wpautop(
 									sprintf(
 									// translators: %1$s is the URL to the particular Creative Commons license, %2$s is the license description.
 										__( 'This work is licensed under a <a rel="noreferrer license" target="_blank" href="%1$s">%2$s</a>.', 'republication-tracker-tool' ),
 										REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['url'],
-										REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['description'],
+										REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['description']
 									)
 								)
 							);
@@ -240,7 +240,7 @@ if ( $plain_text_enabled ) {
 											id="republish-canonical-url"
 											class="republish-content__input"
 											readonly
-											value="<?php echo esc_html( $canonical_tag ); ?>"
+											value="<?php echo esc_attr( $canonical_tag ); ?>"
 											aria-label="<?php esc_attr_e( 'Canonical Tag for this article', 'republication-tracker-tool' ); ?>"
 										/>
 										<button class="plain-text-field__button" data-target="#republish-canonical-url" aria-label="<?php esc_attr_e( 'Copy canonical URL', 'republication-tracker-tool' ); ?>">
@@ -258,7 +258,7 @@ if ( $plain_text_enabled ) {
 											readonly
 											rows="12"
 											aria-label="<?php esc_attr_e( 'Plain text article content', 'republication-tracker-tool' ); ?>"
-										><?php echo $republish_plain_text_content; ?></textarea>
+										><?php echo wp_kses_post( $republish_plain_text_content ); ?></textarea>
 										<button class="plain-text-field__button" data-target="#republish-plain-text-content" aria-label="<?php esc_attr_e( 'Copy article content', 'republication-tracker-tool' ); ?>">
 											<?php esc_html_e( 'Copy Content', 'republication-tracker-tool' ); ?>
 										</button>
@@ -274,7 +274,7 @@ if ( $plain_text_enabled ) {
 											class="republish-content__input"
 											readonly
 											aria-label="<?php esc_attr_e( 'Tracking snippet', 'republication-tracker-tool' ); ?>"
-											value="<?php echo esc_html( $additional_tracking_html ); ?>"
+											value="<?php echo esc_attr( $additional_tracking_html ); ?>"
 										/>
 										<button class="plain-text-field__button" data-target="#republish-tracking-snippet" aria-label="<?php esc_attr_e( 'Copy tracking snippet', 'republication-tracker-tool' ); ?>">
 											<?php esc_html_e( 'Copy Snippet', 'republication-tracker-tool' ); ?>

@@ -4,6 +4,7 @@
  *
  * @link https://wpvip.com/plugins/co-authors-plus/
  * @link https://github.com/Automattic/Co-Authors-Plus
+ * @package Republication_Tracker_Tool
  */
 
 /**
@@ -14,7 +15,7 @@
  *
  * @link https://github.com/Automattic/Co-Authors-Plus/blob/3.4.3/php/class-coauthors-template-filters.php#L18-L20 the filter that does not trigger
  *
- * @param String $author_string The string returned by get_the_author
+ * @param String $author_string The string returned by get_the_author.
  * @since Co-Authors Plus 3.4.3
  * @uses coauthors https://github.com/Automattic/Co-Authors-Plus/blob/3.4.3/template-tags.php#L210-L227
  * @return String the plain-text byline
