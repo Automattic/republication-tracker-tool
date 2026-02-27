@@ -33,7 +33,7 @@ In order to see how stories are performing, you’ll need to log into your Googl
 
 ![google analytics new exploration](img/google-analytics-new-exploration.png)
 
-Once inside the new Exploration, you'll need to add a Segment, Dimensions, and Metrics. To view a report of articles that were shared via this plugin, click the + button next to the Segments panel and create a new **Event segment**. Add a new Condition with a `shared_post_url` containing part or all of the URL of the post you want to view metrics for.
+Once inside the new Exploration, you'll need to add a segment, dimensions, and metrics. To view a report of articles that were shared via this plugin, click the + button next to the Segments panel and create a new **Event segment**. Add a new Condition with a `shared_post_url` containing part or all of the URL of the post you want to view metrics for.
 
 Here you can enter a value that will return multiple articles (such as your root domain or a category slug to view all republished articles on the site or in a specific category) or a particular story (such as the post slug for the story). 
 
