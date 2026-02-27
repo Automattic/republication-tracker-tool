@@ -14,7 +14,7 @@ Metrics for republished/shared posts are tracked as `page_view` events in Google
 
 ## Register Custom Dimensions in GA4
 
-Before you can use `shared_post_url` in Explorations, you must register it as a custom dimension in your GA4 property. Without this step, data will be sent to GA4 but won't appear in your reports.
+Before you can use `shared_post_url` in Explorations, you must register it as a custom dimension in your GA4 property. Without this step, events will still be collected in GA4, but the `shared_post_url` parameter won't be available in your reports.
 1. In Google Analytics, go to **Admin** (gear icon) → **Data display** → **Custom dimensions**.
 2. Click **Create custom dimension** with the following settings:
 
