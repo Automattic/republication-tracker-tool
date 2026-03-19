@@ -32,11 +32,13 @@ class WidgetTest extends WP_UnitTestCase {
 
 		$this->widget = new Republication_Tracker_Tool_Widget();
 
-		$this->test_post = $this->factory->post->create_and_get( array(
-			'post_title'   => 'Test Post for Widget',
-			'post_content' => '<p>Test content for widget display.</p>',
-			'post_status'  => 'publish',
-		) );
+		$this->test_post = $this->factory->post->create_and_get(
+			array(
+				'post_title'   => 'Test Post for Widget',
+				'post_content' => '<p>Test content for widget display.</p>',
+				'post_status'  => 'publish',
+			)
+		);
 	}
 
 	/**
@@ -50,9 +52,9 @@ class WidgetTest extends WP_UnitTestCase {
 	/**
 	 * Test widget displays on single posts.
 	 */
-	function test_widget_displays_on_single_post() {
+	public function test_widget_displays_on_single_post() {
 		global $post, $wp_query;
-		
+
 		$post = $this->test_post;
 		$wp_query->is_single = true;
 		$wp_query->queried_object = $this->test_post;
@@ -88,7 +90,7 @@ class WidgetTest extends WP_UnitTestCase {
 	/**
 	 * Test widget respects hide widget meta.
 	 */
-	function test_widget_respects_hide_meta() {
+	public function test_widget_respects_hide_meta() {
 		global $post, $wp_query;
 
 		$post = $this->test_post;
@@ -110,7 +112,7 @@ class WidgetTest extends WP_UnitTestCase {
 	/**
 	 * Test widget does not display on hide_republication_widget filter set to true.
 	 */
-	function test_widget_does_not_display_on_hide_filter() {
+	public function test_widget_does_not_display_on_hide_filter() {
 		global $post, $wp_query;
 		$post = $this->test_post;
 		$wp_query->is_single = true;
@@ -130,7 +132,7 @@ class WidgetTest extends WP_UnitTestCase {
 	/**
 	 * Test even if multiple instances of the widget are created, it should only contain one modal.
 	 */
-	function test_multiple_widget_instances() {
+	public function test_multiple_widget_instances() {
 		global $post, $wp_query;
 		$post = $this->test_post;
 		$wp_query->is_single = true;
@@ -157,7 +159,7 @@ class WidgetTest extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'republication-tracker-tool-modal', $output );
 		$this->assertStringContainsString( 'republication-tracker-tool-button', $output );
 
-		// Check only one modal is present
+		// Check only one modal is present.
 		$this->assertEquals( substr_count( $output, 'republication-tracker-tool-modal' ), 1, 'Single modal found in output.' );
 		$this->assertEquals( substr_count( $output, 'republication-tracker-tool-button' ), 3, 'Multiple buttons found in output.' );
 	}

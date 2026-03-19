@@ -12,13 +12,28 @@ Metrics for republished/shared posts are tracked as `page_view` events in Google
 - `page_referrer`: URL where the post was republished (ex: https://nytimes.com/story-1)
 - `page_title`: Title of the page where the post was republished (ex: Story Title)
 
+## Register Custom Dimensions in GA4
+
+Before you can use `shared_post_url` in Explorations, you must register it as a custom dimension in your GA4 property. Without this step, events will still be collected in GA4, but the `shared_post_url` parameter won't be available in your reports.
+1. In Google Analytics, go to **Admin** (gear icon) → **Data display** → **Custom dimensions**.
+2. Click **Create custom dimension** with the following settings:
+
+| Dimension name | Scope | Event parameter |
+|---|---|---|
+| `shared_post_url` | Event | `shared_post_url` |
+
+3. Make sure the **Scope** is set to **Event** (not User).
+4. Click **Save** to create the custom dimension.
+
+> **Note:** Custom dimensions only apply to data collected **after** they are registered. Historical event data will not retroactively include this dimension.
+
 ## See How Stories are Performing
 
 In order to see how stories are performing, you’ll need to log into your Google Analytics account. Once logged into your dashboard, select the “Explore” tab on the left sidebar. Once the “Explore” pane opens up, select “Blank” to create a new Exploration report. 
 
 ![google analytics new exploration](img/google-analytics-new-exploration.png)
 
-Once inside the new Exploration, you'll need to add a Segment of users to analyze, and Dimensions and Metrics to display. To view a report of articles that were shared via this plugin, click the + button next to the Segments panel and create a new User segment. Add a new Condition with a `shared_post_url` containing part or all of the URL of the post you want to view metrics for.
+Once inside the new Exploration, you'll need to add a segment, dimensions, and metrics. To view a report of articles that were shared via this plugin, click the + button next to the Segments panel and create a new **Event segment**. Add a new Condition with a `shared_post_url` containing part or all of the URL of the post you want to view metrics for.
 
 Here you can enter a value that will return multiple articles (such as your root domain or a category slug to view all republished articles on the site or in a specific category) or a particular story (such as the post slug for the story). 
 
@@ -39,7 +54,7 @@ In the Settings column, you can choose Visualization options. For example, to vi
 
 - Technique: Free form
 - Visualization: Table
-- Segment Comparisons: Your user segment as created above
+- Segment Comparisons: Your event segment as created above
 - Rows: Page location
 - Columns: Page referrer (this will show each shared URL in its own column of the report)
 - Values: Event count

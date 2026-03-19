@@ -73,7 +73,7 @@ class Republication_Tracker_Tool_Rewrite_Endpoint {
 		if ( function_exists( 'wpcom_vip_url_to_postid' ) ) {
 			$post_id = wpcom_vip_url_to_postid( $endpoint );
 		} else {
-			$post_id = url_to_postid( $endpoint );
+			$post_id = url_to_postid( $endpoint ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.url_to_postid_url_to_postid
 		}
 
 		// If there is no post ID then redirect to 404.
@@ -161,7 +161,7 @@ class Republication_Tracker_Tool_Rewrite_Endpoint {
 			REPUBLICATION_TRACKER_TOOL_VERSION
 		);
 
-		// Enqueue the clipboard utility first
+		// Enqueue the clipboard utility first.
 		wp_enqueue_script(
 			'republication-tracker-tool-clipboard-utils',
 			REPUBLICATION_TRACKER_TOOL_URL . 'assets/clipboard-utils.js',
