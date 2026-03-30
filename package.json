@@ -1,6 +1,6 @@
 {
 	"name": "republication-tracker-tool",
-	"version": "2.8.0",
+	"version": "2.8.1",
 	"main": "Gruntfile.js",
 	"author": "Automattic",
 	"scripts": {
@@ -26,6 +26,6 @@
 		"grunt": "~1.6.1",
 		"grunt-wp-i18n": "~1.0.3",
 		"grunt-wp-readme-to-markdown": "~2.1.0",
-		"newspack-scripts": "^5.9.0"
+		"newspack-scripts": "^5.9.5"
 	}
 }
