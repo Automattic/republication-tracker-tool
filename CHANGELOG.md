@@ -1,3 +1,11 @@
+## [2.8.1](https://github.com/Automattic/republication-tracker-tool/compare/v2.8.0...v2.8.1) (2026-03-30)
+
+
+### Bug Fixes
+
+* bump newspack-scripts version ([#314](https://github.com/Automattic/republication-tracker-tool/issues/314)) ([9a61262](https://github.com/Automattic/republication-tracker-tool/commit/9a61262768ad16508797b08be7ac6bccefe52f34))
+* force release ([e2adf96](https://github.com/Automattic/republication-tracker-tool/commit/e2adf965c8559f02a1e1ef0d89b13aced3ca2c80))
+
 # [2.8.0](https://github.com/Automattic/republication-tracker-tool/compare/v2.7.0...v2.8.0) (2025-11-24)
 
 
