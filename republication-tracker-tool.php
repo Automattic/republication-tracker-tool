@@ -73,6 +73,13 @@ final class Republication_Tracker_Tool {
 	protected static $single_instance = null;
 
 	/**
+	 * Whether the modal has been rendered on this page.
+	 *
+	 * @var bool
+	 */
+	public static $modal_rendered = false;
+
+	/**
 	 * Instance of Republication_Tracker_Tool_Settings
 	 *
 	 * @since 1.0
