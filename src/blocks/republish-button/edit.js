@@ -20,15 +20,37 @@ function RepublishButtonEdit( { attributes, setAttributes } ) {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={ __( 'Display Settings', 'republication-tracker-tool' ) }>
+				<PanelBody
+					title={ __(
+						'Display Settings',
+						'republication-tracker-tool'
+					) }
+				>
 					<SelectControl
-						label={ __( 'Display mode', 'republication-tracker-tool' ) }
+						label={ __(
+							'Display mode',
+							'republication-tracker-tool'
+						) }
 						value={ displayMode }
 						options={ [
-							{ label: __( 'Modal', 'republication-tracker-tool' ), value: 'modal' },
-							{ label: __( 'Page', 'republication-tracker-tool' ), value: 'page' },
+							{
+								label: __(
+									'Modal',
+									'republication-tracker-tool'
+								),
+								value: 'modal',
+							},
+							{
+								label: __(
+									'Page',
+									'republication-tracker-tool'
+								),
+								value: 'page',
+							},
 						] }
-						onChange={ ( val ) => setAttributes( { displayMode: val } ) }
+						onChange={ ( val ) =>
+							setAttributes( { displayMode: val } )
+						}
 					/>
 				</PanelBody>
 			</InspectorControls>
@@ -38,17 +60,28 @@ function RepublishButtonEdit( { attributes, setAttributes } ) {
 					className="wp-block-republication-tracker-tool-republish-button__message"
 					value={ message }
 					onChange={ ( val ) => setAttributes( { message: val } ) }
-					placeholder={ __( 'Add a description of the republish feature...', 'republication-tracker-tool' ) }
+					placeholder={ __(
+						'Add a description of the republish feature…',
+						'republication-tracker-tool'
+					) }
 					withoutInteractiveFormatting
 				/>
 				<span className="wp-block-republication-tracker-tool-republish-button__button">
 					<RichText
 						tagName="span"
 						value={ buttonText }
-						onChange={ ( val ) => setAttributes( { buttonText: val } ) }
-						placeholder={ __( 'Republish This Story', 'republication-tracker-tool' ) }
+						onChange={ ( val ) =>
+							setAttributes( { buttonText: val } )
+						}
+						placeholder={ __(
+							'Republish This Story',
+							'republication-tracker-tool'
+						) }
 						allowedFormats={ [] }
-						aria-label={ __( 'Button text', 'republication-tracker-tool' ) }
+						aria-label={ __(
+							'Button text',
+							'republication-tracker-tool'
+						) }
 					/>
 				</span>
 			</div>

@@ -1,3 +1,5 @@
+/* global ClipboardUtils, DOMParser */
+
 /**
  * WordPress dependencies
  */
@@ -87,7 +89,10 @@ function initTabSwitching( modal ) {
 		copyActiveBtn.addEventListener( 'click', ( e ) => {
 			e.preventDefault();
 			if ( window.ClipboardUtils ) {
-				ClipboardUtils.copyFromElement( getActiveTextarea(), copyActiveBtn );
+				ClipboardUtils.copyFromElement(
+					getActiveTextarea(),
+					copyActiveBtn
+				);
 			}
 		} );
 	}
@@ -131,12 +136,13 @@ function trapFocus( modal ) {
 		if ( e.key !== 'Tab' ) {
 			return;
 		}
+		const active = modal.ownerDocument.activeElement;
 		if ( e.shiftKey ) {
-			if ( document.activeElement === firstFocusable ) {
+			if ( active === firstFocusable ) {
 				lastFocusable.focus();
 				e.preventDefault();
 			}
-		} else if ( document.activeElement === lastFocusable ) {
+		} else if ( active === lastFocusable ) {
 			firstFocusable.focus();
 			e.preventDefault();
 		}
