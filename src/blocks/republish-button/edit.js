@@ -11,12 +11,11 @@ import {
 	InspectorControls,
 	RichText,
 	useBlockProps,
-	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
+	/* eslint-disable @wordpress/no-unsafe-wp-apis */
 	__experimentalUseBorderProps as useBorderProps,
-	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
 	__experimentalUseColorProps as useColorProps,
-	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
 	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
+	/* eslint-enable @wordpress/no-unsafe-wp-apis */
 } from '@wordpress/block-editor';
 import { PanelBody, SelectControl } from '@wordpress/components';
 
