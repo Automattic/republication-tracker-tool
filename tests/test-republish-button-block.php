@@ -23,6 +23,16 @@ class RepublishButtonBlockTest extends WP_UnitTestCase {
 	public function set_up() {
 		parent::set_up();
 
+		// Register the block type so get_block_wrapper_attributes() works.
+		if ( ! WP_Block_Type_Registry::get_instance()->is_registered( 'republication-tracker-tool/republish-button' ) ) {
+			register_block_type_from_metadata(
+				REPUBLICATION_TRACKER_TOOL_PATH . 'src/blocks/republish-button',
+				[
+					'render_callback' => [ 'Republication_Tracker_Tool_Republish_Button_Block', 'render_block' ],
+				]
+			);
+		}
+
 		$this->test_post = $this->factory->post->create_and_get(
 			[
 				'post_title'   => 'Test Post for Block',
