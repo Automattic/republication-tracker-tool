@@ -21,18 +21,26 @@ final class Republication_Tracker_Tool_Republish_Button_Block {
 	}
 
 	/**
-	 * Register the block. Only available on block themes.
+	 * Register the block.
+	 *
+	 * On block themes the block is fully available. On classic themes it is
+	 * still registered (so existing content does not become an "unknown block")
+	 * but hidden from the inserter.
 	 */
 	public static function register_block() {
-		if ( ! function_exists( 'wp_is_block_theme' ) || ! wp_is_block_theme() ) {
-			return;
+		$args = [
+			'render_callback' => [ __CLASS__, 'render_block' ],
+		];
+
+		if ( function_exists( 'wp_is_block_theme' ) && ! wp_is_block_theme() ) {
+			$args['supports'] = [
+				'inserter' => false,
+			];
 		}
 
 		register_block_type_from_metadata(
 			REPUBLICATION_TRACKER_TOOL_PATH . 'src/blocks/republish-button',
-			[
-				'render_callback' => [ __CLASS__, 'render_block' ],
-			]
+			$args
 		);
 	}
 
