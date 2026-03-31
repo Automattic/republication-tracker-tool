@@ -88,24 +88,23 @@ final class Republication_Tracker_Tool_Republish_Button_Block {
 		$license_key   = get_option( 'republication_tracker_tool_license', REPUBLICATION_TRACKER_TOOL_DEFAULT_LICENSE );
 		$using_license = isset( REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ] );
 
-		// Build the CTA element with block support attributes.
-		$extra_classes      = [ 'wp-block-republication-tracker-tool-republish-button__button' ];
-		$wrapper_args       = [ 'class' => implode( ' ', $extra_classes ) ];
-		$wrapper_attributes = get_block_wrapper_attributes( $wrapper_args );
+		// Block wrapper attributes go on the outer div (anchor, alignment, layout, block supports).
+		$wrapper_attributes = get_block_wrapper_attributes();
 
 		// Start building output.
-		$html = '<div class="wp-block-republication-tracker-tool-republish-button">';
+		$html = '<div ' . $wrapper_attributes . '>';
 
 		// Message.
 		$html .= '<p class="wp-block-republication-tracker-tool-republish-button__message">' . wp_kses_post( $message_text ) . '</p>';
 
-		// Button or link.
+		// Button or link (inherits colors from wrapper via CSS).
+		$button_class = 'wp-block-republication-tracker-tool-republish-button__button';
 		if ( 'page' === $display_mode ) {
 			$endpoint      = apply_filters( 'republication_tracker_tool_endpoint', 'republish' );
 			$republish_url = home_url( '/' . $endpoint . wp_make_link_relative( get_permalink( $post->ID ) ) );
-			$html         .= '<a ' . $wrapper_attributes . ' href="' . esc_url( $republish_url ) . '">' . esc_html( $button_text ) . '</a>';
+			$html         .= '<a class="' . esc_attr( $button_class ) . '" href="' . esc_url( $republish_url ) . '">' . esc_html( $button_text ) . '</a>';
 		} else {
-			$html .= '<button ' . $wrapper_attributes . ' data-modal-trigger="republish">' . esc_html( $button_text ) . '</button>';
+			$html .= '<button class="' . esc_attr( $button_class ) . '" data-modal-trigger="republish">' . esc_html( $button_text ) . '</button>';
 		}
 
 		// License badge.

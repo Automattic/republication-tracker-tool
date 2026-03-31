@@ -1,9 +1,4 @@
 /**
- * External dependencies
- */
-import classnames from 'classnames';
-
-/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
@@ -11,34 +6,16 @@ import {
 	InspectorControls,
 	RichText,
 	useBlockProps,
-	/* eslint-disable @wordpress/no-unsafe-wp-apis */
-	__experimentalUseBorderProps as useBorderProps,
-	__experimentalUseColorProps as useColorProps,
-	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
-	/* eslint-enable @wordpress/no-unsafe-wp-apis */
 } from '@wordpress/block-editor';
 import { PanelBody, SelectControl } from '@wordpress/components';
 
 function RepublishButtonEdit( { attributes, setAttributes } ) {
 	const { buttonText, message, displayMode } = attributes;
 
-	const colorProps = useColorProps( attributes );
-	const borderProps = useBorderProps( attributes );
-	const spacingProps = useSpacingProps( attributes );
-
+	// Block supports (color, typography, spacing, border, shadow) are applied
+	// to the wrapper div automatically by useBlockProps(). The inner button
+	// inherits colors via CSS.
 	const blockProps = useBlockProps();
-
-	const buttonClasses = classnames(
-		'wp-block-republication-tracker-tool-republish-button__button',
-		colorProps.className,
-		borderProps.className
-	);
-
-	const buttonStyles = {
-		...borderProps.style,
-		...colorProps.style,
-		...spacingProps.style,
-	};
 
 	return (
 		<>
@@ -64,7 +41,7 @@ function RepublishButtonEdit( { attributes, setAttributes } ) {
 					placeholder={ __( 'Add a description of the republish feature...', 'republication-tracker-tool' ) }
 					withoutInteractiveFormatting
 				/>
-				<span className={ buttonClasses } style={ buttonStyles }>
+				<span className="wp-block-republication-tracker-tool-republish-button__button">
 					<RichText
 						tagName="span"
 						value={ buttonText }
