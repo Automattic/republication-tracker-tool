@@ -64,12 +64,25 @@ class RepublishButtonBlockTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Helper to render the block through the standard pipeline so
+	 * WP_Block_Supports context is set correctly.
+	 *
+	 * @param array $attrs Block attributes.
+	 * @return string Rendered HTML.
+	 */
+	private function render_block( $attrs = [] ) {
+		$json       = empty( $attrs ) ? '' : ' ' . wp_json_encode( (object) $attrs );
+		$serialized = '<!-- wp:republication-tracker-tool/republish-button' . $json . ' /-->';
+		return do_blocks( $serialized );
+	}
+
+	/**
 	 * Test block renders on singular post view.
 	 */
 	public function test_block_renders_on_singular_post() {
 		$this->set_singular_context();
 
-		$output = Republication_Tracker_Tool_Republish_Button_Block::render_block( [] );
+		$output = $this->render_block();
 
 		$this->assertStringContainsString( 'wp-block-republication-tracker-tool-republish-button', $output );
 		$this->assertStringContainsString( 'Republish This Story', $output );
@@ -143,12 +156,12 @@ class RepublishButtonBlockTest extends WP_UnitTestCase {
 	public function test_single_modal_across_multiple_blocks() {
 		$this->set_singular_context();
 
-		$output1 = Republication_Tracker_Tool_Republish_Button_Block::render_block( [] );
-		$output2 = Republication_Tracker_Tool_Republish_Button_Block::render_block( [] );
+		$output1 = $this->render_block();
+		$output2 = $this->render_block();
 
 		$combined = $output1 . $output2;
 
-		$this->assertEquals( 1, substr_count( $combined, 'republication-tracker-tool-modal' ), 'Single modal in combined output.' );
+		$this->assertEquals( 1, substr_count( $combined, 'id="republication-tracker-tool-modal"' ), 'Single modal in combined output.' );
 		$this->assertEquals( 2, substr_count( $combined, 'data-modal-trigger="republish"' ), 'Two trigger buttons in combined output.' );
 	}
 
@@ -158,16 +171,12 @@ class RepublishButtonBlockTest extends WP_UnitTestCase {
 	public function test_page_mode_renders_link() {
 		$this->set_singular_context();
 
-		$output = Republication_Tracker_Tool_Republish_Button_Block::render_block(
-			[
-				'displayMode' => 'page',
-			]
-		);
+		$output = $this->render_block( [ 'displayMode' => 'page' ] );
 
 		$this->assertStringContainsString( '<a class=', $output );
 		$this->assertStringContainsString( '/republish/', $output );
 		$this->assertStringNotContainsString( 'data-modal-trigger', $output );
-		$this->assertStringNotContainsString( 'republication-tracker-tool-modal', $output );
+		$this->assertStringNotContainsString( 'id="republication-tracker-tool-modal"', $output );
 	}
 
 	/**
@@ -176,7 +185,7 @@ class RepublishButtonBlockTest extends WP_UnitTestCase {
 	public function test_empty_attributes_fallback() {
 		$this->set_singular_context();
 
-		$output = Republication_Tracker_Tool_Republish_Button_Block::render_block(
+		$output = $this->render_block(
 			[
 				'buttonText' => '',
 				'message'    => '',
@@ -193,11 +202,7 @@ class RepublishButtonBlockTest extends WP_UnitTestCase {
 	public function test_invalid_display_mode_fallback() {
 		$this->set_singular_context();
 
-		$output = Republication_Tracker_Tool_Republish_Button_Block::render_block(
-			[
-				'displayMode' => 'invalid',
-			]
-		);
+		$output = $this->render_block( [ 'displayMode' => 'invalid' ] );
 
 		$this->assertStringContainsString( 'data-modal-trigger="republish"', $output );
 	}
