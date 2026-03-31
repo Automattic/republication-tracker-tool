@@ -72,6 +72,7 @@ function RepublishButtonEdit( { attributes, setAttributes } ) {
 						onChange={ ( val ) => setAttributes( { buttonText: val } ) }
 						placeholder={ __( 'Republish This Story', 'republication-tracker-tool' ) }
 						allowedFormats={ [] }
+						aria-label={ __( 'Button text', 'republication-tracker-tool' ) }
 					/>
 				</span>
 			</div>

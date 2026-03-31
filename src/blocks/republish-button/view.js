@@ -3,6 +3,9 @@
  */
 import domReady from '@wordpress/dom-ready';
 
+let initialized = false;
+let currentTrigger = null;
+
 /**
  * Get the textarea for the currently active tab.
  *
@@ -141,20 +144,86 @@ function trapFocus( modal ) {
 }
 
 /**
+ * Close the modal and return focus to the trigger button.
+ *
+ * @param {HTMLElement} modal The modal element.
+ */
+function closeModal( modal ) {
+	document.body.classList.remove( 'modal-open-disallow-scrolling' );
+	modal.style.display = 'none';
+	if ( currentTrigger ) {
+		currentTrigger.focus();
+	}
+	currentTrigger = null;
+}
+
+/**
+ * Initialize modal event listeners once.
+ *
+ * @param {HTMLElement} modal The modal element.
+ */
+function initModal( modal ) {
+	if ( initialized ) {
+		return;
+	}
+	initialized = true;
+
+	const modalContent = modal.querySelector(
+		'#republication-tracker-tool-modal-content'
+	);
+	const closeBtn = modal.querySelector( '.republication-tracker-tool-close' );
+
+	// Move modal to body once.
+	if ( modal.parentNode !== document.body ) {
+		document.body.appendChild( modal );
+	}
+
+	// Strip captions once (not per-open).
+	stripCaptions( modal );
+
+	// Tab switching (bind once).
+	initTabSwitching( modal );
+
+	// Focus trap (bind once).
+	trapFocus( modal );
+
+	// Prevent clicks inside modal content from closing modal.
+	if ( modalContent ) {
+		modalContent.addEventListener( 'click', ( e ) => e.stopPropagation() );
+	}
+
+	// Click outside modal content closes modal.
+	modal.addEventListener( 'click', () => closeModal( modal ) );
+
+	// Close button.
+	if ( closeBtn ) {
+		closeBtn.addEventListener( 'click', ( e ) => {
+			e.stopPropagation();
+			closeModal( modal );
+		} );
+	}
+
+	// Escape key.
+	document.addEventListener( 'keydown', ( e ) => {
+		if ( e.key === 'Escape' && modal.style.display !== 'none' ) {
+			closeModal( modal );
+		}
+	} );
+}
+
+/**
  * Show the modal.
  *
  * @param {HTMLElement} modal         The modal element.
  * @param {HTMLElement} triggerButton The button that triggered the modal.
  */
 function showModal( modal, triggerButton ) {
+	initModal( modal );
+	currentTrigger = triggerButton;
+
 	const modalContent = modal.querySelector(
 		'#republication-tracker-tool-modal-content'
 	);
-
-	// Move modal to body if not already there.
-	if ( modal.parentNode !== document.body ) {
-		document.body.appendChild( modal );
-	}
 
 	modal.style.display = '';
 	if ( modalContent ) {
@@ -162,49 +231,11 @@ function showModal( modal, triggerButton ) {
 	}
 	document.body.classList.add( 'modal-open-disallow-scrolling' );
 
-	// Prevent clicks inside modal content from closing modal.
-	if ( modalContent ) {
-		modalContent.addEventListener( 'click', ( e ) => e.stopPropagation() );
-	}
-
-	stripCaptions( modal );
-	initTabSwitching( modal );
-	trapFocus( modal );
-
 	// Focus close button.
 	const closeBtn = modal.querySelector( '.republication-tracker-tool-close' );
 	if ( closeBtn ) {
 		closeBtn.focus();
 	}
-
-	// Close handlers.
-	const closeModal = () => {
-		document.body.classList.remove( 'modal-open-disallow-scrolling' );
-		modal.style.display = 'none';
-		if ( triggerButton ) {
-			triggerButton.focus();
-		}
-	};
-
-	// Click outside modal content.
-	modal.addEventListener( 'click', closeModal );
-
-	// Close button.
-	if ( closeBtn ) {
-		closeBtn.addEventListener( 'click', ( e ) => {
-			e.stopPropagation();
-			closeModal();
-		} );
-	}
-
-	// Escape key.
-	const escHandler = ( e ) => {
-		if ( e.key === 'Escape' ) {
-			closeModal();
-			document.removeEventListener( 'keyup', escHandler );
-		}
-	};
-	document.addEventListener( 'keyup', escHandler );
 }
 
 domReady( () => {

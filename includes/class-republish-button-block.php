@@ -5,6 +5,9 @@
  * @package Republication_Tracker_Tool
  */
 
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
+
 /**
  * Republish Button Block class.
  */
@@ -43,13 +46,13 @@ final class Republication_Tracker_Tool_Republish_Button_Block {
 		global $post;
 
 		// Guard: only render on singular views.
-		if ( ! is_singular() ) {
+		if ( ! is_singular() || ! $post instanceof \WP_Post ) {
 			return '';
 		}
 
 		// Guard: check allowed post types.
 		$allowed_post_types = apply_filters( 'republication_tracker_tool_post_types', [ 'post' ] );
-		if ( ! in_array( get_post_type(), $allowed_post_types, true ) ) {
+		if ( ! in_array( get_post_type( $post ), $allowed_post_types, true ) ) {
 			return '';
 		}
 
@@ -70,6 +73,11 @@ final class Republication_Tracker_Tool_Republish_Button_Block {
 			'displayMode' => 'modal',
 		];
 		$attrs = wp_parse_args( $attrs, $default_attrs );
+
+		// Validate displayMode against allowed values.
+		if ( ! in_array( $attrs['displayMode'], [ 'modal', 'page' ], true ) ) {
+			$attrs['displayMode'] = 'modal';
+		}
 
 		// Fall back to translated default when attribute is empty string.
 		$button_text  = '' === trim( (string) $attrs['buttonText'] ) ? $default_attrs['buttonText'] : $attrs['buttonText'];
@@ -106,7 +114,7 @@ final class Republication_Tracker_Tool_Republish_Button_Block {
 				'<p><a class="license" rel="noreferrer license" target="_blank" href="%s"><img alt="%s" style="border-width:0" src="%s" /></a></p>',
 				esc_url( REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['url'] ),
 				esc_html__( 'Creative Commons License', 'republication-tracker-tool' ),
-				esc_url( plugin_dir_url( __DIR__ ) ) . 'assets/img/' . esc_attr( $license_key ) . '.png'
+				esc_url( plugin_dir_url( __DIR__ ) . 'assets/img/' . $license_key . '.png' )
 			);
 		}
 
