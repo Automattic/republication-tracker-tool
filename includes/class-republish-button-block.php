@@ -167,7 +167,10 @@ final class Republication_Tracker_Tool_Republish_Button_Block {
 		$asset_file = REPUBLICATION_TRACKER_TOOL_PATH . 'dist/republish-button-view.asset.php';
 		$asset      = file_exists( $asset_file )
 			? include $asset_file
-			: [ 'dependencies' => [], 'version' => REPUBLICATION_TRACKER_TOOL_VERSION ];
+			: [
+				'dependencies' => [],
+				'version'      => REPUBLICATION_TRACKER_TOOL_VERSION,
+			];
 
 		wp_enqueue_script(
 			'republication-tracker-tool-republish-button-view',

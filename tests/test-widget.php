@@ -46,6 +46,7 @@ class WidgetTest extends WP_UnitTestCase {
 	 */
 	public function tear_down() {
 		wp_delete_post( $this->test_post->ID, true );
+		Republication_Tracker_Tool::$modal_rendered = false;
 		parent::tear_down();
 	}
 
