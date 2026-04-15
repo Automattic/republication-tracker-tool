@@ -162,7 +162,8 @@ final class Republication_Tracker_Tool {
 			function( $template ) {
 				// If the params are set, use our pixel functions.
 				if ( isset( $_GET['republication-pixel'] ) && isset( $_GET['post'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-					return include_once plugin_dir_path( __FILE__ ) . 'includes/pixel.php';
+					include_once plugin_dir_path( __FILE__ ) . 'includes/pixel.php';
+					exit;
 					// Else, continue with whatever template was being loaded.
 				} else {
 					return $template;
