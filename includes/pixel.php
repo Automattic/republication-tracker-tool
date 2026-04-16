@@ -74,7 +74,10 @@ function wprtt_extract_cid_from_cookies() {
 	return wprtt_create_cid_cookie_if_not_set();
 }
 
-if ( isset( $_GET['post'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+// Non-ga4 hits (bots, crawlers) skip this block entirely. No counter update, no DB writes.
+// The wp-admin referrer bailout below is therefore only needed within this block.
+// Only update share tracking when a ga4 param is present (real pixel fires from configured republishers).
+if ( isset( $_GET['post'] ) && isset( $_GET['ga4'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 	// set up all of our post vars we want to track.
 	$shared_post_id = absint( $_GET['post'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
