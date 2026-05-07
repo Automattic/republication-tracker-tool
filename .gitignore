@@ -5,6 +5,7 @@ node_modules/
 *.sql
 *.tar.gz
 *.zip
+dist/
 release/
 vendor
 .phpunit.result.cache
