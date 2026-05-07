@@ -16,31 +16,37 @@ const RepublicationTrackerPanel = () => {
 
 	const [ meta, setMeta ] = useEntityProp( 'postType', postType, 'meta' );
 
-	const filterHides = useSelect(
-		( select ) =>
-			select( 'core/editor' ).getEditedPostAttribute(
+	const { filterHides, shareData } = useSelect( ( select ) => {
+		const editor = select( 'core/editor' );
+		return {
+			filterHides: editor.getEditedPostAttribute(
 				'republication_tracker_tool_filter_hides'
 			),
-		[]
-	);
+			shareData: editor.getEditedPostAttribute(
+				'republication_tracker_tool_share_data'
+			),
+		};
+	}, [] );
 
 	if ( 'post' !== postType ) {
 		return null;
 	}
 
 	const hideWidget = !! meta?.[ META_KEY ];
+	const total = shareData?.total ?? 0;
+	const entries = shareData?.entries ?? [];
 
 	return (
 		<PluginDocumentSettingPanel
-			name="republication-tracker-tool-hide-widget"
+			name="republication-tracker-tool"
 			title={ __(
-				'Hide Republication Widget',
+				'Republication Widget Settings',
 				'republication-tracker-tool'
 			) }
 		>
 			<ToggleControl
 				label={ __(
-					'Hide the Republication sharing widget on this post?',
+					'Hide Republication widget',
 					'republication-tracker-tool'
 				) }
 				checked={ filterHides ? true : hideWidget }
@@ -70,6 +76,50 @@ const RepublicationTrackerPanel = () => {
 						: undefined
 				}
 			/>
+			<p style={ { marginTop: '16px' } }>
+				{ __( 'Total number of views:', 'republication-tracker-tool' ) }{ ' ' }
+				{ total }
+			</p>
+			{ entries.length > 0 ? (
+				<table className="widefat striped">
+					<thead>
+						<tr>
+							<th>
+								{ __(
+									'Republished URL',
+									'republication-tracker-tool'
+								) }
+							</th>
+							<th>
+								{ __( 'Views', 'republication-tracker-tool' ) }
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						{ entries.map( ( entry ) => (
+							<tr key={ entry.url }>
+								<td>
+									<a
+										href={ entry.url }
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										{ entry.url }
+									</a>
+								</td>
+								<td>{ entry.count }</td>
+							</tr>
+						) ) }
+					</tbody>
+				</table>
+			) : (
+				<p>
+					{ __(
+						'There are no shares to display.',
+						'republication-tracker-tool'
+					) }
+				</p>
+			) }
 		</PluginDocumentSettingPanel>
 	);
 };

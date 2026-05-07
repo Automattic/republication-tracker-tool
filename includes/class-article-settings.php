@@ -93,6 +93,35 @@ class Republication_Tracker_Tool_Article_Settings {
 					),
 				)
 			);
+			register_rest_field(
+				$post_type,
+				'republication_tracker_tool_share_data',
+				array(
+					'get_callback' => function( $post_array ) {
+						$shares = get_post_meta( $post_array['id'], 'republication_tracker_tool_sharing', true );
+						if ( ! is_array( $shares ) ) {
+							$shares = array();
+						}
+						$total   = 0;
+						$entries = array();
+						foreach ( $shares as $url => $count ) {
+							$total    += (int) $count;
+							$entries[] = array(
+								'url'   => (string) $url,
+								'count' => (int) $count,
+							);
+						}
+						return array(
+							'total'   => $total,
+							'entries' => $entries,
+						);
+					},
+					'schema'       => array(
+						'type'    => 'object',
+						'context' => array( 'edit' ),
+					),
+				)
+			);
 		}
 	}
 
