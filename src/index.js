@@ -58,7 +58,7 @@ const RepublicationTrackerPanel = () => {
 					filterHides
 						? createInterpolateElement(
 								__(
-									'The Republication sharing widget on this post is programatically disabled through the <code>hide_republication_widget</code> filter. <a>Read more about this filter</a>.',
+									'The Republication sharing widget on this post is programmatically disabled through the <code>hide_republication_widget</code> filter. <a>Read more about this filter</a>.',
 									'republication-tracker-tool'
 								),
 								{
