@@ -8,7 +8,7 @@
 		"cm": "newspack-scripts commit",
 		"build": "newspack-scripts wp-scripts build",
 		"i18n": "grunt i18n",
-		"lint:js": "newspack-scripts wp-scripts lint-js",
+		"lint:js": "newspack-scripts wp-scripts lint-js src",
 		"readme": "grunt readme",
 		"semantic-release": "newspack-scripts release --files=republication-tracker-tool.php",
 		"release:archive": "rm -rf release && mkdir -p release && rsync -r . ./release/republication-tracker-tool --exclude-from='./.distignore' && cd release && zip -r republication-tracker-tool.zip republication-tracker-tool",
@@ -23,6 +23,7 @@
 		"url": "https://github.com/Automattic/republication-tracker-tool/issues"
 	},
 	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "^6.21.0",
 		"grunt": "~1.6.1",
 		"grunt-wp-i18n": "~1.0.3",
 		"grunt-wp-readme-to-markdown": "~2.1.0",
