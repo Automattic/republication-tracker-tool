@@ -52,7 +52,7 @@ class Republication_Tracker_Tool_Article_Settings {
 	/**
 	 * Register the hide-widget meta so the block editor can read/write it via REST.
 	 *
-	 * @since 2.8.3
+	 * @since 2.9.0
 	 */
 	public function register_meta() {
 		foreach ( array( 'post' ) as $post_type ) {
@@ -63,8 +63,8 @@ class Republication_Tracker_Tool_Article_Settings {
 					'show_in_rest'  => true,
 					'single'        => true,
 					'type'          => 'boolean',
-					'auth_callback' => function() {
-						return current_user_can( 'edit_posts' );
+					'auth_callback' => function( $allowed, $meta_key, $post_id, $user_id ) {
+						return user_can( $user_id, 'edit_post', $post_id );
 					},
 				)
 			);
@@ -75,7 +75,7 @@ class Republication_Tracker_Tool_Article_Settings {
 	 * Expose whether the hide_republication_widget filter forces hiding,
 	 * so the block editor sidebar can render a notice instead of the toggle.
 	 *
-	 * @since 2.8.3
+	 * @since 2.9.0
 	 */
 	public function register_rest_fields() {
 		foreach ( array( 'post' ) as $post_type ) {
@@ -161,7 +161,7 @@ class Republication_Tracker_Tool_Article_Settings {
 	/**
 	 * Enqueue the block editor sidebar panel.
 	 *
-	 * @since 2.8.3
+	 * @since 2.9.0
 	 */
 	public function enqueue_editor_assets() {
 		$screen = get_current_screen();
@@ -281,7 +281,7 @@ class Republication_Tracker_Tool_Article_Settings {
 		$hide_republication_widget_by_filter = apply_filters( 'hide_republication_widget', $hide_republication_widget_by_filter, $post );
 
 		if ( true == $hide_republication_widget_by_filter ) {
-			echo '<p>The Republication sharing widget on this post is programmatically disabled through the <code>hide_republication_widget</code> filter. <a href="https://github.com/Automattic/republication-tracker-tool/blob/trunk/docs/removing-republish-button-from-categories.md" target="_blank">Read more about this filter</a>.</p>';
+			echo '<p>The Republication sharing widget on this post is programmatically disabled through the <code>hide_republication_widget</code> filter. <a href="https://github.com/Automattic/republication-tracker-tool/blob/trunk/docs/removing-republish-button-from-categories.md" target="_blank" rel="noopener noreferrer">Read more about this filter</a>.</p>';
 		} else {
 
 			echo '<label>';

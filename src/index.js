@@ -1,32 +1,31 @@
 import { registerPlugin } from '@wordpress/plugins';
-import { PluginDocumentSettingPanel } from '@wordpress/editor';
+import { PluginDocumentSettingPanel } from '@wordpress/edit-post';
 import { ToggleControl } from '@wordpress/components';
-import { useSelect } from '@wordpress/data';
-import { useEntityProp } from '@wordpress/core-data';
+import { useSelect, useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { createInterpolateElement } from '@wordpress/element';
 
 const META_KEY = 'republication-tracker-tool-hide-widget';
 
 const RepublicationTrackerPanel = () => {
-	const postType = useSelect(
-		( select ) => select( 'core/editor' ).getCurrentPostType(),
+	const { postType, meta, filterHides, shareData } = useSelect(
+		( select ) => {
+			const editor = select( 'core/editor' );
+			return {
+				postType: editor.getCurrentPostType(),
+				meta: editor.getEditedPostAttribute( 'meta' ),
+				filterHides: editor.getEditedPostAttribute(
+					'republication_tracker_tool_filter_hides'
+				),
+				shareData: editor.getEditedPostAttribute(
+					'republication_tracker_tool_share_data'
+				),
+			};
+		},
 		[]
 	);
 
-	const [ meta, setMeta ] = useEntityProp( 'postType', postType, 'meta' );
-
-	const { filterHides, shareData } = useSelect( ( select ) => {
-		const editor = select( 'core/editor' );
-		return {
-			filterHides: editor.getEditedPostAttribute(
-				'republication_tracker_tool_filter_hides'
-			),
-			shareData: editor.getEditedPostAttribute(
-				'republication_tracker_tool_share_data'
-			),
-		};
-	}, [] );
+	const { editPost } = useDispatch( 'core/editor' );
 
 	if ( 'post' !== postType ) {
 		return null;
@@ -52,7 +51,9 @@ const RepublicationTrackerPanel = () => {
 				checked={ filterHides ? true : hideWidget }
 				disabled={ filterHides }
 				onChange={ ( value ) =>
-					setMeta( { ...meta, [ META_KEY ]: value } )
+					editPost( {
+						meta: { ...( meta ?? {} ), [ META_KEY ]: value },
+					} )
 				}
 				help={
 					filterHides
