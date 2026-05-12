@@ -166,20 +166,6 @@ class RepublishButtonBlockTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Test page mode renders a link instead of a button.
-	 */
-	public function test_page_mode_renders_link() {
-		$this->set_singular_context();
-
-		$output = $this->render_block( [ 'displayMode' => 'page' ] );
-
-		$this->assertStringContainsString( '<a class=', $output );
-		$this->assertStringContainsString( '/republish/', $output );
-		$this->assertStringNotContainsString( 'data-modal-trigger', $output );
-		$this->assertStringNotContainsString( 'id="republication-tracker-tool-modal"', $output );
-	}
-
-	/**
 	 * Test empty attributes fall back to translated defaults.
 	 */
 	public function test_empty_attributes_fallback() {
@@ -194,16 +180,5 @@ class RepublishButtonBlockTest extends WP_UnitTestCase {
 
 		$this->assertStringContainsString( 'Republish This Story', $output );
 		$this->assertStringContainsString( 'Republish our articles for free', $output );
-	}
-
-	/**
-	 * Test invalid displayMode falls back to modal.
-	 */
-	public function test_invalid_display_mode_fallback() {
-		$this->set_singular_context();
-
-		$output = $this->render_block( [ 'displayMode' => 'invalid' ] );
-
-		$this->assertStringContainsString( 'data-modal-trigger="republish"', $output );
 	}
 }

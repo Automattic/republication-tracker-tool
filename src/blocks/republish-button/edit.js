@@ -2,15 +2,10 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import {
-	InspectorControls,
-	RichText,
-	useBlockProps,
-} from '@wordpress/block-editor';
-import { PanelBody, SelectControl } from '@wordpress/components';
+import { RichText, useBlockProps } from '@wordpress/block-editor';
 
 function RepublishButtonEdit( { attributes, setAttributes } ) {
-	const { buttonText, message, displayMode } = attributes;
+	const { buttonText, message } = attributes;
 
 	// Block supports (color, typography, spacing, border, shadow) are applied
 	// to the wrapper div automatically by useBlockProps(). The inner button
@@ -19,41 +14,6 @@ function RepublishButtonEdit( { attributes, setAttributes } ) {
 
 	return (
 		<>
-			<InspectorControls>
-				<PanelBody
-					title={ __(
-						'Display Settings',
-						'republication-tracker-tool'
-					) }
-				>
-					<SelectControl
-						label={ __(
-							'Display mode',
-							'republication-tracker-tool'
-						) }
-						value={ displayMode }
-						options={ [
-							{
-								label: __(
-									'Modal',
-									'republication-tracker-tool'
-								),
-								value: 'modal',
-							},
-							{
-								label: __(
-									'Page',
-									'republication-tracker-tool'
-								),
-								value: 'page',
-							},
-						] }
-						onChange={ ( val ) =>
-							setAttributes( { displayMode: val } )
-						}
-					/>
-				</PanelBody>
-			</InspectorControls>
 			<div { ...blockProps }>
 				<RichText
 					tagName="p"

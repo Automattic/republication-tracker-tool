@@ -76,21 +76,14 @@ final class Republication_Tracker_Tool_Republish_Button_Block {
 
 		// Translated defaults (block.json defaults are not translatable).
 		$default_attrs = [
-			'buttonText'  => __( 'Republish This Story', 'republication-tracker-tool' ),
-			'message'     => __( 'Republish our articles for free, online or in print, under a Creative Commons license.', 'republication-tracker-tool' ),
-			'displayMode' => 'modal',
+			'buttonText' => __( 'Republish This Story', 'republication-tracker-tool' ),
+			'message'    => __( 'Republish our articles for free, online or in print, under a Creative Commons license.', 'republication-tracker-tool' ),
 		];
 		$attrs = wp_parse_args( $attrs, $default_attrs );
-
-		// Validate displayMode against allowed values.
-		if ( ! in_array( $attrs['displayMode'], [ 'modal', 'page' ], true ) ) {
-			$attrs['displayMode'] = 'modal';
-		}
 
 		// Fall back to translated default when attribute is empty string.
 		$button_text  = '' === trim( (string) $attrs['buttonText'] ) ? $default_attrs['buttonText'] : $attrs['buttonText'];
 		$message_text = '' === trim( (string) $attrs['message'] ) ? $default_attrs['message'] : $attrs['message'];
-		$display_mode = $attrs['displayMode'];
 
 		// License badge.
 		$license_key   = get_option( 'republication_tracker_tool_license', REPUBLICATION_TRACKER_TOOL_DEFAULT_LICENSE );
@@ -105,15 +98,9 @@ final class Republication_Tracker_Tool_Republish_Button_Block {
 		// Message.
 		$html .= '<p class="wp-block-republication-tracker-tool-republish-button__message">' . wp_kses_post( $message_text ) . '</p>';
 
-		// Button or link (inherits colors from wrapper via CSS).
+		// Modal trigger button (inherits colors from wrapper via CSS).
 		$button_class = 'wp-block-republication-tracker-tool-republish-button__button';
-		if ( 'page' === $display_mode ) {
-			$endpoint      = apply_filters( 'republication_tracker_tool_endpoint', 'republish' );
-			$republish_url = home_url( '/' . $endpoint . wp_make_link_relative( get_permalink( $post->ID ) ) );
-			$html         .= '<a class="' . esc_attr( $button_class ) . '" href="' . esc_url( $republish_url ) . '">' . esc_html( $button_text ) . '</a>';
-		} else {
-			$html .= '<button class="' . esc_attr( $button_class ) . '" data-modal-trigger="republish">' . esc_html( $button_text ) . '</button>';
-		}
+		$html        .= '<button class="' . esc_attr( $button_class ) . '" data-modal-trigger="republish">' . esc_html( $button_text ) . '</button>';
 
 		// License badge.
 		if ( $using_license ) {
@@ -127,24 +114,22 @@ final class Republication_Tracker_Tool_Republish_Button_Block {
 
 		$html .= '</div>';
 
-		// Modal (only for modal mode, only once per page).
-		if ( 'modal' === $display_mode ) {
-			self::enqueue_modal_assets();
+		// Modal markup — only rendered once per page across all block instances.
+		self::enqueue_modal_assets();
 
-			if ( ! Republication_Tracker_Tool::$modal_rendered ) {
-				Republication_Tracker_Tool::$modal_rendered = true;
+		if ( ! Republication_Tracker_Tool::$modal_rendered ) {
+			Republication_Tracker_Tool::$modal_rendered = true;
 
-				$is_amp             = false; // Block themes do not support AMP.
-				$modal_content_path = REPUBLICATION_TRACKER_TOOL_PATH . 'includes/shareable-content.php';
+			$is_amp             = false; // Used by shareable-content.php; block themes do not support AMP.
+			$modal_content_path = REPUBLICATION_TRACKER_TOOL_PATH . 'includes/shareable-content.php';
 
-				ob_start();
-				?>
-				<div id="republication-tracker-tool-modal" style="display:none;" data-postid="<?php echo esc_attr( $post->ID ); ?>" data-pluginsdir="<?php echo esc_attr( plugins_url() ); ?>" role="dialog" aria-modal="true" aria-labelledby="republish-modal-label">
-					<?php include $modal_content_path; ?>
-				</div>
-				<?php
-				$html .= ob_get_clean();
-			}
+			ob_start();
+			?>
+			<div id="republication-tracker-tool-modal" style="display:none;" data-postid="<?php echo esc_attr( $post->ID ); ?>" data-pluginsdir="<?php echo esc_attr( plugins_url() ); ?>" role="dialog" aria-modal="true" aria-labelledby="republish-modal-label">
+				<?php include $modal_content_path; ?>
+			</div>
+			<?php
+			$html .= ob_get_clean();
 		}
 
 		return $html;

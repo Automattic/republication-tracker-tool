@@ -15,11 +15,6 @@
 		"message": {
 			"type": "string",
 			"default": "Republish our articles for free, online or in print, under a Creative Commons license."
-		},
-		"displayMode": {
-			"type": "string",
-			"default": "modal",
-			"enum": [ "modal", "page" ]
 		}
 	},
 	"supports": {
@@ -54,8 +49,7 @@
 	"example": {
 		"attributes": {
 			"buttonText": "Republish This Story",
-			"message": "Republish our articles for free, online or in print, under a Creative Commons license.",
-			"displayMode": "modal"
+			"message": "Republish our articles for free, online or in print, under a Creative Commons license."
 		}
 	}
 }
