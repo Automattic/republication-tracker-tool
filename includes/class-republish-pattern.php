@@ -56,6 +56,11 @@ final class Republication_Tracker_Tool_Republish_Pattern {
 <!-- /wp:group -->
 HTML;
 
+		// Hide the pattern from the inserter on classic themes (matches the
+		// republish-button block's gating). Stays registered so existing
+		// instances and inter-block references keep working.
+		$inserter = ! function_exists( 'wp_is_block_theme' ) || wp_is_block_theme();
+
 		register_block_pattern(
 			self::PATTERN_NAME,
 			[
@@ -63,6 +68,7 @@ HTML;
 				'description' => __( 'A paragraph, republish button, and Creative Commons license badge grouped together.', 'republication-tracker-tool' ),
 				'categories'  => [ self::CATEGORY_SLUG ],
 				'content'     => $content,
+				'inserter'    => $inserter,
 			]
 		);
 	}

@@ -27,6 +27,7 @@
 	},
 	"devDependencies": {
 		"@typescript-eslint/eslint-plugin": "^8.58.0",
+		"@wordpress/icons": "^11.1.0",
 		"grunt": "~1.6.1",
 		"grunt-wp-i18n": "~1.0.3",
 		"grunt-wp-readme-to-markdown": "~2.1.0",
