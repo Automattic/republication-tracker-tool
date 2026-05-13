@@ -77,41 +77,26 @@ final class Republication_Tracker_Tool_Republish_Button_Block {
 		// Translated defaults (block.json defaults are not translatable).
 		$default_attrs = [
 			'buttonText' => __( 'Republish This Story', 'republication-tracker-tool' ),
-			'message'    => __( 'Republish our articles for free, online or in print, under a Creative Commons license.', 'republication-tracker-tool' ),
 		];
 		$attrs = wp_parse_args( $attrs, $default_attrs );
 
 		// Fall back to translated default when attribute is empty string.
-		$button_text  = '' === trim( (string) $attrs['buttonText'] ) ? $default_attrs['buttonText'] : $attrs['buttonText'];
-		$message_text = '' === trim( (string) $attrs['message'] ) ? $default_attrs['message'] : $attrs['message'];
+		$button_text = '' === trim( (string) $attrs['buttonText'] ) ? $default_attrs['buttonText'] : $attrs['buttonText'];
 
-		// License badge.
-		$license_key   = get_option( 'republication_tracker_tool_license', REPUBLICATION_TRACKER_TOOL_DEFAULT_LICENSE );
-		$using_license = isset( REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ] );
+		// Block supports (color, typography, spacing, border, shadow) apply to the inner
+		// <button> so theme button styles cascade via the standard core button classes.
+		$button_attributes = get_block_wrapper_attributes(
+			[
+				'class'              => 'wp-block-button__link wp-element-button wp-block-republication-tracker-tool-republish-button',
+				'data-modal-trigger' => 'republish',
+			]
+		);
 
-		// Block wrapper attributes go on the outer div (anchor, alignment, layout, block supports).
-		$wrapper_attributes = get_block_wrapper_attributes();
-
-		// Start building output.
-		$html = '<div ' . $wrapper_attributes . '>';
-
-		// Message.
-		$html .= '<p class="wp-block-republication-tracker-tool-republish-button__message">' . wp_kses_post( $message_text ) . '</p>';
-
-		// Modal trigger button (inherits colors from wrapper via CSS).
-		$button_class = 'wp-block-republication-tracker-tool-republish-button__button';
-		$html        .= '<button class="' . esc_attr( $button_class ) . '" data-modal-trigger="republish">' . esc_html( $button_text ) . '</button>';
-
-		// License badge.
-		if ( $using_license ) {
-			$html .= sprintf(
-				'<p><a class="license" rel="noreferrer license" target="_blank" href="%s"><img alt="%s" style="border-width:0" src="%s" /></a></p>',
-				esc_url( REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['url'] ),
-				esc_html__( 'Creative Commons License', 'republication-tracker-tool' ),
-				esc_url( plugin_dir_url( __DIR__ ) . 'assets/img/' . $license_key . '.png' )
-			);
-		}
-
+		// Three-layer button markup matches core/button so theme styles apply.
+		$html  = '<div class="wp-block-buttons is-layout-flex">';
+		$html .= '<div class="wp-block-button">';
+		$html .= '<button ' . $button_attributes . '>' . esc_html( $button_text ) . '</button>';
+		$html .= '</div>';
 		$html .= '</div>';
 
 		// Modal markup — only rendered once per page across all block instances.

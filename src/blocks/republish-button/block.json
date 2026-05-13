@@ -11,14 +11,11 @@
 		"buttonText": {
 			"type": "string",
 			"default": "Republish This Story"
-		},
-		"message": {
-			"type": "string",
-			"default": "Republish our articles for free, online or in print, under a Creative Commons license."
 		}
 	},
 	"supports": {
 		"anchor": true,
+		"align": false,
 		"color": {
 			"background": true,
 			"text": true
@@ -48,8 +45,7 @@
 	"style": "file:../../../dist/republish-button.css",
 	"example": {
 		"attributes": {
-			"buttonText": "Republish This Story",
-			"message": "Republish our articles for free, online or in print, under a Creative Commons license."
+			"buttonText": "Republish This Story"
 		}
 	}
 }

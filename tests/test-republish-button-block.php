@@ -85,6 +85,9 @@ class RepublishButtonBlockTest extends WP_UnitTestCase {
 		$output = $this->render_block();
 
 		$this->assertStringContainsString( 'wp-block-republication-tracker-tool-republish-button', $output );
+		$this->assertStringContainsString( 'wp-block-buttons', $output );
+		$this->assertStringContainsString( 'wp-block-button__link', $output );
+		$this->assertStringContainsString( 'wp-element-button', $output );
 		$this->assertStringContainsString( 'Republish This Story', $output );
 		$this->assertStringContainsString( 'data-modal-trigger="republish"', $output );
 	}
@@ -166,7 +169,7 @@ class RepublishButtonBlockTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Test empty attributes fall back to translated defaults.
+	 * Test empty buttonText falls back to translated default.
 	 */
 	public function test_empty_attributes_fallback() {
 		$this->set_singular_context();
@@ -174,11 +177,36 @@ class RepublishButtonBlockTest extends WP_UnitTestCase {
 		$output = $this->render_block(
 			[
 				'buttonText' => '',
-				'message'    => '',
 			]
 		);
 
 		$this->assertStringContainsString( 'Republish This Story', $output );
-		$this->assertStringContainsString( 'Republish our articles for free', $output );
+	}
+
+	/**
+	 * Block no longer emits the message paragraph.
+	 */
+	public function test_block_does_not_emit_message_paragraph() {
+		$this->set_singular_context();
+
+		$output = $this->render_block();
+
+		$this->assertStringNotContainsString( 'wp-block-republication-tracker-tool-republish-button__message', $output );
+	}
+
+	/**
+	 * Block no longer emits the inline CC license badge link.
+	 */
+	public function test_block_does_not_emit_license_badge() {
+		// Ensure a known license is set so the legacy code path would fire if it still existed.
+		update_option( 'republication_tracker_tool_license', 'cc-by-nd-4.0' );
+
+		$this->set_singular_context();
+
+		$output = $this->render_block();
+
+		$this->assertStringNotContainsString( 'class="license"', $output );
+
+		delete_option( 'republication_tracker_tool_license' );
 	}
 }

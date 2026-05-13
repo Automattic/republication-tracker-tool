@@ -2,50 +2,61 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { RichText, useBlockProps } from '@wordpress/block-editor';
+import {
+	RichText,
+	useBlockProps,
+	/* eslint-disable @wordpress/no-unsafe-wp-apis */
+	__experimentalUseBorderProps as useBorderProps,
+	__experimentalUseColorProps as useColorProps,
+	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
+	/* eslint-enable @wordpress/no-unsafe-wp-apis */
+} from '@wordpress/block-editor';
 
 function RepublishButtonEdit( { attributes, setAttributes } ) {
-	const { buttonText, message } = attributes;
+	const { buttonText } = attributes;
+	const borderProps = useBorderProps( attributes );
+	const colorProps = useColorProps( attributes );
+	const spacingProps = useSpacingProps( attributes );
 
-	// Block supports (color, typography, spacing, border, shadow) are applied
-	// to the wrapper div automatically by useBlockProps(). The inner button
-	// inherits colors via CSS.
-	const blockProps = useBlockProps();
+	const innerClassNames = [
+		'wp-block-button__link',
+		'wp-element-button',
+		'wp-block-republication-tracker-tool-republish-button',
+		colorProps.className,
+		borderProps.className,
+	]
+		.filter( Boolean )
+		.join( ' ' );
+
+	const blockProps = useBlockProps( {
+		className: innerClassNames,
+		style: {
+			...borderProps.style,
+			...colorProps.style,
+			...spacingProps.style,
+		},
+	} );
 
 	return (
-		<>
-			<div { ...blockProps }>
+		<div className="wp-block-buttons is-layout-flex">
+			<div className="wp-block-button">
 				<RichText
-					tagName="p"
-					className="wp-block-republication-tracker-tool-republish-button__message"
-					value={ message }
-					onChange={ ( val ) => setAttributes( { message: val } ) }
+					tagName="button"
+					{ ...blockProps }
+					value={ buttonText }
+					onChange={ ( val ) => setAttributes( { buttonText: val } ) }
 					placeholder={ __(
-						'Add a description of the republish feature…',
+						'Republish This Story',
 						'republication-tracker-tool'
 					) }
-					withoutInteractiveFormatting
+					allowedFormats={ [] }
+					aria-label={ __(
+						'Button text',
+						'republication-tracker-tool'
+					) }
 				/>
-				<span className="wp-block-republication-tracker-tool-republish-button__button">
-					<RichText
-						tagName="span"
-						value={ buttonText }
-						onChange={ ( val ) =>
-							setAttributes( { buttonText: val } )
-						}
-						placeholder={ __(
-							'Republish This Story',
-							'republication-tracker-tool'
-						) }
-						allowedFormats={ [] }
-						aria-label={ __(
-							'Button text',
-							'republication-tracker-tool'
-						) }
-					/>
-				</span>
 			</div>
-		</>
+		</div>
 	);
 }
 

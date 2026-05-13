@@ -1,0 +1,18 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "republication-tracker-tool/republish-license",
+	"title": "Republish License",
+	"category": "widgets",
+	"description": "Displays the site's current Creative Commons license badge, linked to the license.",
+	"keywords": [ "republish", "creative commons", "license" ],
+	"textdomain": "republication-tracker-tool",
+	"supports": {
+		"align": [ "left", "center", "right" ],
+		"spacing": {
+			"margin": true,
+			"padding": true
+		}
+	},
+	"editorScript": "file:../../../dist/republish-license.js"
+}
