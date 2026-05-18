@@ -1,5 +1,5 @@
 import { registerPlugin } from '@wordpress/plugins';
-import { PluginDocumentSettingPanel } from '@wordpress/editor'
+import { PluginDocumentSettingPanel } from '@wordpress/editor';
 import { ToggleControl } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
@@ -57,8 +57,8 @@ const RepublicationTrackerPanel = () => {
 				}
 				help={
 					filterHides
-						// translators: <a> and </a> tags represent a link to the Republication Tracker README file on GitHub.
 						? createInterpolateElement(
+								// translators: <a> and </a> tags represent a link to the Republication Tracker README file on GitHub.
 								__(
 									'The Republication sharing widget on this post is programmatically disabled through the <code>hide_republication_widget</code> filter. <a>Read more about this filter</a>.',
 									'republication-tracker-tool'
