@@ -35,11 +35,11 @@ final class Republication_Tracker_Tool_Republish_Pattern {
 	public static function register() {
 		register_block_pattern_category(
 			self::CATEGORY_SLUG,
-			[ 'label' => __( 'Republication', 'republication-tracker-tool' ) ]
+			[ 'label' => esc_html__( 'Republication', 'republication-tracker-tool' ) ]
 		);
 
-		$description     = __( 'Republish our articles for free, online or in print, under a Creative Commons license.', 'republication-tracker-tool' );
-		$button_text     = __( 'Republish This Story', 'republication-tracker-tool' );
+		$description     = esc_html__( 'Republish our articles for free, online or in print, under a Creative Commons license.', 'republication-tracker-tool' );
+		$button_text     = esc_html__( 'Republish This Story', 'republication-tracker-tool' );
 		$button_text_enc = wp_json_encode( $button_text );
 
 		$content = <<<HTML
@@ -62,8 +62,8 @@ HTML;
 		register_block_pattern(
 			self::PATTERN_NAME,
 			[
-				'title'       => __( 'Republish Section', 'republication-tracker-tool' ),
-				'description' => __( 'A paragraph, republish button, and Creative Commons license badge grouped together.', 'republication-tracker-tool' ),
+				'title'       => esc_html__( 'Republish Section', 'republication-tracker-tool' ),
+				'description' => esc_html__( 'A paragraph, republish button, and Creative Commons license badge grouped together.', 'republication-tracker-tool' ),
 				'categories'  => [ self::CATEGORY_SLUG ],
 				'content'     => $content,
 				'inserter'    => $inserter,
