@@ -125,17 +125,22 @@ function stripCaptions( modal ) {
 function trapFocus( modal ) {
 	const focusableSelector =
 		'a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), select:not([disabled])';
-	const focusableEls = modal.querySelectorAll( focusableSelector );
-	if ( ! focusableEls.length ) {
-		return;
-	}
-	const firstFocusable = focusableEls[ 0 ];
-	const lastFocusable = focusableEls[ focusableEls.length - 1 ];
 
 	modal.addEventListener( 'keydown', ( e ) => {
 		if ( e.key !== 'Tab' ) {
 			return;
 		}
+		// Recompute visible focusable elements on each Tab so tab switching
+		// (which hides controls like the main copy button) doesn't leave
+		// stale references that let focus escape the modal.
+		const focusableEls = Array.from(
+			modal.querySelectorAll( focusableSelector )
+		).filter( ( el ) => el.offsetParent !== null );
+		if ( ! focusableEls.length ) {
+			return;
+		}
+		const firstFocusable = focusableEls[ 0 ];
+		const lastFocusable = focusableEls[ focusableEls.length - 1 ];
 		const active = modal.ownerDocument.activeElement;
 		if ( e.shiftKey ) {
 			if ( active === firstFocusable ) {
