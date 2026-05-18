@@ -2,7 +2,7 @@
 Contributors: innlabs
 Donate link: https://inn.org/donate
 Tags: publishers, news
-Requires at least: 6.0
+Requires at least: 6.3
 Requires PHP: 7.4
 Tested up to: 7.0
 Stable tag: trunk
