@@ -50,8 +50,6 @@ final class Republication_Tracker_Tool_Republish_Pattern {
 	<!-- /wp:paragraph -->
 
 	<!-- wp:republication-tracker-tool/republish-button {"buttonText":{$button_text_enc}} /-->
-
-	<!-- wp:republication-tracker-tool/republish-license /-->
 </div>
 <!-- /wp:group -->
 HTML;

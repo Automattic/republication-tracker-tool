@@ -195,17 +195,49 @@ class RepublishButtonBlockTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Block no longer emits the inline CC license badge link.
+	 * Block emits the license badge by default when a license is configured.
 	 */
-	public function test_block_does_not_emit_license_badge() {
-		// Ensure a known license is set so the legacy code path would fire if it still existed.
+	public function test_block_emits_license_badge_by_default() {
 		update_option( 'republication_tracker_tool_license', 'cc-by-nd-4.0' );
 
 		$this->set_singular_context();
 
 		$output = $this->render_block();
 
-		$this->assertStringNotContainsString( 'class="license"', $output );
+		$this->assertStringContainsString( '__license', $output );
+		$this->assertStringContainsString( 'rel="noreferrer license"', $output );
+		$this->assertStringContainsString( REPUBLICATION_TRACKER_TOOL_LICENSES['cc-by-nd-4.0']['url'], $output );
+
+		delete_option( 'republication_tracker_tool_license' );
+	}
+
+	/**
+	 * Block omits the license badge when showLicense is false.
+	 */
+	public function test_block_omits_license_when_disabled() {
+		update_option( 'republication_tracker_tool_license', 'cc-by-nd-4.0' );
+
+		$this->set_singular_context();
+
+		$output = $this->render_block( [ 'showLicense' => false ] );
+
+		$this->assertStringNotContainsString( '__license', $output );
+
+		delete_option( 'republication_tracker_tool_license' );
+	}
+
+	/**
+	 * Block omits the license badge when no recognizable license is set,
+	 * even if showLicense is true.
+	 */
+	public function test_block_omits_license_when_no_license_set() {
+		update_option( 'republication_tracker_tool_license', 'not-a-real-license' );
+
+		$this->set_singular_context();
+
+		$output = $this->render_block();
+
+		$this->assertStringNotContainsString( '__license', $output );
 
 		delete_option( 'republication_tracker_tool_license' );
 	}

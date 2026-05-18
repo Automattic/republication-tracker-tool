@@ -11,6 +11,10 @@
 		"buttonText": {
 			"type": "string",
 			"default": "Republish This Story"
+		},
+		"showLicense": {
+			"type": "boolean",
+			"default": true
 		}
 	},
 	"supports": {
@@ -18,7 +22,11 @@
 		"align": false,
 		"color": {
 			"background": true,
-			"text": true
+			"text": true,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
 		},
 		"typography": {
 			"fontSize": true,
@@ -28,16 +36,23 @@
 			"__experimentalFontStyle": true,
 			"__experimentalTextTransform": true,
 			"__experimentalTextDecoration": true,
-			"__experimentalLetterSpacing": true
+			"__experimentalLetterSpacing": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true
+			}
 		},
 		"spacing": {
-			"padding": true
+			"padding": true,
+			"__experimentalDefaultControls": {
+				"padding": true
+			}
 		},
 		"__experimentalBorder": {
 			"radius": true,
 			"color": true,
 			"style": true,
-			"width": true
+			"width": true,
+			"__experimentalDefaultControls": {}
 		},
 		"shadow": true
 	},

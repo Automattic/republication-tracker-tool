@@ -57,6 +57,6 @@ class RepublishPatternTest extends WP_UnitTestCase {
 		$this->assertStringContainsString( '<!-- wp:group', $content );
 		$this->assertStringContainsString( '<!-- wp:paragraph', $content );
 		$this->assertStringContainsString( '<!-- wp:republication-tracker-tool/republish-button', $content );
-		$this->assertStringContainsString( '<!-- wp:republication-tracker-tool/republish-license', $content );
+		$this->assertStringNotContainsString( 'republish-license', $content );
 	}
 }

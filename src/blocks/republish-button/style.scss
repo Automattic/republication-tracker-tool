@@ -4,3 +4,12 @@
 .wp-block-republication-tracker-tool-republish-button {
 	cursor: pointer;
 }
+
+.wp-block-republication-tracker-tool-republish-button__license {
+	margin-top: 0.5em;
+
+	img {
+		max-width: 100%;
+		height: auto;
+	}
+}

@@ -18,6 +18,31 @@ final class Republication_Tracker_Tool_Republish_Button_Block {
 	 */
 	public static function init() {
 		add_action( 'init', [ __CLASS__, 'register_block' ] );
+		add_action( 'enqueue_block_editor_assets', [ __CLASS__, 'enqueue_editor_data' ] );
+	}
+
+	/**
+	 * Inject the current site's Creative Commons license data into the editor
+	 * so the block preview can render the real badge image without a REST
+	 * round-trip. Data is read on every page load — admin setting changes
+	 * surface on the next editor refresh.
+	 */
+	public static function enqueue_editor_data() {
+		$license_key = get_option( 'republication_tracker_tool_license', REPUBLICATION_TRACKER_TOOL_DEFAULT_LICENSE );
+
+		$license = isset( REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ] )
+			? [
+				'url'         => REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['url'],
+				'badge'       => REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['badge'],
+				'description' => REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ]['description'],
+			]
+			: null;
+
+		wp_add_inline_script(
+			'republication-tracker-tool-republish-button-editor-script',
+			'window.republicationTrackerToolEditor = ' . wp_json_encode( [ 'license' => $license ] ) . ';',
+			'before'
+		);
 	}
 
 	/**
@@ -76,12 +101,14 @@ final class Republication_Tracker_Tool_Republish_Button_Block {
 
 		// Translated defaults (block.json defaults are not translatable).
 		$default_attrs = [
-			'buttonText' => __( 'Republish This Story', 'republication-tracker-tool' ),
+			'buttonText'  => __( 'Republish This Story', 'republication-tracker-tool' ),
+			'showLicense' => true,
 		];
 		$attrs = wp_parse_args( $attrs, $default_attrs );
 
 		// Fall back to translated default when attribute is empty string.
-		$button_text = '' === trim( (string) $attrs['buttonText'] ) ? $default_attrs['buttonText'] : $attrs['buttonText'];
+		$button_text  = '' === trim( (string) $attrs['buttonText'] ) ? $default_attrs['buttonText'] : $attrs['buttonText'];
+		$show_license = (bool) $attrs['showLicense'];
 
 		// Block supports (color, typography, spacing, border, shadow) apply to the inner
 		// <button> so theme button styles cascade via the standard core button classes.
@@ -98,6 +125,13 @@ final class Republication_Tracker_Tool_Republish_Button_Block {
 		$html .= '<button ' . $button_attributes . '>' . esc_html( $button_text ) . '</button>';
 		$html .= '</div>';
 		$html .= '</div>';
+
+		// Optional Creative Commons license badge, sourced from the site setting.
+		// Rendered as a sibling outside the buttons container so the flex layout
+		// doesn't affect the image.
+		if ( $show_license ) {
+			$html .= self::render_license_badge();
+		}
 
 		// Modal markup — only rendered once per page across all block instances.
 		self::enqueue_modal_assets();
@@ -118,6 +152,39 @@ final class Republication_Tracker_Tool_Republish_Button_Block {
 		}
 
 		return $html;
+	}
+
+	/**
+	 * Render the Creative Commons license badge based on the site's current
+	 * configured license. Returns an empty string when no recognizable license
+	 * is set.
+	 *
+	 * In the editor preview (ServerSideRender → REST block-renderer endpoint)
+	 * the link is neutralized to `#` and the target attribute is dropped so
+	 * accidental clicks don't open the real license URL in a new tab.
+	 *
+	 * @return string Rendered HTML or empty string.
+	 */
+	private static function render_license_badge() {
+		$license_key = get_option( 'republication_tracker_tool_license', REPUBLICATION_TRACKER_TOOL_DEFAULT_LICENSE );
+
+		if ( ! isset( REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ] ) ) {
+			return '';
+		}
+
+		$license = REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ];
+
+		$is_editor_preview = defined( 'REST_REQUEST' ) && REST_REQUEST;
+		$href              = $is_editor_preview ? '#' : esc_url( $license['url'] );
+		$target_attr       = $is_editor_preview ? '' : ' target="_blank"';
+
+		return sprintf(
+			'<div class="wp-block-republication-tracker-tool-republish-button__license"><a rel="noreferrer license" href="%1$s"%2$s><img alt="%3$s" style="border-width:0" src="%4$s" /></a></div>',
+			$href,
+			$target_attr,
+			esc_attr( $license['description'] ),
+			esc_url( $license['badge'] )
+		);
 	}
 
 	/**
