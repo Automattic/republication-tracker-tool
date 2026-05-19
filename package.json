@@ -6,9 +6,9 @@
 	"scripts": {
 		"start": "npm ci",
 		"cm": "newspack-scripts commit",
-		"build": "echo 'No build in this repository.'",
+		"build": "newspack-scripts wp-scripts build",
 		"i18n": "grunt i18n",
-		"lint:js": "echo 'No JS to lint in this repository.'",
+		"lint:js": "newspack-scripts wp-scripts lint-js src",
 		"readme": "grunt readme",
 		"semantic-release": "newspack-scripts release --files=republication-tracker-tool.php",
 		"release:archive": "rm -rf release && mkdir -p release && rsync -r . ./release/republication-tracker-tool --exclude-from='./.distignore' && cd release && zip -r republication-tracker-tool.zip republication-tracker-tool",
