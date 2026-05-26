@@ -9,14 +9,14 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-05-08T10:52:30+00:00\n"
+"POT-Creation-Date: 2026-05-19T21:30:11+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: republication-tracker-tool\n"
 
 #. Plugin Name of the plugin
 #: republication-tracker-tool.php
-#: includes/class-article-settings.php:59
+#: includes/class-article-settings.php:144
 #: includes/class-widget.php:29
 msgid "Republication Tracker Tool"
 msgstr ""
@@ -36,30 +36,36 @@ msgstr ""
 msgid "https://labs.inn.org"
 msgstr ""
 
-#: includes/class-article-settings.php:68
+#: includes/class-article-settings.php:153
 msgid "Hide Republication Widget"
 msgstr ""
 
-#: includes/class-article-settings.php:125
-#: includes/class-article-settings.php:138
+#: includes/class-article-settings.php:239
+#: includes/class-article-settings.php:252
+#: dist/index.js:4
+#: src/index.js:90
 msgid "Republished URL"
 msgstr ""
 
-#: includes/class-article-settings.php:126
-#: includes/class-article-settings.php:139
+#: includes/class-article-settings.php:240
+#: includes/class-article-settings.php:253
+#: dist/index.js:4
+#: src/index.js:96
 msgid "Views"
 msgstr ""
 
-#: includes/class-article-settings.php:143
+#: includes/class-article-settings.php:257
+#: dist/index.js:4
+#: src/index.js:119
 msgid "There are no shares to display."
 msgstr ""
 
-#: includes/class-article-settings.php:176
+#: includes/class-article-settings.php:290
 msgid "Hide the Republication sharing widget on this post?"
 msgstr ""
 
-#: includes/class-article-settings.php:189
-#: includes/class-article-settings.php:200
+#: includes/class-article-settings.php:303
+#: includes/class-article-settings.php:314
 msgid "Total Views"
 msgstr ""
 
@@ -350,4 +356,25 @@ msgstr ""
 #: templates/republish-template.php:287
 #: templates/republish-template.php:288
 msgid "Copy to clipboard"
+msgstr ""
+
+#: dist/index.js:1
+#: src/index.js:41
+msgid "Republication Widget Settings"
+msgstr ""
+
+#: dist/index.js:1
+#: src/index.js:47
+msgid "Hide Republication widget"
+msgstr ""
+
+#. translators: <a> and </a> tags represent a link to the Republication Tracker README file on GitHub.
+#: dist/index.js:4
+#: src/index.js:62
+msgid "The Republication sharing widget on this post is programmatically disabled through the <code>hide_republication_widget</code> filter. <a>Read more about this filter</a>."
+msgstr ""
+
+#: dist/index.js:4
+#: src/index.js:82
+msgid "Total number of views:"
 msgstr ""

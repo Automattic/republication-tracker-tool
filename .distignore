@@ -35,7 +35,4 @@ contributing.md
 docs
 release.sh
 release
-src/**/*.js
-src/**/*.jsx
-src/**/*.scss
-webpack.config.js
+src
