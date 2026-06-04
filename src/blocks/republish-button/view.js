@@ -1,4 +1,4 @@
-/* global ClipboardUtils, DOMParser */
+/* global ClipboardUtils */
 
 /**
  * WordPress dependencies
