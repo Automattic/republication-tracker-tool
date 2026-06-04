@@ -6,7 +6,12 @@
  */
 
 // Load the composer autoloader.
-require_once __DIR__ . '/../vendor/autoload.php';
+$rtt_autoload = __DIR__ . '/../vendor/autoload.php';
+if ( ! file_exists( $rtt_autoload ) ) {
+	fwrite( STDERR, "Composer autoloader not found. Run `composer install` before running the test suite.\n" ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_fwrite
+	exit( 1 );
+}
+require_once $rtt_autoload;
 
 $_tests_dir = getenv( 'WP_TESTS_DIR' );
 if ( ! $_tests_dir ) {
