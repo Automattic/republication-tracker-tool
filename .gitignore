@@ -9,4 +9,3 @@ dist/
 release/
 vendor
 .phpunit.result.cache
-dist/

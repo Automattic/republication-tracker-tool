@@ -33,13 +33,23 @@ final class Republication_Tracker_Tool_Republish_Pattern {
 	 * Register the pattern category and pattern.
 	 */
 	public static function register() {
+		// Block pattern APIs are only available on WP 5.5+. Bail gracefully on
+		// older installs instead of fataling on init.
+		if ( ! function_exists( 'register_block_pattern' ) || ! function_exists( 'register_block_pattern_category' ) ) {
+			return;
+		}
+
 		register_block_pattern_category(
 			self::CATEGORY_SLUG,
 			[ 'label' => esc_html__( 'Republication', 'republication-tracker-tool' ) ]
 		);
 
-		$description     = esc_html__( 'Republish our articles for free, online or in print, under a Creative Commons license.', 'republication-tracker-tool' );
-		$button_text     = esc_html__( 'Republish This Story', 'republication-tracker-tool' );
+		$description = esc_html__( 'Republish our articles for free, online or in print, under a Creative Commons license.', 'republication-tracker-tool' );
+
+		// Plain __() (not esc_html__): buttonText is JSON-encoded into a block
+		// attribute and escaped again by the block's render_callback, so escaping
+		// here would double-encode entities in translations (apostrophes, etc.).
+		$button_text     = __( 'Republish This Story', 'republication-tracker-tool' );
 		$button_text_enc = wp_json_encode( $button_text );
 
 		$content = <<<HTML

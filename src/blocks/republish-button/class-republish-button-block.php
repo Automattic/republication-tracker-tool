@@ -16,7 +16,7 @@ final class Republication_Tracker_Tool_Republish_Button_Block {
 	/**
 	 * Initialize the block.
 	 */
-	public static function init() {
+	public static function init(): void {
 		add_action( 'init', [ __CLASS__, 'register_block' ] );
 		add_action( 'enqueue_block_editor_assets', [ __CLASS__, 'enqueue_editor_data' ] );
 	}
@@ -27,7 +27,7 @@ final class Republication_Tracker_Tool_Republish_Button_Block {
 	 * round-trip. Data is read on every page load — admin setting changes
 	 * surface on the next editor refresh.
 	 */
-	public static function enqueue_editor_data() {
+	public static function enqueue_editor_data(): void {
 		$license_key = get_option( 'republication_tracker_tool_license', REPUBLICATION_TRACKER_TOOL_DEFAULT_LICENSE );
 
 		$license = isset( REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ] )
@@ -52,21 +52,34 @@ final class Republication_Tracker_Tool_Republish_Button_Block {
 	 * still registered (so existing content does not become an "unknown block")
 	 * but hidden from the inserter.
 	 */
-	public static function register_block() {
-		$args = [
+	public static function register_block(): void {
+		// register_block_type_from_metadata() is only available on WP 5.5+.
+		// Bail gracefully on older installs instead of fataling on init.
+		if ( ! function_exists( 'register_block_type_from_metadata' ) ) {
+			return;
+		}
+
+		$block_dir = REPUBLICATION_TRACKER_TOOL_PATH . 'src/blocks/republish-button';
+		$args      = [
 			'render_callback' => [ __CLASS__, 'render_block' ],
 		];
 
 		if ( function_exists( 'wp_is_block_theme' ) && ! wp_is_block_theme() ) {
-			$args['supports'] = [
-				'inserter' => false,
-			];
+			// Deep-merge into the declared supports rather than replacing them.
+			// register_block_type_from_metadata() shallow-merges $args over the
+			// block.json metadata, so a bare supports override would drop the
+			// block's color/typography/spacing/border support and strip saved
+			// styles from existing instances rendered on a classic theme.
+			$metadata = wp_json_file_decode( $block_dir . '/block.json', [ 'associative' => true ] );
+			$supports = ( is_array( $metadata ) && isset( $metadata['supports'] ) && is_array( $metadata['supports'] ) )
+				? $metadata['supports']
+				: [];
+
+			$supports['inserter'] = false;
+			$args['supports']     = $supports;
 		}
 
-		register_block_type_from_metadata(
-			REPUBLICATION_TRACKER_TOOL_PATH . 'src/blocks/republish-button',
-			$args
-		);
+		register_block_type_from_metadata( $block_dir, $args );
 	}
 
 	/**
@@ -75,7 +88,7 @@ final class Republication_Tracker_Tool_Republish_Button_Block {
 	 * @param array $attrs Block attributes.
 	 * @return string Rendered block HTML.
 	 */
-	public static function render_block( $attrs ) {
+	public static function render_block( array $attrs ): string {
 		global $post;
 
 		// Guard: only render on singular views.
@@ -159,13 +172,9 @@ final class Republication_Tracker_Tool_Republish_Button_Block {
 	 * configured license. Returns an empty string when no recognizable license
 	 * is set.
 	 *
-	 * In the editor preview (ServerSideRender → REST block-renderer endpoint)
-	 * the link is neutralized to `#` and the target attribute is dropped so
-	 * accidental clicks don't open the real license URL in a new tab.
-	 *
 	 * @return string Rendered HTML or empty string.
 	 */
-	private static function render_license_badge() {
+	private static function render_license_badge(): string {
 		$license_key = get_option( 'republication_tracker_tool_license', REPUBLICATION_TRACKER_TOOL_DEFAULT_LICENSE );
 
 		if ( ! isset( REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ] ) ) {
@@ -174,14 +183,9 @@ final class Republication_Tracker_Tool_Republish_Button_Block {
 
 		$license = REPUBLICATION_TRACKER_TOOL_LICENSES[ $license_key ];
 
-		$is_editor_preview = defined( 'REST_REQUEST' ) && REST_REQUEST;
-		$href              = $is_editor_preview ? '#' : esc_url( $license['url'] );
-		$target_attr       = $is_editor_preview ? '' : ' target="_blank"';
-
 		return sprintf(
-			'<div class="wp-block-republication-tracker-tool-republish-button__license"><a rel="noreferrer license" href="%1$s"%2$s><img alt="%3$s" style="border-width:0" src="%4$s" /></a></div>',
-			$href,
-			$target_attr,
+			'<div class="wp-block-republication-tracker-tool-republish-button__license"><a rel="noreferrer license" href="%1$s" target="_blank"><img alt="%2$s" style="border-width:0" src="%3$s" /></a></div>',
+			esc_url( $license['url'] ),
 			esc_attr( $license['description'] ),
 			esc_url( $license['badge'] )
 		);
@@ -190,7 +194,7 @@ final class Republication_Tracker_Tool_Republish_Button_Block {
 	/**
 	 * Enqueue modal-specific assets.
 	 */
-	private static function enqueue_modal_assets() {
+	private static function enqueue_modal_assets(): void {
 		// Modal styles (same handle as widget for deduplication).
 		wp_enqueue_style(
 			'republication-tracker-tool-css',
